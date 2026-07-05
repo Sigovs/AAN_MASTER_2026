@@ -1,6 +1,12 @@
-# Dependencies & build output (regenerated: npm install / npm run build)
+# Dependencies (regenerated: npm install)
 node_modules/
-dist/
+
+# Build output — ignore everything EXCEPT the compiled CSS, which is committed
+# by design so the repo renders on GitHub / Pages without a build step.
+dist/*
+!dist/css/
+dist/css/*
+!dist/css/main.css
 
 # Playwright self-check output
 screenshots/

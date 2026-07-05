@@ -108,7 +108,14 @@ styles (photo / plain).
 
 ## 6. Working style
 
-- Phase discipline: do only the current phase's work. Phase 1 is scaffold +
-  tokens with placeholder values — **no visual design decisions yet.**
+- **Never ask yes/no or confirmation questions; never pause for permission
+  between steps.** Make senior-level decisions and continue, flagging judgment
+  calls in the final report only. Sole exception: external blockers Claude
+  cannot resolve alone (auth prompts, locked files, missing credentials) — stop
+  and state exactly what the user must do.
+- **Run `npm run build` before committing.** `dist/css/main.css` is committed by
+  design so the repo is viewable (GitHub / Pages) without a build step; other
+  build junk stays ignored.
+- Phase discipline: do only the current phase's work.
 - Prefer editing a token over adding an exception.
 - Keep the SCSS import graph flowing through `main.scss`.
