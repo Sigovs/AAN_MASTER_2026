@@ -131,9 +131,15 @@
     flex-direction: column;
     justify-content: center;
     gap: t.$space-8;
-    max-width: 40rem;
-    padding: t.$section-pt t.$space-10 t.$section-pb;
+    padding-block: t.$section-pt t.$section-pb;
+    // Inline padding is set per --img-left/--img-right: the INNER side (toward
+    // the image) is $split-gap; the OUTER side lines the text up with the page
+    // container so the extra air comes out of the inner edge, not the margins.
   }
+
+  // Outer padding lands the text's far edge on the container content edge; on
+  // viewports narrower than the container it falls back to a plain page margin.
+  $_split-outer: max(#{t.$space-10}, calc((100vw - #{t.$container-max}) / 2 + #{t.$container-px}));
 
   &--img-left {
     .media-split__media {
@@ -141,7 +147,8 @@
     }
     .media-split__text {
       grid-column: 2;
-      justify-self: start; // sit near the centre seam (reads "contained")
+      padding-left: t.$split-gap; // inner air (image on the left)
+      padding-right: $_split-outer;
     }
   }
   &--img-right {
@@ -150,8 +157,20 @@
     }
     .media-split__text {
       grid-column: 1;
-      justify-self: end;
+      padding-right: t.$split-gap; // inner air (image on the right)
+      padding-left: $_split-outer;
     }
+  }
+}
+
+// Laptop (~1024–1280px): step the inner air down one token so the narrower
+// text column keeps a comfortable measure.
+@media (min-width: t.$bp-md) and (max-width: (t.$bp-xl - 1px)) {
+  .media-split--img-left .media-split__text {
+    padding-left: t.$split-gap-laptop;
+  }
+  .media-split--img-right .media-split__text {
+    padding-right: t.$split-gap-laptop;
   }
 }
 

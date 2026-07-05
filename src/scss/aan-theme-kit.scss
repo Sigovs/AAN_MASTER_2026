@@ -344,3 +344,13 @@ $container-px-mobile:  $space-4 !default; // 16px
 $bp-sm: 576px !default;
 $bp-md: 768px !default;
 $bp-lg: 992px !default;
+$bp-xl: 1280px !default; // laptop/desktop divide (media-split gap step)
+
+// ----------------------------------------------------------------------------
+// PATTERN TOKENS
+// ----------------------------------------------------------------------------
+// media-split: horizontal air between the bleed image's inner edge and the
+// text column's content edge — one-line tunable per clone. Steps down below
+// $bp-xl so the text column isn't starved at laptop widths.
+$split-gap:        $space-20 !default; // 80px
+$split-gap-laptop: $space-16 !default; // 64px (~1024–1280px)
