@@ -106,11 +106,14 @@ heights). If the next section isn't visible, the height values are wrong — fix
 the tokens/height values, not the content. Both modes must work with both hero
 styles (photo / plain).
 
-**Content contract:** `.hero--full` centers the text block (eyebrow/h1/lead/CTAs)
-as a group and pins the spec-strip to the hero bottom (separate grid row, so it
-does not affect the centering). `.hero--compact` HIDES the spec-strip and may
-reduce the display size (smaller h1 clamp) so the whole reduced set — including
-both CTAs — sits fully above the fold with the next section still peeking.
+**Content contract:** BOTH modes center the text block (eyebrow/h1/lead/CTAs)
+vertically as a group, with even air above and below. `.hero--full` centers it in
+a 1fr grid row and pins the spec-strip to the hero bottom (separate `auto` row, so
+it does not affect the centering). `.hero--compact` HIDES the spec-strip and caps
+the height (and may reduce the display size — smaller h1 clamp) so the whole
+centered set — including both CTAs — sits fully above the fold with the next
+section still peeking. Compact keeps the next section visible via its capped
+height, NOT a top anchor.
 
 ## 5c. Accessibility is a contract
 

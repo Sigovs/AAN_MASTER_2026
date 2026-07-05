@@ -112,10 +112,12 @@
 
   // COMPACT: reduced content set — the spec-strip is HIDDEN and the headline
   // uses a smaller clamp so eyebrow + h1 + lead + BOTH CTAs sit fully above the
-  // fold, top-anchored below the header, with quick-search still peeking.
+  // fold, with quick-search still peeking. The text block is vertically centered
+  // AS A GROUP (same as full), with even air above and below; the capped height
+  // is what keeps the next section peeking — not a top anchor.
   &--compact {
     height: clamp(480px, 62svh, 640px);
-    align-items: flex-start; // top-anchor below the header
+    align-items: center; // centered group (base .hero already centers)
 
     .hero__stats {
       display: none;
