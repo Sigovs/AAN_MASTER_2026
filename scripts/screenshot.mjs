@@ -151,6 +151,50 @@ for (const skin of ['obsidian', 'gallery']) {
   await page.close();
 }
 
+// DS sidebar overhaul — grouped nav in three skins.
+for (const skin of ['obsidian', 'gallery', 'aurum']) {
+  const page = await browser.newPage({ viewport: { width: 1280, height: 1000 } });
+  await page.goto(`${base}/design-system.html`, { waitUntil: 'networkidle' });
+  await settle(page, skin);
+  const nav = await page.$('.ds-nav');
+  if (nav) await nav.screenshot({ path: `screenshots/ds-sidebar-${skin}.png` });
+  shots.push(`ds-sidebar-${skin}.png`);
+  await page.close();
+}
+
+// DS sidebar — filtered search state.
+{
+  const page = await browser.newPage({ viewport: { width: 1280, height: 1000 } });
+  await page.goto(`${base}/design-system.html`, { waitUntil: 'networkidle' });
+  await settle(page, 'obsidian');
+  await page.fill('#ds-nav-search', 'car');
+  await page.waitForTimeout(200);
+  const nav = await page.$('.ds-nav');
+  if (nav) await nav.screenshot({ path: 'screenshots/ds-sidebar-filtered.png' });
+  shots.push('ds-sidebar-filtered.png');
+  await page.close();
+}
+
+// DS viewport previews — Vehicle Card + Forms + Quick-search in MOBILE.
+{
+  const page = await browser.newPage({ viewport: { width: 1280, height: 1200 } });
+  await page.goto(`${base}/design-system.html`, { waitUntil: 'networkidle' });
+  await settle(page, 'obsidian');
+  const vcBtn = await page.$('#vehicle-card [data-viewport-set="mobile"]');
+  if (vcBtn) { await vcBtn.click(); await page.waitForTimeout(400); }
+  const vcVp = await page.$('#vehicle-card .ds-viewport');
+  if (vcVp) await vcVp.screenshot({ path: 'screenshots/vp-vehicle-mobile.png' });
+  shots.push('vp-vehicle-mobile.png');
+  const formBtns = await page.$$('#forms [data-viewport-set="mobile"]');
+  for (const b of formBtns) await b.click();
+  await page.waitForTimeout(400);
+  const formVps = await page.$$('#forms .ds-viewport');
+  if (formVps[0]) await formVps[0].screenshot({ path: 'screenshots/vp-form-mobile.png' });
+  if (formVps[1]) await formVps[1].screenshot({ path: 'screenshots/vp-quicksearch-mobile.png' });
+  shots.push('vp-form-mobile.png', 'vp-quicksearch-mobile.png');
+  await page.close();
+}
+
 await browser.close();
 server.close();
 console.log('SCREENSHOTS:\n' + shots.join('\n'));

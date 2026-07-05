@@ -69,15 +69,57 @@ $_ds-shadows: (
   align-self: stretch;
   background: t.$bg-row;
   border-right: 1px solid t.$color-border;
-  padding: t.$space-8 t.$space-6;
+  padding: t.$space-6 t.$space-5;
 
   &__brand {
-    margin: 0 0 t.$space-6;
+    margin: 0 0 t.$space-4;
     font-family: t.$font-mono;
     font-size: 12px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: t.$color-heading;
+  }
+
+  // Keyword search
+  &__search {
+    position: relative;
+    margin-bottom: t.$space-5;
+  }
+  &__search-icon {
+    position: absolute;
+    left: t.$space-3;
+    top: 50%;
+    transform: translateY(-50%);
+    color: t.$color-muted;
+    pointer-events: none;
+  }
+  &__search-input {
+    width: 100%;
+    padding: t.$space-2 t.$space-3 t.$space-2 t.$space-8; // room for the icon
+    border: 1px solid t.$color-border;
+    border-radius: t.$radius-sm;
+    background: t.$field-bg;
+    color: t.$color-text;
+    font-family: t.$font-body;
+    font-size: t.$text-md;
+
+    &::placeholder {
+      color: t.$color-muted;
+    }
+    &::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+    }
+    &:focus-visible {
+      outline: none;
+      border-color: t.$color-accent;
+      box-shadow: 0 0 0 t.$focus-ring-width rgba(t.$color-accent, 0.3);
+    }
+  }
+  &__empty {
+    margin: 0 0 t.$space-4 t.$space-3;
+    font-family: t.$font-mono;
+    font-size: t.$text-xs;
+    color: t.$color-muted;
   }
 
   &__list {
@@ -86,22 +128,66 @@ $_ds-shadows: (
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: t.$space-1;
-    counter-reset: nav;
+    gap: t.$space-5; // between groups
+  }
+
+  &__group.is-hidden {
+    display: none; // search hides a group whose items all filtered out
+  }
+  &__group-label {
+    margin: 0 0 t.$space-2 t.$space-3;
+    font-family: t.$font-mono;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: t.$color-muted;
+  }
+  &__group-items {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  &__item.is-hidden {
+    display: none;
   }
 
   &__link {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: t.$space-2;
     padding: t.$space-2 t.$space-3;
-    border-radius: t.$radius-sm;
-    font-size: 14px;
+    border-left: 2px solid transparent; // active-rule slot (no layout shift)
+    border-radius: 0 t.$radius-sm t.$radius-sm 0;
+    font-size: t.$text-md;
     text-decoration: none;
     color: t.$color-muted;
-    transition: color t.$dur-fast t.$ease, background-color t.$dur-fast t.$ease;
+    transition: color t.$dur-fast t.$ease, background-color t.$dur-fast t.$ease,
+      border-color t.$dur-fast t.$ease;
+
+    .icon {
+      color: t.$color-muted;
+      transition: color t.$dur-fast t.$ease;
+    }
 
     &:hover {
       color: t.$color-heading;
       background: rgba(t.$color-accent, 0.08);
+      .icon {
+        color: t.$color-heading;
+      }
+    }
+  }
+
+  // Active section (set by the IntersectionObserver in ui.js).
+  &__item.is-active &__link {
+    color: t.$color-heading;
+    border-left-color: t.$color-accent;
+    background: rgba(t.$color-accent, 0.08);
+    .icon {
+      color: t.$color-accent;
     }
   }
 
@@ -748,7 +834,8 @@ $_ds-text: (
 
 // The real .site-header is position:fixed; inside a framed mockup it must stay
 // contained (relative to the frame, not fixed to the viewport).
-.ds-frame .site-header {
+.ds-frame .site-header,
+.ds-viewport .site-header {
   position: relative;
 }
 
@@ -1052,4 +1139,107 @@ $_ds-text: (
   font-family: t.$font-mono;
   font-size: t.$text-sm;
   letter-spacing: 0.04em;
+}
+
+// ===========================================================================
+// VIEWPORT PREVIEW — a DESK / MOBILE toggle over a specimen frame. DS-chrome
+// only. Container-query components (e.g. .car-card--row) reflow automatically
+// because the frame is a size container; media-query components get a forced
+// mobile modifier under .ds-viewport.is-mobile (the .nav--mobile approach).
+// ===========================================================================
+.ds-viewport {
+  margin-top: t.$space-3;
+}
+
+.ds-viewport__bar {
+  display: inline-flex;
+  gap: 2px;
+  margin-bottom: t.$space-4;
+  padding: 3px;
+  border: 1px solid t.$color-border;
+  border-radius: t.$radius-pill;
+  background: t.$bg-row;
+}
+.ds-viewport__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: t.$space-2;
+  padding: t.$space-1 t.$space-4;
+  border: 0;
+  border-radius: t.$radius-pill;
+  background: none;
+  color: t.$color-muted;
+  font-family: t.$font-mono;
+  font-size: t.$text-2xs;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color t.$dur-fast t.$ease, color t.$dur-fast t.$ease;
+
+  .icon {
+    width: 0.95em;
+    height: 0.95em;
+  }
+  &:hover {
+    color: t.$color-heading;
+  }
+  &.is-active {
+    background: t.$color-primary;
+    color: t.$on-primary;
+  }
+}
+
+.ds-viewport__frame {
+  container-type: inline-size; // size container → component container queries fire
+  padding: t.$space-6;
+  border: 1px solid t.$color-border;
+  border-radius: t.$radius-md;
+  background: t.$bg-page;
+  transition: max-width t.$dur-base t.$ease;
+}
+
+// MOBILE — constrain to a 390px device column, centered, device-y border.
+.ds-viewport.is-mobile .ds-viewport__frame {
+  max-width: 390px;
+  margin-inline: auto;
+  border-color: t.$color-muted;
+  border-radius: t.$radius-lg;
+}
+
+// Two-state swap (used by Navigation: absorbs the old side-by-side mockups).
+.ds-viewport__mobile {
+  display: none;
+  position: relative; // context for a frame-contained off-canvas
+  overflow: hidden; // clip the closed off-canvas parked off the right edge
+}
+.ds-viewport.is-mobile {
+  .ds-viewport__desk {
+    display: none;
+  }
+  .ds-viewport__mobile {
+    display: block;
+  }
+}
+
+// Forced mobile modifiers for MEDIA-query components (container width can't
+// trigger a viewport @media). Each mirrors the component's real mobile layout.
+.ds-viewport.is-mobile {
+  // Quick-search: 4-across → 2×2 selects + full-width submit.
+  .quick-search__form {
+    grid-template-columns: 1fr 1fr;
+
+    .quick-search__submit {
+      grid-column: 1 / -1;
+      width: 100%;
+    }
+  }
+  // Filters: row → fully stacked.
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  // Sample form: side-by-side field rows → single column.
+  .form-row {
+    flex-direction: column;
+  }
 }

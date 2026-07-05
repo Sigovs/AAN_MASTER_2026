@@ -332,4 +332,81 @@
       counters.forEach(function (c) { c.play(); }); // no IO support → just play once
     }
   }
+
+  // -- DS sidebar: keyword search filter (name + per-item keywords) ----------
+  var navSearch = document.getElementById('ds-nav-search');
+  if (navSearch) {
+    var navItems = Array.prototype.slice.call(document.querySelectorAll('.ds-nav__item'));
+    var navGroups = Array.prototype.slice.call(document.querySelectorAll('.ds-nav__group'));
+    var navEmpty = document.querySelector('[data-nav-empty]');
+    function filterNav() {
+      var q = navSearch.value.trim().toLowerCase();
+      var anyVisible = false;
+      navItems.forEach(function (it) {
+        var link = it.querySelector('.ds-nav__link');
+        var hay = ((link ? link.textContent : '') + ' ' + (it.getAttribute('data-keywords') || '')).toLowerCase();
+        var show = !q || hay.indexOf(q) !== -1;
+        it.classList.toggle('is-hidden', !show);
+        if (show) anyVisible = true;
+      });
+      navGroups.forEach(function (g) {
+        var visible = g.querySelectorAll('.ds-nav__item:not(.is-hidden)').length;
+        g.classList.toggle('is-hidden', visible === 0);
+      });
+      if (navEmpty) navEmpty.hidden = anyVisible;
+    }
+    navSearch.addEventListener('input', filterNav);
+    navSearch.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { navSearch.value = ''; filterNav(); navSearch.blur(); }
+    });
+  }
+
+  // -- DS sidebar: active-section highlight (topmost in an upper band) -------
+  var navAnchors = document.querySelectorAll('.ds-nav__item > .ds-nav__link[href^="#"]');
+  if (navAnchors.length && 'IntersectionObserver' in window) {
+    var itemById = {};
+    var sections = [];
+    navAnchors.forEach(function (a) {
+      var id = a.getAttribute('href').slice(1);
+      var sec = document.getElementById(id);
+      if (!sec) return;
+      itemById[id] = a.parentElement;
+      sections.push(sec);
+    });
+    var visibleTops = {};
+    var currentId = null;
+    function setActive(id) {
+      if (id === currentId) return;
+      currentId = id;
+      Object.keys(itemById).forEach(function (k) {
+        itemById[k].classList.toggle('is-active', k === id);
+      });
+    }
+    var secObs = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) visibleTops[e.target.id] = e.boundingClientRect.top;
+          else delete visibleTops[e.target.id];
+        });
+        var ids = Object.keys(visibleTops);
+        if (!ids.length) return;
+        ids.sort(function (a, b) { return visibleTops[a] - visibleTops[b]; });
+        setActive(ids[0]);
+      },
+      { rootMargin: '-30% 0px -60% 0px', threshold: 0 }
+    );
+    sections.forEach(function (s) { secObs.observe(s); });
+  }
+
+  // -- DS viewport DESK/MOBILE toggle ---------------------------------------
+  document.querySelectorAll('[data-viewport]').forEach(function (vp) {
+    vp.querySelectorAll('[data-viewport-set]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        vp.classList.toggle('is-mobile', btn.getAttribute('data-viewport-set') === 'mobile');
+        vp.querySelectorAll('[data-viewport-set]').forEach(function (b) {
+          b.classList.toggle('is-active', b === btn);
+        });
+      });
+    });
+  });
 })();
