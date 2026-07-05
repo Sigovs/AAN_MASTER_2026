@@ -1074,6 +1074,12 @@
             </div>
           </div>
           <p class="ds-note">.site-nav + .nav-dropdown (hover, $dur-slow $ease-out) · .nav--desktop / .nav--mobile force the layout on the DS page; the off-canvas is frame-contained here (absolute), viewport-fixed in the real component.</p>
+
+          <div class="ds-usage">
+            <p class="ds-usage__title">Transparent-at-top contract</p>
+            <p>The real <code>.site-header</code> is <code>position: fixed</code> and overlays the hero. At <code>scrollY == 0</code> it wears <code>.site-header--top</code>: fully transparent (no bg / blur / border), logo + links + hamburger render in <code>var(--header-top-fg)</code> — a per-skin token (light over a photo hero; <code>$color-heading</code> over gallery's plain hero) so it's always legible.</p>
+            <p>After ~24px of scroll ui.js removes <code>--top</code> → the frosted state (bg-header + $blur-frosted + border), transitioned on background/border/backdrop over $dur-base $ease-in-out. The hero pads its content by <code>$header-h</code> so nothing sits under the bar. (Framed mockups above are overridden to non-fixed for the DS.)</p>
+          </div>
         </section>
 
         <!-- ---------- FOOTER ---------- -->

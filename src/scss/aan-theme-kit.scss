@@ -58,6 +58,7 @@ $shadow-card-hover: var(--shadow-card-hover) !default;
 $skins: (
   obsidian: (
     hero-style:      photo, // skin-level: photo | plain (drives the hero)
+    header-top-fg:   #ECEAE3, // transparent-header text at top (over dark photo)
     color-primary:   #ECEAE3, // neutral warm-white (was champagne)
     on-primary:      #101114,
     color-secondary: #2A2D34,
@@ -82,6 +83,7 @@ $skins: (
   ),
   gallery: (
     hero-style:      plain, // light neutral skin → plain hero (no dark photo)
+    header-top-fg:   #1B1C1F, // transparent-header text at top (over light plain hero)
     color-primary:   #1E1F22, // neutral ink
     on-primary:      #F7F6F2,
     color-secondary: #E8E5DE,
@@ -108,6 +110,7 @@ $skins: (
   // clone injects a brand hue over the neutral master.
   aurum: (
     hero-style:      photo,
+    header-top-fg:   #ECEAE3,
     color-primary:   #C2A878,
     on-primary:      #101114,
     color-secondary: #2A2D34,

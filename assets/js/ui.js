@@ -124,6 +124,25 @@
     });
   }
 
+  // -- Transparent-until-scroll header (index.html real header) -------------
+  var siteHeader = document.querySelector('body > .site-header');
+  if (siteHeader) {
+    var HEADER_THRESHOLD = 24;
+    var headerTicking = false;
+    var applyHeader = function () {
+      siteHeader.classList.toggle('site-header--top', window.scrollY <= HEADER_THRESHOLD);
+      headerTicking = false;
+    };
+    var onScrollHeader = function () {
+      if (!headerTicking) {
+        requestAnimationFrame(applyHeader);
+        headerTicking = true;
+      }
+    };
+    window.addEventListener('scroll', onScrollHeader, { passive: true });
+    applyHeader(); // initial state
+  }
+
   // -- Featured: swap skeletons → real cards after a simulated load ---------
   var featured = document.querySelector('.featured');
   if (featured && !featured.classList.contains('is-loaded')) {

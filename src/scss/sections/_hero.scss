@@ -12,7 +12,10 @@
   align-items: center;
   min-height: clamp(480px, 62svh, 640px); // sensible default (= compact)
   overflow: hidden;
-  padding-block: t.$space-16 t.$space-20; // pb > pt
+  // Top compensation: the header is position:fixed and overlays the hero, so
+  // content is padded below the bar (both modes). pb > pt.
+  padding-top: t.$header-h;
+  padding-bottom: t.$space-20;
   color: t.$fg-on-photo;
 
   &__media {
@@ -81,8 +84,11 @@
   // full: fills the viewport under the header (zero bleed). content centered,
   // spec-strip pinned to the bottom. compact: shorter, next section must peek.
   &--full {
+    // Header overlays (fixed), so the hero fills the WHOLE viewport → zero fold
+    // bleed. The usable content height is the viewport minus the header, via the
+    // padding-top:$header-h above (content is centered / stats pinned below it).
     height: 100vh; // fallback
-    height: calc(100svh - #{t.$header-h});
+    height: 100svh;
     align-items: stretch; // let the inner own the column
     // Safe-area / breathing room at the bottom (notch home indicator).
     padding-bottom: max(#{t.$space-16}, env(safe-area-inset-bottom, 0px));
@@ -101,6 +107,9 @@
 
   &--compact {
     height: clamp(480px, 62svh, 640px); // shorter — next section peeks
+    // Top-anchor content below the fixed header so a tall headline never slides
+    // under the bar (centering would let overflow eat into the top padding).
+    align-items: flex-start;
   }
 
   // Spec strip — 4 stat cells in a bordered row.
@@ -178,6 +187,6 @@
 @media (max-height: 560px) {
   .hero--full {
     height: auto;
-    min-height: calc(100svh - #{t.$header-h});
+    min-height: 100svh;
   }
 }

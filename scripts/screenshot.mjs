@@ -88,6 +88,18 @@ for (const [file, prefix] of [['index.html', 'index'], ['design-system.html', 'd
   await page.close();
 }
 
+// Header states — transparent at top vs frosted after scroll.
+{
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
+  await settle(page, 'obsidian');
+  await shoot(page, 'header-top-transparent', false);
+  await page.evaluate(() => window.scrollTo(0, 600));
+  await page.waitForTimeout(500);
+  await shoot(page, 'header-scrolled-frosted', false);
+  await page.close();
+}
+
 // Mobile pass — 390px wide
 {
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });

@@ -746,6 +746,12 @@ $_ds-text: (
   }
 }
 
+// The real .site-header is position:fixed; inside a framed mockup it must stay
+// contained (relative to the frame, not fixed to the viewport).
+.ds-frame .site-header {
+  position: relative;
+}
+
 // Desktop header mockup gets a full-width row (so nav + dropdown never clip);
 // the mobile mockup wraps to its own row below at device width.
 .ds-nav-demos {
