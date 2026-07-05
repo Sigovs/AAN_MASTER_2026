@@ -1,0 +1,318 @@
+// ============================================================================
+// AAN MASTER 2026 — THEME KIT
+// The single source of truth for every design token. Names are canonical and
+// match the client's existing Theme Kit — do not rename or add ad-hoc tokens.
+//
+// RULES (see CLAUDE.md):
+//   • Nothing in the codebase hard-codes a color, size, radius, font, shadow,
+//     transition, or z-index. It comes from here.
+//   • PHASE 1–2: color values are PLACEHOLDERS (neutral slate). They avoid the
+//     banned "AI default" looks (no cream+terracotta, no black+acid-green, no
+//     gradient CTAs). Font FAMILIES are placeholder slots — the real pair is
+//     swapped here (and in fonts.scss) in one place, later.
+//
+// Consume elsewhere with:  @use '../aan-theme-kit' as t;  ->  t.$color-primary
+// ============================================================================
+
+
+// ----------------------------------------------------------------------------
+// COLOR — SKINNABLE TOKENS
+// These resolve to CSS custom properties so a skin can be switched at runtime
+// via [data-skin] on <html>. Components keep consuming the SAME token names
+// (t.$color-primary, …); the values live in the skin maps below and are emitted
+// as :root[data-skin="…"] blocks by main.scss.
+// ----------------------------------------------------------------------------
+// -- global --
+$color-primary:   var(--color-primary)   !default;
+$on-primary:      var(--on-primary)      !default; // text/icon on a primary fill
+$color-secondary: var(--color-secondary) !default;
+$color-accent:    var(--color-accent)    !default;
+$color-text:      var(--color-text)      !default;
+$color-heading:   var(--color-heading)   !default;
+$color-muted:     var(--color-muted)     !default;
+// -- surfaces & backgrounds --
+$bg-page:      var(--bg-page)      !default;
+$bg-row:       var(--bg-row)       !default;
+$bg-row-alt:   var(--bg-row-alt)   !default;
+$surface-card: var(--surface-card) !default;
+$bg-header:    var(--bg-header)    !default;
+$bg-invert:    var(--bg-invert)    !default;
+$bg-footer:    var(--bg-footer)    !default;
+$color-border: var(--color-border) !default;
+// -- states --
+$color-success: var(--color-success) !default;
+$color-danger:  var(--color-danger)  !default;
+$color-warning: var(--color-warning) !default;
+$color-info:    var(--color-info)    !default;
+// -- elevation (skin-dependent) --
+$shadow-card:       var(--shadow-card)       !default;
+$shadow-card-hover: var(--shadow-card-hover) !default;
+
+// ----------------------------------------------------------------------------
+// SKINS — value maps (emitted as :root[data-skin] blocks by main.scss).
+// obsidian = dark (default) · gallery = light.
+// ----------------------------------------------------------------------------
+// Master default is chromatically NEUTRAL — premium comes from type + spacing,
+// not a brand hue. A clone sets $color-primary (see the "aurum" example).
+// States (success/danger/warning/info) are functional and NOT brand.
+$skins: (
+  obsidian: (
+    hero-style:      photo, // skin-level: photo | plain (drives the hero)
+    color-primary:   #ECEAE3, // neutral warm-white (was champagne)
+    on-primary:      #101114,
+    color-secondary: #2A2D34,
+    color-accent:    #ECEAE3,
+    color-text:      #C9CBD1,
+    color-heading:   #ECEAE3,
+    color-muted:     #8E9097,
+    bg-page:         #101114,
+    bg-row:          #141519,
+    bg-row-alt:      #17181C,
+    surface-card:    #191B20,
+    bg-header:       rgba(16, 17, 20, 0.86),
+    bg-invert:       #ECEAE3,
+    bg-footer:       #0C0D10,
+    color-border:    rgba(236, 234, 227, 0.12),
+    color-success:   #3E9C72, // lifted for contrast on dark
+    color-danger:    #D9564B,
+    color-warning:   #D8A63F,
+    color-info:      #5A93B8,
+    shadow-card:       (0 1px 2px rgba(0, 0, 0, 0.35)),      // deeper on obsidian
+    shadow-card-hover: (0 12px 32px rgba(0, 0, 0, 0.55)),
+  ),
+  gallery: (
+    hero-style:      plain, // light neutral skin → plain hero (no dark photo)
+    color-primary:   #1E1F22, // neutral ink
+    on-primary:      #F7F6F2,
+    color-secondary: #E8E5DE,
+    color-accent:    #1E1F22,
+    color-text:      #3A3B40,
+    color-heading:   #1B1C1F,
+    color-muted:     #77787E,
+    bg-page:         #F7F6F2,
+    bg-row:          #EFEDE7,
+    bg-row-alt:      #F2F0EB,
+    surface-card:    #FFFFFF,
+    bg-header:       rgba(247, 246, 242, 0.88),
+    bg-invert:       #1B1C1F,
+    bg-footer:       #1B1C1F,
+    color-border:    rgba(27, 28, 31, 0.14),
+    color-success:   #2F7D5B,
+    color-danger:    #C24338,
+    color-warning:   #C9962E,
+    color-info:      #3E6E8E,
+    shadow-card:       (0 1px 2px rgba(0, 0, 0, 0.06)),
+    shadow-card-hover: (0 12px 32px rgba(0, 0, 0, 0.10)),
+  ),
+  // CLONE EXAMPLE — obsidian surfaces + champagne primary. Shows how a dealer
+  // clone injects a brand hue over the neutral master.
+  aurum: (
+    hero-style:      photo,
+    color-primary:   #C2A878,
+    on-primary:      #101114,
+    color-secondary: #2A2D34,
+    color-accent:    #C2A878,
+    color-text:      #C9CBD1,
+    color-heading:   #ECEAE3,
+    color-muted:     #8E9097,
+    bg-page:         #101114,
+    bg-row:          #141519,
+    bg-row-alt:      #17181C,
+    surface-card:    #191B20,
+    bg-header:       rgba(16, 17, 20, 0.86),
+    bg-invert:       #ECEAE3,
+    bg-footer:       #0C0D10,
+    color-border:    rgba(236, 234, 227, 0.12),
+    color-success:   #3E9C72,
+    color-danger:    #D9564B,
+    color-warning:   #D8A63F,
+    color-info:      #5A93B8,
+    shadow-card:       (0 1px 2px rgba(0, 0, 0, 0.35)),
+    shadow-card-hover: (0 12px 32px rgba(0, 0, 0, 0.55)),
+  ),
+) !default;
+
+// ----------------------------------------------------------------------------
+// FONTS — token slots (system placeholders; real pair swapped here + fonts.scss)
+// ----------------------------------------------------------------------------
+$font-display: 'Bodoni Moda', Georgia, 'Times New Roman', serif !default;   // headings / display (placeholder)
+$font-body:    'Archivo', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif !default; // body copy (placeholder)
+$font-accent:  'Oswald', 'Arial Narrow', system-ui, sans-serif !default;    // condensed label face (overlays / plates / labels) — loaded in fonts.scss
+$font-mono:    'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace !default; // mono (placeholder) — eyebrow/tag/caption/buttons
+
+// ----------------------------------------------------------------------------
+// RADII
+// ----------------------------------------------------------------------------
+$radius-0:    0     !default;
+$radius-sm:   2px   !default;
+$radius-md:   4px   !default;
+$radius-lg:   8px   !default;
+$radius-pill: 999px !default;
+
+// ----------------------------------------------------------------------------
+// SPACING SCALE — 4px step (name ≈ px / 4)
+// ----------------------------------------------------------------------------
+$space-1:  4px   !default;
+$space-2:  8px   !default;
+$space-3:  12px  !default;
+$space-4:  16px  !default;
+$space-5:  20px  !default;
+$space-6:  24px  !default;
+$space-8:  32px  !default;
+$space-10: 40px  !default;
+$space-12: 48px  !default;
+$space-16: 64px  !default;
+$space-20: 80px  !default;
+$space-24: 96px  !default;
+$space-30: 120px !default;
+
+// ----------------------------------------------------------------------------
+// SECTION RHYTHM  (bottom padding ALWAYS larger than top — CLAUDE.md §5)
+// ----------------------------------------------------------------------------
+$section-pt:        $space-24 !default; // 96px
+$section-pb:        $space-30 !default; // 120px
+$section-pt-mobile: $space-16 !default; // 64px
+$section-pb-mobile: $space-20 !default; // 80px
+$section-head-gap:  $space-12 !default; // 48px — section heading → body
+$object-gap:        $space-8  !default; // 32px — between objects in a section
+$grid-gutter:       $space-6  !default; // 24px — grid gutters
+
+// ----------------------------------------------------------------------------
+// TEXT STACK GAPS  (adjacent-sibling vertical rhythm)
+// ----------------------------------------------------------------------------
+$stack-eyebrow-to-h: $space-4 !default; // 16px
+$stack-h-to-sub:     $space-3 !default; // 12px
+$stack-h-to-lead:    $space-5 !default; // 20px
+$stack-lead-to-body: $space-4 !default; // 16px
+$stack-p-to-p:       $space-4 !default; // 16px
+$stack-text-to-cta:  $space-8 !default; // 32px
+
+// ----------------------------------------------------------------------------
+// BUTTONS
+// ----------------------------------------------------------------------------
+$btn-shape:          soft !default;        // semantic flag → soft corners
+$btn-radius:         $radius-md !default;  // realises "soft" (now 4px)
+$btn-font:           $font-mono !default;  // mono label buttons
+$btn-weight:         500 !default;
+$btn-text-transform: uppercase !default;
+$btn-letter-spacing: 0.16em !default;
+$btn-h-sm:           36px !default;
+$btn-h-md:           48px !default;
+$btn-h-lg:           56px !default;
+$btn-px-sm:          $space-4 !default; // 16px
+$btn-px-md:          $space-6 !default; // 24px
+$btn-px-lg:          $space-8 !default; // 32px
+$btn-icon-gap:       $space-3 !default; // 12px
+
+// ----------------------------------------------------------------------------
+// FORMS
+// ----------------------------------------------------------------------------
+$field-h:            48px !default;
+$field-px:           $space-4 !default;  // 16px
+$field-radius:       $radius-sm !default;
+$field-bg:           $surface-card !default;
+$label-size:         12px !default;
+$form-row-gap:       $space-5 !default;  // 20px — between rows
+$form-col-gap:       $space-4 !default;  // 16px — between columns
+$fieldset-gap:       $space-10 !default; // 40px — between fieldsets
+$fieldset-title-gap: $space-5 !default;  // 20px — fieldset title → fields
+$form-submit-gap:    $space-8 !default;  // 32px — fields → submit
+
+// ----------------------------------------------------------------------------
+// TAGS / BADGES
+// ----------------------------------------------------------------------------
+$tag-font:           $font-mono !default;
+$tag-size-sm:        20px !default; // height
+$tag-size-md:        26px !default; // height
+$tag-px:             $space-3 !default; // 12px
+$tag-radius:         $radius-sm !default;
+$tag-letter-spacing: 0.14em !default;
+
+// ----------------------------------------------------------------------------
+// SHADOWS
+// $shadow-card / -hover are skin-dependent (declared as var() above, values in
+// the skin maps). Dropdown/modal are soft + low-opacity, skin-independent.
+// ----------------------------------------------------------------------------
+$shadow-dropdown:   0 8px 24px rgba(0, 0, 0, 0.14) !default;
+$shadow-modal:      0 24px 64px rgba(0, 0, 0, 0.20) !default;
+
+// ----------------------------------------------------------------------------
+// MOTION  (calibrated to Porsche Design System motion standards)
+// Easings: base (symmetric) · enter (decelerate) · exit (accelerate).
+// Durations: fast (micro-interactions) · base (default) ·
+//            slow (modals / dropdowns / off-canvas) · xl (spinner / skeleton).
+// ----------------------------------------------------------------------------
+$ease-in-out: cubic-bezier(0.4, 0, 0.2, 1) !default; // base
+$ease-out:    cubic-bezier(0, 0, 0.2, 1)   !default; // enter (decelerate)
+$ease-in:     cubic-bezier(0.4, 0, 1, 1)   !default; // exit (accelerate)
+$ease:        $ease-in-out !default;                 // alias — back-compat
+
+$dur-fast: 0.15s !default;
+$dur-base: 0.25s !default;
+$dur-slow: 0.4s  !default;
+$dur-xl:   1.2s  !default;
+
+// ----------------------------------------------------------------------------
+// FOCUS RING  (structural — shared by buttons, controls, switch)
+// ----------------------------------------------------------------------------
+$focus-ring-width:  2px !default; // benchmarked to PDS (was 3px)
+$focus-ring-offset: 2px !default;
+
+// ----------------------------------------------------------------------------
+// SPINNER  (loading indicator geometry + timing)
+// ----------------------------------------------------------------------------
+$spinner-size:   1em    !default;
+$spinner-border: 2px    !default;
+$spinner-dur:    $dur-xl !default; // xl bucket (spinner / skeleton)
+
+// ----------------------------------------------------------------------------
+// EFFECTS
+// ----------------------------------------------------------------------------
+$blur-frosted: blur(8px) !default; // frosted backdrop (tag-outline, pill, header)
+
+// ----------------------------------------------------------------------------
+// PHOTO OVERLAY LABELS  (condensed label type for photo overlays)
+// ----------------------------------------------------------------------------
+$ov-label-font:    $font-accent !default; // condensed (Oswald)
+$ov-label-spacing: 0.08em !default;
+$ov-label-size-sm: 10px !default; // (reserved)
+$ov-label-size-md: 12px !default; // (reserved)
+$ov-label-size-lg: 14px !default; // unified: ribbon / bar / pill / corner
+$ov-label-size-xl: 20px !default; // scrim
+
+$ov-corner-size:   8em !default; // corner triangle leg (tunable per clone)
+
+// Scrim = a dark veil (skin-independent) so a "Sold" cover always obscures the
+// photo and reads with light text, in either skin.
+$overlay-scrim:      rgba(12, 13, 16, 0.82) !default;
+$overlay-scrim-text: #ECEAE3 !default;
+
+// Always-light foreground for elements that sit on PHOTOS (dark-biased in both
+// skins) — e.g. .btn-on-invert. Must NOT flip between skins.
+$fg-on-photo: #ECEAE3 !default;
+
+// ----------------------------------------------------------------------------
+// Z-INDEX
+// ----------------------------------------------------------------------------
+$z-offcanvas: 40  !default; // mobile drawer — sits BELOW the header so the X shows
+$z-header:    50  !default;
+$z-dropdown:  60  !default;
+$z-modal:     100 !default;
+$z-toast:     110 !default;
+
+// Structural header height (shared by nav height + off-canvas top offset).
+$header-h: 76px !default; // site header height (used by .site-header/.site-nav + hero --full)
+
+// ----------------------------------------------------------------------------
+// CONTAINER
+// ----------------------------------------------------------------------------
+$container-max:        1200px   !default;
+$container-px:         $space-8 !default; // 32px
+$container-px-mobile:  $space-4 !default; // 16px
+
+// ----------------------------------------------------------------------------
+// BREAKPOINTS  (structural — needed for media queries; not a visual token)
+// ----------------------------------------------------------------------------
+$bp-sm: 576px !default;
+$bp-md: 768px !default;
+$bp-lg: 992px !default;

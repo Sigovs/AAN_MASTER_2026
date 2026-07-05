@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en" data-skin="obsidian">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AAN Motors — Luxury &amp; Exotic Vehicles</title>
+
+    <!-- Bootstrap 4.6.2 FULL CSS — mirrors production; visuals overridden by our CSS. -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+    <!-- AAN theme (compiled from src/scss/main.scss). Loaded last so it wins. -->
+    <link rel="stylesheet" href="dist/css/main.css" />
+  </head>
+  <body>
+    <!-- ===================== HEADER ===================== -->
+    <header class="site-header">
+      <div class="container">
+        <nav class="site-nav">
+          <a href="#" class="site-nav__logo">AAN Motors</a>
+          <ul class="site-nav__menu">
+            <li><a href="#featured" class="site-nav__link">Inventory</a></li>
+            <li class="nav-dropdown">
+              <a href="#services" class="site-nav__link nav-dropdown__toggle">Services<span class="nav-dropdown__caret" aria-hidden="true"></span></a>
+              <div class="nav-dropdown__panel">
+                <a href="#sell-your-car" class="nav-dropdown__item">Sell your car</a>
+                <a href="#services" class="nav-dropdown__item">Financing</a>
+                <a href="#services" class="nav-dropdown__item">Trade-in</a>
+              </div>
+            </li>
+            <li><a href="#visit" class="site-nav__link">Visit</a></li>
+          </ul>
+          <div class="site-nav__actions">
+            <a href="#" class="btn btn-outline btn-sm">Sign in</a>
+            <a href="#sell-your-car" class="btn btn-primary btn-sm">Sell your car</a>
+          </div>
+          <button class="nav-toggle" type="button" data-site-nav-toggle aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- ===================== HERO ===================== -->
+      <section class="hero hero--full" id="hero">
+        <div class="hero__media"><img src="assets/img/demo/car-1.jpg" alt="Featured McLaren" /></div>
+        <div class="hero__scrim"></div>
+        <div class="hero__inner">
+          <div class="container">
+            <div class="hero__content">
+              <p class="eyebrow">All Auto Network</p>
+              <h1 class="hero__title">The exotic you want,<br />delivered <em>effortlessly</em>.</h1>
+              <p class="hero__lead">A curated collection of luxury and performance vehicles — inspected, financed, and shipped nationwide. No pressure, no games.</p>
+              <div class="hero__cta">
+                <a href="#featured" class="btn btn-primary">Browse inventory</a>
+                <a href="#sell-your-car" class="btn btn-on-invert">Sell your car</a>
+              </div>
+              <div class="hero__stats">
+                <div class="stat-cell"><span class="stat-cell__num">64</span><span class="stat-cell__label">In stock</span></div>
+                <div class="stat-cell"><span class="stat-cell__num">17</span><span class="stat-cell__label">Avg days to sell</span></div>
+                <div class="stat-cell"><span class="stat-cell__num">3,400+</span><span class="stat-cell__label">Cars sold</span></div>
+                <div class="stat-cell"><span class="stat-cell__num">4.9</span><span class="stat-cell__label">Google rating</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== QUICK SEARCH ===================== -->
+      <section class="section quick-search" id="quick-search">
+        <div class="container">
+          <form class="quick-search__form" onsubmit="return false">
+            <div class="form-field">
+              <label class="form-label" for="qs-make">Make</label>
+              <div class="select"><select class="form-control" id="qs-make"><option>Any make</option><option>Ferrari</option><option>Porsche</option><option>McLaren</option></select></div>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="qs-model">Model</label>
+              <div class="select"><select class="form-control" id="qs-model"><option>Any model</option><option>911</option><option>720S</option><option>Roma</option></select></div>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="qs-year">Year</label>
+              <div class="select"><select class="form-control" id="qs-year"><option>Any year</option><option>2024</option><option>2023</option><option>2022</option></select></div>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="qs-price">Max price</label>
+              <div class="select"><select class="form-control" id="qs-price"><option>Any price</option><option>$150k</option><option>$300k</option><option>$500k</option></select></div>
+            </div>
+            <button class="btn btn-primary quick-search__submit" type="submit">Search</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- ===================== FEATURED ===================== -->
+      <section class="section" id="featured">
+        <div class="container">
+          <div class="sec-head">
+            <div class="sec-head__text">
+              <p class="eyebrow">The collection</p>
+              <h2>Featured this week</h2>
+            </div>
+            <a href="#" class="btn btn-tertiary sec-head__action">All 64 vehicles →</a>
+          </div>
+
+          <div class="featured">
+            <!-- skeletons (shown until ui.js swaps after 600ms) -->
+            <div class="featured__skeletons featured__grid" aria-hidden="true">
+              <div class="skeleton-card"><div class="skeleton-card__image skeleton"></div><div class="skeleton-card__body"><div class="skeleton-card__line skeleton-card__line--title skeleton"></div><div class="skeleton-card__line skeleton-card__line--sub skeleton"></div><div class="skeleton-card__plate skeleton"></div></div></div>
+              <div class="skeleton-card"><div class="skeleton-card__image skeleton"></div><div class="skeleton-card__body"><div class="skeleton-card__line skeleton-card__line--title skeleton"></div><div class="skeleton-card__line skeleton-card__line--sub skeleton"></div><div class="skeleton-card__plate skeleton"></div></div></div>
+              <div class="skeleton-card"><div class="skeleton-card__image skeleton"></div><div class="skeleton-card__body"><div class="skeleton-card__line skeleton-card__line--title skeleton"></div><div class="skeleton-card__line skeleton-card__line--sub skeleton"></div><div class="skeleton-card__plate skeleton"></div></div></div>
+            </div>
+
+            <!-- real cards -->
+            <div class="featured__cards featured__grid">
+              <article class="car-card">
+                <div class="car-image">
+                  <div class="image frame"><img src="assets/img/demo/car-1.jpg" alt="2024 McLaren 720S" /></div>
+                  <span class="card-badge card-badge--new">New Arrival</span>
+                  <div class="car-pins"><button class="car-pin" type="button" data-save aria-label="Save">♥</button><button class="car-pin" type="button" aria-label="Share">⤴</button></div>
+                </div>
+                <div class="car-name">
+                  <span class="car-name__year">2024</span><h3 class="car-name__title">McLaren 720S</h3><p class="car-name__trim">Performance · Coupe</p>
+                  <div class="car-price"><span class="car-price__miles">8,400 mi</span><span class="car-price__figure"><span class="car-price__value">$284,500</span></span></div>
+                  <a class="btn btn-primary btn-sm car-cta" href="#">View details</a>
+                </div>
+              </article>
+              <article class="car-card">
+                <div class="car-image">
+                  <div class="image frame"><img src="assets/img/demo/car-2.jpg" alt="2023 Porsche 911 Turbo S" /></div>
+                  <span class="card-badge card-badge--cpo">Certified Pre-Owned</span>
+                  <div class="car-pins"><button class="car-pin" type="button" data-save aria-label="Save">♥</button><button class="car-pin" type="button" aria-label="Share">⤴</button></div>
+                </div>
+                <div class="car-name">
+                  <span class="car-name__year">2023</span><h3 class="car-name__title">Porsche 911 Turbo S</h3><p class="car-name__trim">Cabriolet</p>
+                  <div class="car-price"><span class="car-price__miles">5,100 mi</span><span class="car-price__figure"><span class="car-price__value">$219,900</span></span></div>
+                  <a class="btn btn-primary btn-sm car-cta" href="#">View details</a>
+                </div>
+              </article>
+              <article class="car-card">
+                <div class="car-image">
+                  <div class="image frame"><img src="assets/img/demo/car-3.webp" alt="2023 Ferrari Roma — sold" /></div>
+                  <div class="car-pins"><button class="car-pin" type="button" aria-label="Share">⤴</button></div>
+                  <div class="p-overlay p-overlay-scrim p-overlay--sold"><span>Sold</span></div>
+                </div>
+                <div class="car-name">
+                  <span class="car-name__year">2023</span><h3 class="car-name__title">Ferrari Roma</h3><p class="car-name__trim">Grand Tourer</p>
+                  <div class="car-price"><span class="car-price__miles">1,250 mi</span><span class="car-price__figure"><span class="car-price__value">$258,000</span></span></div>
+                  <a class="btn btn-primary btn-sm car-cta" href="#">View details</a>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== SELL YOUR CAR ===================== -->
+      <section class="media-split media-split--img-left" id="sell-your-car">
+        <div class="media-split__media">
+          <img src="assets/img/demo/car-3.webp" alt="Consign your vehicle" />
+          <span class="p-overlay p-overlay-pill p-overlay--special p-overlay--tl">Consignment</span>
+        </div>
+        <div class="media-split__text">
+          <div>
+            <p class="eyebrow">Sell or trade</p>
+            <h2 class="sell__title">We want <em>your car</em>.</h2>
+            <p class="lead">Get a competitive, wholesale-backed offer on your luxury or exotic vehicle within 24 hours — any condition considered, nationwide pickup.</p>
+            <div class="btn-row">
+              <a href="#" class="btn btn-primary">Start with your VIN</a>
+            </div>
+          </div>
+          <div class="sell__steps">
+            <div class="sell-step">
+              <span class="sell-step__num">01</span>
+              <div><h4 class="sell-step__title">Tell us about it</h4><p class="sell-step__copy">Enter your VIN and a few photos — takes two minutes.</p></div>
+            </div>
+            <div class="sell-step">
+              <span class="sell-step__num">02</span>
+              <div><h4 class="sell-step__title">Get your offer</h4><p class="sell-step__copy">A real, wholesale-backed number within 24 hours.</p></div>
+            </div>
+            <div class="sell-step">
+              <span class="sell-step__num">03</span>
+              <div><h4 class="sell-step__title">Get paid</h4><p class="sell-step__copy">We handle the paperwork and pick up nationwide.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== SERVICES ===================== -->
+      <section class="section" id="services">
+        <div class="container">
+          <div class="sec-head">
+            <div class="sec-head__text">
+              <p class="eyebrow">Full service</p>
+              <h2>Everything, handled</h2>
+            </div>
+          </div>
+          <div class="services__grid">
+            <div class="panel service">
+              <span class="service__glyph" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="5" x2="5" y2="19" /><circle cx="6.5" cy="6.5" r="2.5" /><circle cx="17.5" cy="17.5" r="2.5" /></svg>
+              </span>
+              <h3 class="service__title">Financing</h3>
+              <p class="service__copy">Competitive rates via multiple lenders, pre-approval in minutes.</p>
+            </div>
+            <div class="panel service">
+              <span class="service__glyph" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5h11v9H2z" /><path d="M13 8h4l4 3.5V14h-8z" /><circle cx="6" cy="16.5" r="1.7" /><circle cx="17" cy="16.5" r="1.7" /></svg>
+              </span>
+              <h3 class="service__title">Nationwide delivery</h3>
+              <p class="service__copy">Enclosed transport anywhere in the continental US.</p>
+            </div>
+            <div class="panel service">
+              <span class="service__glyph" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="1.5" /><rect x="9" y="2.5" width="6" height="3" rx="1" /><path d="M8.5 13l2.2 2.2L15.5 10" /></svg>
+              </span>
+              <h3 class="service__title">Inspection reports</h3>
+              <p class="service__copy">Every vehicle documented — history, condition, service.</p>
+            </div>
+            <div class="panel service">
+              <span class="service__glyph" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h14" /><path d="M15 6l3 3-3 3" /><path d="M20 15H6" /><path d="M9 12l-3 3 3 3" /></svg>
+              </span>
+              <h3 class="service__title">Trade-ins</h3>
+              <p class="service__copy">Roll your current vehicle into your next one, seamlessly.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== SHOWCASE (visual break) ===================== -->
+      <section class="showcase" id="showcase">
+        <div class="showcase__media"><img src="assets/img/demo/car-2.jpg" alt="" loading="lazy" /></div>
+        <div class="showcase__inner">
+          <p class="eyebrow">The drive</p>
+          <p class="showcase__title">Engineered to be driven.</p>
+          <a href="#" class="showcase__link">Our story →</a>
+        </div>
+      </section>
+
+      <!-- ===================== BRANDS ===================== -->
+      <section class="section section--tight" id="brands">
+        <div class="container">
+          <div class="brands__row">
+            <a href="#" class="brand">Ferrari</a>
+            <a href="#" class="brand">Porsche</a>
+            <a href="#" class="brand">McLaren</a>
+            <a href="#" class="brand">Lamborghini</a>
+            <a href="#" class="brand">Bentley</a>
+            <a href="#" class="brand">Aston Martin</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== TESTIMONIAL ===================== -->
+      <section class="section section--alt" id="testimonials">
+        <div class="container">
+          <blockquote class="testimonial">
+            <p class="testimonial__quote">From first call to delivery in my driveway was four days. The whole process felt built for people who value their time.</p>
+            <cite class="testimonial__cite">Marcus R. — Scottsdale, AZ</cite>
+          </blockquote>
+        </div>
+      </section>
+
+      <!-- ===================== VISIT ===================== -->
+      <section class="section" id="visit">
+        <div class="container">
+          <div class="visit__grid">
+            <div>
+              <p class="eyebrow">Come by</p>
+              <h2>Visit the showroom</h2>
+              <p class="lead">See the collection in person. Private appointments available for serious buyers.</p>
+              <address class="visit__address">1234 Auto Row<br />Salt Lake City, UT 84101<br />(801) 664-2117</address>
+              <div class="visit__cta"><a href="#" class="btn btn-outline">Get directions</a></div>
+            </div>
+            <div>
+              <table class="table hours-table">
+                <tbody>
+                  <tr><td class="day">Monday – Friday</td><td class="time">9:00 – 19:00</td></tr>
+                  <tr class="is-today"><td class="day">Saturday</td><td class="time">10:00 – 17:00</td></tr>
+                  <tr><td class="day">Sunday</td><td class="time">Closed</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="site-footer__grid">
+          <div>
+            <div class="site-footer__brand">AAN Motors</div>
+            <p>Luxury &amp; exotic vehicles. Nationwide delivery and wholesale-backed offers.</p>
+          </div>
+          <div>
+            <p class="site-footer__title">Explore</p>
+            <a class="site-footer__link" href="#featured">Inventory</a>
+            <a class="site-footer__link" href="#services">Financing</a>
+            <a class="site-footer__link" href="#sell-your-car">Sell your car</a>
+          </div>
+          <div>
+            <p class="site-footer__title">Contact</p>
+            <address class="site-footer__contact">1234 Auto Row<br />Salt Lake City, UT<br />(801) 664-2117</address>
+          </div>
+        </div>
+        <div class="site-footer__legal"><span>© 2026 AAN Motors</span><span>Privacy · Terms</span></div>
+      </div>
+    </footer>
+
+    <!-- Mobile off-canvas (real header) -->
+    <div class="nav-backdrop" data-site-nav-close></div>
+    <aside class="nav-offcanvas" aria-label="Mobile menu">
+      <a href="#featured" class="nav-offcanvas__link" data-site-nav-close>Inventory</a>
+      <a href="#services" class="nav-offcanvas__link" data-site-nav-close>Services</a>
+      <a href="#sell-your-car" class="nav-offcanvas__link" data-site-nav-close>Sell your car</a>
+      <a href="#visit" class="nav-offcanvas__link" data-site-nav-close>Visit</a>
+    </aside>
+
+    <!-- Hero height demo toggle (stacked above the skin switcher) -->
+    <div class="skin-switch skin-switch--stack" role="group" aria-label="Hero height">
+      <span class="skin-switch__label">Hero</span>
+      <button type="button" class="skin-switch__btn is-active" data-hero-set="full">Full</button>
+      <button type="button" class="skin-switch__btn" data-hero-set="compact">Compact</button>
+    </div>
+
+    <!-- Skin switcher (prototype demo) -->
+    <div class="skin-switch" role="group" aria-label="Theme skin">
+      <span class="skin-switch__label">Skin</span>
+      <button type="button" class="skin-switch__btn is-active" data-skin-set="obsidian">Obsidian</button>
+      <button type="button" class="skin-switch__btn" data-skin-set="gallery">Gallery</button>
+      <button type="button" class="skin-switch__btn" data-skin-set="aurum" title="Clone example — brand hue over neutral master">Aurum*</button>
+    </div>
+
+    <!-- Prototype UI behavior (shared, extracted to assets/js/ui.js) -->
+    <script src="assets/js/ui.js" defer></script>
+    <!-- Bootstrap 4.6.2 JS (behavior only). -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

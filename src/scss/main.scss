@@ -1,0 +1,87 @@
+// ============================================================================
+// AAN MASTER 2026 — MAIN ENTRY
+// The one file the build compiles. Import order: tokens → fonts → bridge →
+// base → components → sections → pages, then the runtime token :root export.
+//
+//   npm run watch   ->  dist/css/main.css   (expanded, live)
+//   npm run build   ->  dist/css/main.css   (compressed)
+// ============================================================================
+
+// 1. Tokens — single source of truth (no CSS emitted; variables only).
+@use 'aan-theme-kit' as t;
+
+// 2. Fonts — @font-face declarations (stub).
+@use 'fonts';
+
+// 3. Bootstrap bridge — maps tokens onto Bootstrap variables/components (stub).
+@use 'bootstrap-bridge';
+
+// 4. Base.
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/layout';
+@use 'base/utilities';
+
+// 5. Components (stubs — filled in later phases).
+@use 'components/buttons';
+@use 'components/forms';
+@use 'components/dropzone';
+@use 'components/tags';
+@use 'components/overlays';
+@use 'components/vehicle-card';
+@use 'components/cards';
+@use 'components/tables';
+@use 'components/nav';
+@use 'components/footer';
+@use 'components/modal';
+@use 'components/pagination';
+@use 'components/breadcrumbs';
+@use 'components/accordion';
+@use 'components/alerts';
+@use 'components/filters';
+
+// 6. Sections (stubs — filled in later phases).
+@use 'sections/hero';
+@use 'sections/quick-search';
+@use 'sections/featured';
+@use 'sections/sell-your-car';
+@use 'sections/showcase';
+@use 'sections/services';
+@use 'sections/stats';
+@use 'sections/brands';
+@use 'sections/testimonials';
+@use 'sections/visit';
+
+// 7. Pages.
+@use 'pages/srp';
+@use 'pages/vdp';
+@use 'pages/forms-pages';
+@use 'pages/design-system';
+
+// ----------------------------------------------------------------------------
+// SKIN EMISSION
+// The skinnable tokens are runtime CSS custom properties; here we emit one
+// :root[data-skin="…"] block per skin from the maps in aan-theme-kit. obsidian
+// is also the bare :root default (used when <html> has no data-skin yet).
+// Switch skins by setting data-skin on <html> (see the skin switcher).
+// ----------------------------------------------------------------------------
+@each $skin, $vars in t.$skins {
+  @if $skin == 'obsidian' {
+    :root,
+    :root[data-skin='obsidian'] {
+      @each $prop, $val in $vars {
+        @if $prop != hero-style {
+          --#{$prop}: #{$val};
+        }
+      }
+    }
+  } @else {
+    :root[data-skin='#{$skin}'] {
+      @each $prop, $val in $vars {
+        @if $prop != hero-style {
+          --#{$prop}: #{$val};
+        }
+      }
+    }
+  }
+}

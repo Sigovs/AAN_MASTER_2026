@@ -1,0 +1,56 @@
+// ============================================================================
+// SECTIONS / SERVICES — 4 .panel cards with a primary glyph + uppercase title.
+// Tokens only.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+.services__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: t.$grid-gutter;
+
+  @media (max-width: (t.$bp-lg - 1px)) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: (t.$bp-sm - 1px)) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.service {
+  transition: background-color t.$dur-fast t.$ease, border-color t.$dur-fast t.$ease;
+
+  &:hover {
+    background: t.$bg-row-alt;
+    border-color: t.$color-border;
+  }
+
+  &__glyph {
+    display: block;
+    margin-bottom: t.$space-4;
+    color: t.$color-primary;
+
+    svg {
+      display: block;
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &__title {
+    margin: 0 0 t.$space-2;
+    font-family: t.$font-mono;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: t.$color-heading;
+  }
+
+  &__copy {
+    margin: 0;
+    color: t.$color-muted;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+}

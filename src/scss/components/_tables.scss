@@ -1,0 +1,76 @@
+// ============================================================================
+// COMPONENTS / TABLES — base + zebra + compare + hours. BS4 .table compatible.
+// Tokens only.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: t.$color-text;
+  background: transparent;
+
+  th,
+  td {
+    padding: t.$space-3 t.$space-4;
+    border-top: 0;
+    border-bottom: 1px solid t.$color-border;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  thead th {
+    border-bottom: 1px solid t.$color-border;
+    font-family: t.$font-mono;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: t.$color-muted;
+  }
+}
+
+// Zebra striping.
+.table-zebra tbody tr:nth-child(even) {
+  background: t.$bg-row-alt;
+}
+
+// Compare: sticky first column + mono numeric cells.
+.compare-table {
+  th:first-child,
+  td:first-child {
+    position: sticky;
+    left: 0;
+    background: t.$surface-card;
+    font-family: t.$font-mono;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: t.$color-muted;
+  }
+
+  td.num,
+  .num {
+    font-family: t.$font-mono;
+    font-variant-numeric: tabular-nums;
+    text-align: left; // align columns to the left, under their headers
+    color: t.$color-text;
+  }
+}
+
+// Hours: muted mono day / right-aligned mono time.
+.hours-table {
+  td.day {
+    font-family: t.$font-mono;
+    color: t.$color-muted;
+  }
+  td.time {
+    font-family: t.$font-mono;
+    text-align: right;
+    color: t.$color-text;
+  }
+  tr.is-today td {
+    color: t.$color-heading;
+    font-weight: 600;
+  }
+}

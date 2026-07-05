@@ -1,0 +1,1373 @@
+<!doctype html>
+<html lang="en" data-skin="obsidian">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AAN Master 2026 — Design System</title>
+
+    <!-- Bootstrap 4.6.2 FULL CSS — mirrors production, where the whole BS4
+         utility set is available to the engines' markup. Component visuals are
+         overridden by bootstrap-bridge.scss / our components (loaded after). -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+
+    <!-- AAN theme (compiled from src/scss/main.scss). Loaded last so it wins. -->
+    <link rel="stylesheet" href="dist/css/main.css" />
+  </head>
+  <body>
+    <div class="ds-shell">
+      <!-- ============ LEFT ANCHOR NAV (sticky, quiet chrome) ============ -->
+      <aside class="ds-nav">
+        <nav aria-label="Design system sections">
+          <p class="ds-nav__brand">AAN Master 2026</p>
+          <ul class="ds-nav__list">
+            <li><a class="ds-nav__link" href="#overview">Overview</a></li>
+            <li><a class="ds-nav__link" href="#foundations">Foundations</a></li>
+            <li><a class="ds-nav__link" href="#rhythm">Rhythm</a></li>
+            <li><a class="ds-nav__link" href="#typography">Typography</a></li>
+            <li><a class="ds-nav__link" href="#buttons">Buttons</a></li>
+            <li><a class="ds-nav__link" href="#tags">Tags &amp; Badges</a></li>
+            <li><a class="ds-nav__link" href="#overlays">Photo Overlays</a></li>
+            <li><a class="ds-nav__link" href="#forms">Forms</a></li>
+            <li><a class="ds-nav__link" href="#cards">Cards &amp; Surfaces</a></li>
+            <li><a class="ds-nav__link" href="#vehicle-card">Vehicle Card</a></li>
+            <li><a class="ds-nav__link" href="#navigation">Navigation</a></li>
+            <li><a class="ds-nav__link" href="#footer">Footer</a></li>
+            <li><a class="ds-nav__link" href="#tables">Tables</a></li>
+            <li><a class="ds-nav__link" href="#filters">Filters</a></li>
+            <li><a class="ds-nav__link" href="#pagination">Pagination</a></li>
+            <li><a class="ds-nav__link" href="#breadcrumbs">Breadcrumbs</a></li>
+            <li><a class="ds-nav__link" href="#accordion">Accordion</a></li>
+            <li><a class="ds-nav__link" href="#alerts">Alerts</a></li>
+            <li><a class="ds-nav__link" href="#modal">Modal</a></li>
+            <li><a class="ds-nav__link" href="#shadows">Shadows &amp; Elevation</a></li>
+            <li><a class="ds-nav__link" href="#motion">Motion &amp; Transitions</a></li>
+            <li><a class="ds-nav__link" href="#patterns">Section Patterns</a></li>
+            <li><a class="ds-nav__link" href="#inventory">Live Inventory</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- ===================== SPECIMEN CANVAS ===================== -->
+      <main class="ds-main">
+        <!-- ---------- OVERVIEW ---------- -->
+        <section id="overview" class="ds-section">
+          <div class="ds-section__intro">
+            <p class="eyebrow">Design System</p>
+            <h1>AAN Master 2026</h1>
+            <p class="lead">
+              A token-first system. Every color, size, radius, font, shadow and
+              motion value is defined once in <span class="ds-label">aan-theme-kit.scss</span>
+              and consumed everywhere else. Phase 2 establishes the typography
+              and rhythm foundations; components arrive next.
+            </p>
+            <p class="ds-note">Default master ships neutral (premium comes from type + spacing, not a brand hue); clones set <span class="ds-label">$color-primary</span> — see <strong>Aurum</strong> in the skin switcher for an example.</p>
+          </div>
+
+          <h3>Principles</h3>
+          <div class="stack">
+            <p>1. Tokens are the single source of truth — no magic numbers in partials.</p>
+            <p>2. Bootstrap supplies grid, utilities and JS only; visuals route through the bridge.</p>
+            <p>3. Section rhythm is deliberate — bottom padding is always larger than top.</p>
+            <p>4. Nothing "AI-default": no cream+terracotta, no acid green, no gradient buttons.</p>
+            <p>5. Hero has two contracted modes — full (no fold bleed) and compact (next section visible above the fold).</p>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <p class="eyebrow">Do</p>
+              <div class="stack">
+                <p>Add a token before you reach for a literal value.</p>
+                <p>Compose rhythm from <span class="ds-label">$section-*</span> and <span class="ds-label">$stack-*</span> gaps.</p>
+                <p>Keep the DS chrome quiet — let specimens lead.</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <p class="eyebrow">Don't</p>
+              <div class="stack">
+                <p>Hard-code hex, px, or durations outside the token file.</p>
+                <p>Restyle a Bootstrap component inline or in an ad-hoc file.</p>
+                <p>Introduce components or pages the plan didn't ask for.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- FOUNDATIONS ---------- -->
+        <section id="foundations" class="ds-section">
+          <div class="ds-section__intro">
+            <p class="eyebrow">Foundations</p>
+            <h2>Color, type, spacing &amp; radii</h2>
+            <p class="lead">Each tile renders the live token value. Swap a token and the tile moves with it.</p>
+          </div>
+
+          <h4>Color</h4>
+          <div class="ds-swatches">
+            <!-- global -->
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="color-primary"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$color-primary</span><span class="ds-swatch__value">#1f2a37</span></div></div>
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="color-secondary"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$color-secondary</span><span class="ds-swatch__value">#3a4a5c</span></div></div>
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="color-accent"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$color-accent</span><span class="ds-swatch__value">#3d6b7d</span></div></div>
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="color-text"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$color-text</span><span class="ds-swatch__value">#1f2733</span></div></div>
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="color-heading"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$color-heading</span><span class="ds-swatch__value">#12181f</span></div></div>
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="color-muted"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$color-muted</span><span class="ds-swatch__value">#667080</span></div></div>
+            <!-- surfaces -->
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="bg-page"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$bg-page</span><span class="ds-swatch__value">#fbfcfd</span></div></div>
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="bg-row"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$bg-row</span><span class="ds-swatch__value">#f6f7f8</span></div></div>
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="bg-row-alt"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$bg-row-alt</span><span class="ds-swatch__value">#eef0f2</span></div></div>
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="surface-card"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$surface-card</span><span class="ds-swatch__value">#ffffff</span></div></div>
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="bg-header"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$bg-header</span><span class="ds-swatch__value">#ffffff</span></div></div>
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="bg-invert"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$bg-invert</span><span class="ds-swatch__value">#12181f</span></div></div>
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="bg-footer"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$bg-footer</span><span class="ds-swatch__value">#12181f</span></div></div>
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="color-border"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$color-border</span><span class="ds-swatch__value">#e2e5e9</span></div></div>
+            <!-- states -->
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="color-success"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$color-success</span><span class="ds-swatch__value">#2e7d5b</span></div></div>
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="color-danger"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$color-danger</span><span class="ds-swatch__value">#b23a3a</span></div></div>
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="color-warning"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$color-warning</span><span class="ds-swatch__value">#b8811f</span></div></div>
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="color-info"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$color-info</span><span class="ds-swatch__value">#2f6f8f</span></div></div>
+            <!-- system foregrounds -->
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="on-primary"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$on-primary</span><span class="ds-swatch__value"></span></div></div>
+            <div class="ds-swatch"><div class="ds-swatch__chip" data-token="fg-on-photo"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$fg-on-photo</span><span class="ds-swatch__value">#ECEAE3</span></div></div>
+          </div>
+
+          <h4>System &amp; effect tokens</h4>
+          <p class="ds-note">Structural / effect tokens (not skin colors): <span class="ds-label">$on-primary</span> text-on-primary-fill (per skin) · <span class="ds-label">$fg-on-photo</span> always-light on photos (never flips) · <span class="ds-label">$blur-frosted</span> blur(8px) (frosted backdrops) · <span class="ds-label">$focus-ring-width</span> 2px / <span class="ds-label">$focus-ring-offset</span> 2px · <span class="ds-label">$spinner-size</span> 1em / <span class="ds-label">$spinner-border</span> 2px / <span class="ds-label">$spinner-dur</span> 1.2s · <span class="ds-label">$header-h</span> 76px · <span class="ds-label">$overlay-scrim</span> dark veil · <span class="ds-label">hero-style</span> skin token (photo | plain).</p>
+
+          <h4>Font slots — diagnostic</h4>
+          <p class="ds-note">Family is read live from the compiled CSS (not hardcoded) — a failed load shows in red. The pangram runs weights 100–900 at 20px; weights the face doesn't ship render browser-synthesized, exposing which cuts truly load.</p>
+          <div class="ds-font-panel">
+            <div class="ds-font-block" data-font="display">
+              <p class="ds-font-block__head">$font-display<span class="ds-font-name"></span></p>
+              <div class="ds-font-row"><span class="ds-font-weight">100</span><span class="ds-font-pan ds-fw-100">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">200</span><span class="ds-font-pan ds-fw-200">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">300</span><span class="ds-font-pan ds-fw-300">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">400</span><span class="ds-font-pan ds-fw-400">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">500</span><span class="ds-font-pan ds-fw-500">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">600</span><span class="ds-font-pan ds-fw-600">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">700</span><span class="ds-font-pan ds-fw-700">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">800</span><span class="ds-font-pan ds-fw-800">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">900</span><span class="ds-font-pan ds-fw-900">The quick brown fox jumps over the lazy dog</span></div>
+            </div>
+            <div class="ds-font-block" data-font="body">
+              <p class="ds-font-block__head">$font-body<span class="ds-font-name"></span></p>
+              <div class="ds-font-row"><span class="ds-font-weight">100</span><span class="ds-font-pan ds-fw-100">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">200</span><span class="ds-font-pan ds-fw-200">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">300</span><span class="ds-font-pan ds-fw-300">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">400</span><span class="ds-font-pan ds-fw-400">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">500</span><span class="ds-font-pan ds-fw-500">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">600</span><span class="ds-font-pan ds-fw-600">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">700</span><span class="ds-font-pan ds-fw-700">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">800</span><span class="ds-font-pan ds-fw-800">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">900</span><span class="ds-font-pan ds-fw-900">The quick brown fox jumps over the lazy dog</span></div>
+            </div>
+            <div class="ds-font-block" data-font="accent">
+              <p class="ds-font-block__head">$font-accent<span class="ds-font-name"></span></p>
+              <div class="ds-font-row"><span class="ds-font-weight">100</span><span class="ds-font-pan ds-fw-100">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">200</span><span class="ds-font-pan ds-fw-200">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">300</span><span class="ds-font-pan ds-fw-300">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">400</span><span class="ds-font-pan ds-fw-400">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">500</span><span class="ds-font-pan ds-fw-500">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">600</span><span class="ds-font-pan ds-fw-600">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">700</span><span class="ds-font-pan ds-fw-700">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">800</span><span class="ds-font-pan ds-fw-800">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">900</span><span class="ds-font-pan ds-fw-900">The quick brown fox jumps over the lazy dog</span></div>
+            </div>
+            <div class="ds-font-block" data-font="mono">
+              <p class="ds-font-block__head">$font-mono<span class="ds-font-name"></span></p>
+              <div class="ds-font-row"><span class="ds-font-weight">100</span><span class="ds-font-pan ds-fw-100">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">200</span><span class="ds-font-pan ds-fw-200">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">300</span><span class="ds-font-pan ds-fw-300">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">400</span><span class="ds-font-pan ds-fw-400">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">500</span><span class="ds-font-pan ds-fw-500">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">600</span><span class="ds-font-pan ds-fw-600">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">700</span><span class="ds-font-pan ds-fw-700">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">800</span><span class="ds-font-pan ds-fw-800">The quick brown fox jumps over the lazy dog</span></div>
+              <div class="ds-font-row"><span class="ds-font-weight">900</span><span class="ds-font-pan ds-fw-900">The quick brown fox jumps over the lazy dog</span></div>
+            </div>
+          </div>
+
+          <h4>Spacing scale <span class="ds-note">(4px step)</span></h4>
+          <div class="ds-rulers">
+            <div class="ds-ruler"><span class="ds-ruler__bar" data-space="1"></span><span class="ds-ruler__label">$space-1 · 4px</span></div>
+            <div class="ds-ruler"><span class="ds-ruler__bar" data-space="2"></span><span class="ds-ruler__label">$space-2 · 8px</span></div>
+            <div class="ds-ruler"><span class="ds-ruler__bar" data-space="3"></span><span class="ds-ruler__label">$space-3 · 12px</span></div>
+            <div class="ds-ruler"><span class="ds-ruler__bar" data-space="4"></span><span class="ds-ruler__label">$space-4 · 16px</span></div>
+            <div class="ds-ruler"><span class="ds-ruler__bar" data-space="5"></span><span class="ds-ruler__label">$space-5 · 20px</span></div>
+            <div class="ds-ruler"><span class="ds-ruler__bar" data-space="6"></span><span class="ds-ruler__label">$space-6 · 24px</span></div>
+            <div class="ds-ruler"><span class="ds-ruler__bar" data-space="8"></span><span class="ds-ruler__label">$space-8 · 32px</span></div>
+            <div class="ds-ruler"><span class="ds-ruler__bar" data-space="10"></span><span class="ds-ruler__label">$space-10 · 40px</span></div>
+            <div class="ds-ruler"><span class="ds-ruler__bar" data-space="12"></span><span class="ds-ruler__label">$space-12 · 48px</span></div>
+            <div class="ds-ruler"><span class="ds-ruler__bar" data-space="16"></span><span class="ds-ruler__label">$space-16 · 64px</span></div>
+            <div class="ds-ruler"><span class="ds-ruler__bar" data-space="20"></span><span class="ds-ruler__label">$space-20 · 80px</span></div>
+            <div class="ds-ruler"><span class="ds-ruler__bar" data-space="24"></span><span class="ds-ruler__label">$space-24 · 96px</span></div>
+            <div class="ds-ruler"><span class="ds-ruler__bar" data-space="30"></span><span class="ds-ruler__label">$space-30 · 120px</span></div>
+          </div>
+
+          <h4>Radii</h4>
+          <div class="ds-radii">
+            <div class="ds-radii-tile"><div class="ds-radii-tile__box" data-radius="radius-0"></div><span class="ds-radii-tile__label">$radius-0 · 0</span></div>
+            <div class="ds-radii-tile"><div class="ds-radii-tile__box" data-radius="radius-sm"></div><span class="ds-radii-tile__label">$radius-sm · 4px</span></div>
+            <div class="ds-radii-tile"><div class="ds-radii-tile__box" data-radius="radius-md"></div><span class="ds-radii-tile__label">$radius-md · 8px</span></div>
+            <div class="ds-radii-tile"><div class="ds-radii-tile__box" data-radius="radius-lg"></div><span class="ds-radii-tile__label">$radius-lg · 14px</span></div>
+            <div class="ds-radii-tile"><div class="ds-radii-tile__box" data-radius="radius-pill"></div><span class="ds-radii-tile__label">$radius-pill · 999px</span></div>
+          </div>
+        </section>
+
+        <!-- ---------- RHYTHM ---------- -->
+        <section id="rhythm" class="ds-section">
+          <div class="ds-section__intro">
+            <p class="eyebrow">Rhythm</p>
+            <h2>Section spacing, measured</h2>
+            <p class="lead">
+              Each band below is drawn at the exact token height. Note the rule:
+              <span class="ds-label">$section-pb</span> (120px) is always larger than
+              <span class="ds-label">$section-pt</span> (96px).
+            </p>
+          </div>
+
+          <div class="ds-rhythm">
+            <div class="ds-rhythm__bar ds-rhythm__bar--pt">$section-pt · 96px</div>
+            <div class="ds-rhythm__content">Section heading</div>
+            <div class="ds-rhythm__bar ds-rhythm__bar--head">$section-head-gap · 48px</div>
+            <div class="ds-rhythm__content">Object A</div>
+            <div class="ds-rhythm__bar ds-rhythm__bar--object">$object-gap · 32px</div>
+            <div class="ds-rhythm__content">Object B</div>
+            <div class="ds-rhythm__bar ds-rhythm__bar--pb">$section-pb · 120px</div>
+          </div>
+        </section>
+
+        <!-- ---------- TYPOGRAPHY ---------- -->
+        <section id="typography" class="ds-section">
+          <div class="ds-section__intro">
+            <p class="eyebrow">Typography</p>
+            <h2>The text stack</h2>
+            <p class="lead">Every text role as a class specimen, with its name and — in the live stack — the actual gap token applied between elements.</p>
+          </div>
+
+          <!-- Specimen catalogue -->
+          <div class="ds-specimen">
+            <div class="ds-specimen__head"><span class="ds-label">.eyebrow</span></div>
+            <p class="eyebrow">Certified Inventory</p>
+          </div>
+          <div class="ds-specimen">
+            <div class="ds-specimen__head"><span class="ds-label">.display</span> <span class="ds-note">clamp 56–120px</span></div>
+            <p class="display">Drive</p>
+          </div>
+          <div class="ds-specimen">
+            <div class="ds-specimen__head"><span class="ds-label">h1</span> <span class="ds-note">clamp 44–92px</span></div>
+            <h1>Heading one</h1>
+          </div>
+          <div class="ds-specimen">
+            <div class="ds-specimen__head"><span class="ds-label">h2</span> <span class="ds-note">clamp 32–52px</span></div>
+            <h2>Heading two</h2>
+          </div>
+          <div class="ds-specimen">
+            <div class="ds-specimen__head"><span class="ds-label">h3</span> <span class="ds-note">clamp 24–32px</span></div>
+            <h3>Heading three</h3>
+          </div>
+          <div class="ds-specimen">
+            <div class="ds-specimen__head"><span class="ds-label">h4 / h5 / h6</span></div>
+            <h4>Heading four</h4>
+            <h5>Heading five</h5>
+            <h6>Heading six</h6>
+          </div>
+          <div class="ds-specimen">
+            <div class="ds-specimen__head"><span class="ds-label">.subheading</span></div>
+            <p class="subheading">A supporting subheading in the display face</p>
+          </div>
+          <div class="ds-specimen">
+            <div class="ds-specimen__head"><span class="ds-label">.lead</span> <span class="ds-note">17px · max 52ch</span></div>
+            <p class="lead">A lead paragraph introduces a section with slightly larger, muted body text and a constrained measure for readability.</p>
+          </div>
+          <div class="ds-specimen">
+            <div class="ds-specimen__head"><span class="ds-label">body / p</span> <span class="ds-note">16px</span></div>
+            <p>Body copy is set at sixteen pixels on the body font with a comfortable line height for extended reading.</p>
+          </div>
+          <div class="ds-specimen">
+            <div class="ds-specimen__head"><span class="ds-label">.small</span> · <span class="ds-label">.caption</span></div>
+            <p class="small">Small text at fourteen pixels.</p>
+            <p class="caption">Caption text — 12px mono.</p>
+          </div>
+
+          <!-- Live stack with measured gaps -->
+          <h4>Live stack — measured gaps</h4>
+          <div class="ds-specimen">
+            <p class="eyebrow">New Arrival</p>
+            <p class="ds-gap">.eyebrow + h2 · $stack-eyebrow-to-h · 16px</p>
+            <h2>Section heading</h2>
+            <p class="ds-gap">h2 + .lead · $stack-h-to-lead · 20px</p>
+            <p class="lead">A lead follows the heading to frame the section.</p>
+            <p class="ds-gap">.lead + p · $stack-lead-to-body · 16px</p>
+            <p>First body paragraph continues the thought.</p>
+            <p class="ds-gap">p + p · $stack-p-to-p · 16px</p>
+            <p>Second body paragraph.</p>
+            <p class="ds-gap">* + .btn-row · $stack-text-to-cta · 32px</p>
+            <div class="btn-row"><span class="ds-label">[ CTA row slot ]</span></div>
+          </div>
+        </section>
+
+        <!-- ---------- BUTTONS ---------- -->
+        <section id="buttons" class="ds-section">
+          <div class="ds-section__intro">
+            <p class="eyebrow">Buttons</p>
+            <h2>Button matrix</h2>
+            <p class="lead">Variants × shapes, then sizes, states and content forms — every dimension driven by <span class="ds-label">$btn-*</span> tokens.</p>
+          </div>
+
+          <h4>Variants × shapes</h4>
+          <table class="ds-table">
+            <thead>
+              <tr><th>Variant</th><th>Soft (default)</th><th>Pill</th><th>Square</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>primary</th>
+                <td><button class="btn btn-primary">Book a Test Drive</button></td>
+                <td><button class="btn btn-primary btn-pill">Book a Test Drive</button></td>
+                <td><button class="btn btn-primary btn-square">Book a Test Drive</button></td>
+              </tr>
+              <tr>
+                <th>secondary</th>
+                <td><button class="btn btn-secondary">Book a Test Drive</button></td>
+                <td><button class="btn btn-secondary btn-pill">Book a Test Drive</button></td>
+                <td><button class="btn btn-secondary btn-square">Book a Test Drive</button></td>
+              </tr>
+              <tr>
+                <th>outline</th>
+                <td><button class="btn btn-outline">Book a Test Drive</button></td>
+                <td><button class="btn btn-outline btn-pill">Book a Test Drive</button></td>
+                <td><button class="btn btn-outline btn-square">Book a Test Drive</button></td>
+              </tr>
+              <tr>
+                <th>tertiary</th>
+                <td><button class="btn btn-tertiary">Book a Test Drive</button></td>
+                <td><button class="btn btn-tertiary btn-pill">Book a Test Drive</button></td>
+                <td><button class="btn btn-tertiary btn-square">Book a Test Drive</button></td>
+              </tr>
+              <tr>
+                <th>on-invert</th>
+                <td class="is-invert"><button class="btn btn-on-invert">View Details</button></td>
+                <td class="is-invert"><button class="btn btn-on-invert btn-pill">View Details</button></td>
+                <td class="is-invert"><button class="btn btn-on-invert btn-square">View Details</button></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4>Sizes</h4>
+          <div class="ds-cluster">
+            <button class="btn btn-primary btn-sm">Small · 36px</button>
+            <button class="btn btn-primary">Default · 48px</button>
+            <button class="btn btn-primary btn-lg">Large · 56px</button>
+          </div>
+
+          <h4>States</h4>
+          <div class="ds-cluster">
+            <button class="btn btn-primary">Default</button>
+            <button class="btn btn-primary">Hover me (live)</button>
+            <button class="btn btn-primary ds-force-focus">Focus-visible</button>
+            <button class="btn btn-primary" disabled>Disabled</button>
+            <button class="btn btn-primary is-loading">Loading</button>
+          </div>
+
+          <h4>Content forms</h4>
+          <div class="ds-cluster">
+            <button class="btn btn-primary">Text only</button>
+            <button class="btn btn-primary">Explore Inventory <span class="btn__arrow" aria-hidden="true">→</span></button>
+            <button class="btn btn-outline"><span class="btn__icon" aria-hidden="true">◧</span> With icon</button>
+            <button class="btn btn-primary btn-icon-only" aria-label="Call"><span aria-hidden="true">✆</span></button>
+            <button class="btn btn-outline btn-icon-only" aria-label="Compare"><span aria-hidden="true">⇄</span></button>
+          </div>
+        </section>
+
+        <!-- ---------- TAGS & BADGES ---------- -->
+        <section id="tags" class="ds-section">
+          <div class="ds-section__intro">
+            <p class="eyebrow">Tags &amp; Badges</p>
+            <h2>Status tags</h2>
+            <p class="lead">Twelve statuses across three renders. Uppercase <span class="ds-label">$tag-font</span> (mono), <span class="ds-label">$tag-letter-spacing</span>.</p>
+          </div>
+
+          <h4>All statuses × render variants</h4>
+          <table class="ds-table">
+            <thead>
+              <tr><th>Status <span class="ds-note">(tone)</span></th><th>Solid</th><th>Outline</th><th>Muted</th></tr>
+            </thead>
+            <tbody>
+              <tr><th>New Arrival <span class="ds-note">primary</span></th>
+                <td><span class="tag tag-solid tag--primary">New Arrival</span></td>
+                <td><span class="tag tag-outline tag--primary">New Arrival</span></td>
+                <td><span class="tag tag-muted tag--primary">New Arrival</span></td></tr>
+              <tr><th>Certified Pre-Owned <span class="ds-note">primary</span></th>
+                <td><span class="tag tag-solid tag--primary">Certified Pre-Owned</span></td>
+                <td><span class="tag tag-outline tag--primary">Certified Pre-Owned</span></td>
+                <td><span class="tag tag-muted tag--primary">Certified Pre-Owned</span></td></tr>
+              <tr><th>Lease Special <span class="ds-note">primary</span></th>
+                <td><span class="tag tag-solid tag--primary">Lease Special</span></td>
+                <td><span class="tag tag-outline tag--primary">Lease Special</span></td>
+                <td><span class="tag tag-muted tag--primary">Lease Special</span></td></tr>
+              <tr><th>Reduced <span class="ds-note">success</span></th>
+                <td><span class="tag tag-solid tag--success">Reduced</span></td>
+                <td><span class="tag tag-outline tag--success">Reduced</span></td>
+                <td><span class="tag tag-muted tag--success">Reduced</span></td></tr>
+              <tr><th>Just Serviced <span class="ds-note">success</span></th>
+                <td><span class="tag tag-solid tag--success">Just Serviced</span></td>
+                <td><span class="tag tag-outline tag--success">Just Serviced</span></td>
+                <td><span class="tag tag-muted tag--success">Just Serviced</span></td></tr>
+              <tr><th>Sale Pending <span class="ds-note">warning</span></th>
+                <td><span class="tag tag-solid tag--warning">Sale Pending</span></td>
+                <td><span class="tag tag-outline tag--warning">Sale Pending</span></td>
+                <td><span class="tag tag-muted tag--warning">Sale Pending</span></td></tr>
+              <tr><th>On Hold <span class="ds-note">warning</span></th>
+                <td><span class="tag tag-solid tag--warning">On Hold</span></td>
+                <td><span class="tag tag-outline tag--warning">On Hold</span></td>
+                <td><span class="tag tag-muted tag--warning">On Hold</span></td></tr>
+              <tr><th>Sold <span class="ds-note">danger</span></th>
+                <td><span class="tag tag-solid tag--danger">Sold</span></td>
+                <td><span class="tag tag-outline tag--danger">Sold</span></td>
+                <td><span class="tag tag-muted tag--danger">Sold</span></td></tr>
+              <tr><th>Coming Soon <span class="ds-note">neutral</span></th>
+                <td><span class="tag tag-solid tag--neutral">Coming Soon</span></td>
+                <td><span class="tag tag-outline tag--neutral">Coming Soon</span></td>
+                <td><span class="tag tag-muted tag--neutral">Coming Soon</span></td></tr>
+              <tr><th>In Transit <span class="ds-note">neutral</span></th>
+                <td><span class="tag tag-solid tag--neutral">In Transit</span></td>
+                <td><span class="tag tag-outline tag--neutral">In Transit</span></td>
+                <td><span class="tag tag-muted tag--neutral">In Transit</span></td></tr>
+              <tr><th>One Owner <span class="ds-note">neutral</span></th>
+                <td><span class="tag tag-solid tag--neutral">One Owner</span></td>
+                <td><span class="tag tag-outline tag--neutral">One Owner</span></td>
+                <td><span class="tag tag-muted tag--neutral">One Owner</span></td></tr>
+              <tr><th>Low Miles <span class="ds-note">neutral</span></th>
+                <td><span class="tag tag-solid tag--neutral">Low Miles</span></td>
+                <td><span class="tag tag-outline tag--neutral">Low Miles</span></td>
+                <td><span class="tag tag-muted tag--neutral">Low Miles</span></td></tr>
+            </tbody>
+          </table>
+
+          <h4>Sizes</h4>
+          <div class="ds-cluster">
+            <span class="tag tag-solid tag--primary tag-sm">Small · 20px</span>
+            <span class="tag tag-solid tag--primary">Default · 26px</span>
+          </div>
+
+          <h4>Extras</h4>
+          <div class="ds-cluster">
+            <span class="tag tag-muted tag--success tag-dot">Available</span>
+            <span class="tag tag-solid tag--primary"><span class="tag__icon" aria-hidden="true">★</span>Featured</span>
+            <span class="tag tag-muted tag--neutral tag-removable">Under $30k<button class="tag__remove" type="button" aria-label="Remove filter">×</button></span>
+            <span class="tag tag-outline tag--primary tag-counter">Compare<span class="tag__count">(2)</span></span>
+          </div>
+
+          <h4>On imagery — .tag-outline legibility</h4>
+          <div class="ds-photo">
+            <span class="tag tag-outline tag--primary">Certified Pre-Owned</span>
+            <span class="tag tag-outline tag--warning">Sale Pending</span>
+            <span class="tag tag-outline tag--neutral">Low Miles</span>
+          </div>
+        </section>
+
+        <!-- ---------- PHOTO OVERLAYS ---------- -->
+        <section id="overlays" class="ds-section">
+          <div class="ds-section__intro">
+            <p class="eyebrow">Photo Overlays</p>
+            <h2>CSS photo overlays</h2>
+            <p class="lead">A token-driven CSS overlay family that replaces the legacy PNG banners. Color via <span class="ds-label">--ov-color</span> / <span class="ds-label">--ov-on</span>; the old <span class="ds-label">.image-overlay</span> PNG path still works.</p>
+          </div>
+
+          <div class="ds-ov-grid">
+            <figure class="ds-ov">
+              <div class="ds-ph"><span class="ds-ph__label">Vehicle photo</span>
+                <div class="p-overlay p-overlay-scrim p-overlay--sold"><span>Sold</span></div>
+              </div>
+              <figcaption class="ds-note">.p-overlay-scrim · Sold</figcaption>
+            </figure>
+
+            <figure class="ds-ov">
+              <div class="ds-ph"><span class="ds-ph__label">Vehicle photo</span>
+                <div class="p-overlay p-overlay-ribbon p-overlay--pending p-overlay--tl"><span>Sale Pending</span></div>
+              </div>
+              <figcaption class="ds-note">.p-overlay-ribbon · Sale Pending (tl)</figcaption>
+            </figure>
+
+            <figure class="ds-ov">
+              <div class="ds-ph"><span class="ds-ph__label">Vehicle photo</span>
+                <div class="p-overlay p-overlay-corner p-overlay--sold p-overlay--tl"><span>Sold</span></div>
+              </div>
+              <figcaption class="ds-note">.p-overlay-corner · Sold (short)</figcaption>
+            </figure>
+
+            <figure class="ds-ov">
+              <div class="ds-ph"><span class="ds-ph__label">Vehicle photo</span>
+                <div class="p-overlay p-overlay-bar p-overlay--special"><span>Lease Special</span></div>
+              </div>
+              <figcaption class="ds-note">.p-overlay-bar (bottom) · Lease Special</figcaption>
+            </figure>
+
+            <figure class="ds-ov">
+              <div class="ds-ph"><span class="ds-ph__label">Vehicle photo</span>
+                <div class="p-overlay p-overlay-bar p-overlay--top p-overlay--reduced"><span>Reduced</span></div>
+              </div>
+              <figcaption class="ds-note">.p-overlay-bar.p-overlay--top · Reduced</figcaption>
+            </figure>
+
+            <figure class="ds-ov">
+              <div class="ds-ph"><span class="ds-ph__label">Vehicle photo</span>
+                <div class="p-overlay p-overlay-pill p-overlay--special"><span>New Arrival</span></div>
+              </div>
+              <figcaption class="ds-note">.p-overlay-pill (tr) · New Arrival</figcaption>
+            </figure>
+
+            <figure class="ds-ov">
+              <div class="ds-ph"><span class="ds-ph__label">Vehicle photo</span>
+                <div class="p-overlay p-overlay-bar" style="--ov-color: var(--color-info);"><span>Custom color</span></div>
+              </div>
+              <figcaption class="ds-note">.p-overlay-bar · custom via style="--ov-color:…"</figcaption>
+            </figure>
+
+            <figure class="ds-ov">
+              <div class="ds-ph"><span class="ds-ph__label">Vehicle photo</span>
+                <img class="image-overlay" alt="Sold (legacy PNG)" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20300'%20preserveAspectRatio='xMidYMid%20meet'%3E%3Crect%20x='0'%20y='125'%20width='400'%20height='50'%20fill='%23111'%20opacity='0.82'/%3E%3Ctext%20x='200'%20y='159'%20fill='%23fff'%20font-family='monospace'%20font-size='30'%20letter-spacing='8'%20text-anchor='middle'%3ESOLD%3C/text%3E%3C/svg%3E" />
+              </div>
+              <figcaption class="ds-note">PNG .image-overlay (legacy, still supported)</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <!-- ---------- FORMS ---------- -->
+        <section id="forms" class="ds-section">
+          <div class="ds-section__intro">
+            <p class="eyebrow">Forms</p>
+            <h2>Form controls</h2>
+            <p class="lead">Field anatomy, controls, validation, layout and a dropzone — all from <span class="ds-label">$field-*</span> / <span class="ds-label">$form-*</span> tokens.</p>
+          </div>
+
+          <div class="ds-form-demo">
+            <form class="form-stack" onsubmit="return false">
+              <div class="form-field">
+                <label class="form-label form-label--required" for="f-name">Full name</label>
+                <input class="form-control" id="f-name" type="text" placeholder="Jane Doe" />
+                <span class="form-help">As it appears on your license.</span>
+              </div>
+
+              <div class="form-row">
+                <div class="form-field">
+                  <label class="form-label" for="f-email">Email</label>
+                  <input class="form-control" id="f-email" type="email" placeholder="jane@example.com" />
+                </div>
+                <div class="form-field">
+                  <label class="form-label" for="f-tel">Phone</label>
+                  <input class="form-control" id="f-tel" type="tel" placeholder="(555) 010-0100" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-field">
+                  <label class="form-label" for="f-year">Year</label>
+                  <input class="form-control" id="f-year" type="number" placeholder="2022" />
+                </div>
+                <div class="form-field">
+                  <label class="form-label" for="f-make">Make</label>
+                  <div class="select">
+                    <select class="form-control" id="f-make">
+                      <option>Any make</option>
+                      <option>Audi</option>
+                      <option>BMW</option>
+                      <option>Porsche</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="f-msg">Message</label>
+                <textarea class="form-control" id="f-msg" placeholder="Tell us what you're looking for…"></textarea>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="f-stock">Stock number</label>
+                <div class="input-group">
+                  <input class="form-control" id="f-stock" type="text" placeholder="e.g. A12345" />
+                  <button class="btn btn-primary" type="button">Search</button>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-field">
+                  <label class="form-label" for="f-valid">Valid</label>
+                  <input class="form-control is-valid" id="f-valid" type="email" value="jane@example.com" />
+                </div>
+                <div class="form-field">
+                  <label class="form-label" for="f-invalid">Invalid</label>
+                  <input class="form-control is-invalid" id="f-invalid" type="email" value="not-an-email" />
+                  <span class="form-error">Enter a valid email address.</span>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="f-dis">Disabled</label>
+                <input class="form-control" id="f-dis" type="text" value="Locked field" disabled />
+              </div>
+
+              <fieldset class="fieldset">
+                <legend class="fieldset__title">Preferences</legend>
+                <div class="form-stack">
+                  <label class="form-check"><input type="checkbox" checked /><span>Email me new matches</span></label>
+                  <label class="form-check"><input type="checkbox" /><span>Include auction vehicles</span></label>
+                  <label class="form-check"><input type="radio" name="contact" checked /><span>Contact by email</span></label>
+                  <label class="form-check"><input type="radio" name="contact" /><span>Contact by phone</span></label>
+                  <label class="form-switch"><input type="checkbox" checked /><span>Financing pre-approval</span></label>
+                </div>
+              </fieldset>
+
+              <fieldset class="fieldset">
+                <legend class="fieldset__title">Upload photos</legend>
+                <div class="dropzone" id="ds-dropzone">
+                  <span class="dropzone__icon" aria-hidden="true">⤒</span>
+                  <p class="dropzone__text">Drag &amp; drop your files or <span class="dropzone__browse">browse</span></p>
+                </div>
+                <ul class="dropzone-files" id="ds-dropzone-files">
+                  <li class="dropzone-file"><span class="dropzone-file__name">porsche-front.jpg</span><span class="dropzone-file__size">2.4 MB</span><button class="dropzone-file__remove" type="button" aria-label="Remove file">×</button></li>
+                  <li class="dropzone-file"><span class="dropzone-file__name">porsche-interior.jpg</span><span class="dropzone-file__size">1.8 MB</span><button class="dropzone-file__remove" type="button" aria-label="Remove file">×</button></li>
+                </ul>
+              </fieldset>
+
+              <div class="form-submit btn-row">
+                <button class="btn btn-primary" type="button">Submit request</button>
+                <button class="btn btn-tertiary" type="button">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- ---------- CARDS & SURFACES ---------- -->
+        <section id="cards" class="ds-section">
+          <div class="ds-section__intro">
+            <p class="eyebrow">Cards &amp; Surfaces</p>
+            <h2>Surfaces</h2>
+            <p class="lead">Full surface/card component lands in a later phase; the loading state is ready now.</p>
+          </div>
+
+          <p class="ds-note">Loading skeletons live under <a href="#vehicle-card">Vehicle Card</a>, next to the real cards for comparison.</p>
+
+          <h4>Panels &amp; stats</h4>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="panel">
+                <p class="eyebrow">Panel</p>
+                <h4>.panel</h4>
+                <p>Generic surface — $surface-card, $radius-md, $shadow-card, padding $space-6. Reused for finance widgets, VDP panels, popups.</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="panel">
+                <div class="ds-stat-strip">
+                  <div class="stat-cell"><span class="stat-cell__num">1,240</span><span class="stat-cell__label">In stock</span></div>
+                  <div class="stat-cell"><span class="stat-cell__num">72</span><span class="stat-cell__label">Sold / mo</span></div>
+                  <div class="stat-cell"><span class="stat-cell__num">4.9</span><span class="stat-cell__label">Rating</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- VEHICLE CARD ---------- -->
+        <section id="vehicle-card" class="ds-section">
+          <div class="ds-section__intro">
+            <p class="eyebrow">Vehicle Card</p>
+            <h2>Inventory card</h2>
+            <p class="lead">The SRP / Featured card — production class names (<span class="ds-label">.car-card</span> …) with new modifiers. Photos from <span class="ds-label">assets/img/demo/</span>; status overlays reuse the <span class="ds-label">.p-overlay</span> family.</p>
+            <p class="ds-note">Demo photos: <span class="ds-label">assets/img/demo/car-1…3</span> (3 available) + the gradient placeholder / coming-soon block for the rest.</p>
+          </div>
+
+          <h4>Status variants</h4>
+          <div class="ds-card-grid">
+            <!-- 1 default -->
+            <article class="car-card">
+              <div class="car-image">
+                <div class="image frame"><img src="assets/img/demo/car-1.jpg" alt="2024 McLaren 720S" /></div>
+                <div class="car-pins">
+                  <button class="car-pin" type="button" data-save aria-label="Save">♥</button>
+                  <button class="car-pin" type="button" aria-label="Share">⤴</button>
+                  <button class="car-pin" type="button" aria-label="Text">✉</button>
+                </div>
+              </div>
+              <div class="car-name">
+                <span class="car-name__year">2024</span>
+                <h3 class="car-name__title">McLaren 720S</h3>
+                <p class="car-name__trim">Performance · Coupe</p>
+                <div class="car-price">
+                  <span class="car-price__miles">8,400 mi</span>
+                  <span class="car-price__figure"><span class="car-price__value">$284,500</span></span>
+                </div>
+                <div class="car-share">
+                  <label class="car-compare"><input type="checkbox" /> <span>Compare</span></label>
+                  <div class="car-actions">
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call">✆</button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text">✉</button>
+                  </div>
+                </div>
+                <a class="btn btn-primary btn-sm car-cta" href="#vehicle-card">View details</a>
+              </div>
+            </article>
+
+            <!-- 2 New Arrival -->
+            <article class="car-card">
+              <div class="car-image">
+                <div class="image frame"><img src="assets/img/demo/car-2.jpg" alt="2023 Porsche 911 Turbo S" /></div>
+                <span class="card-badge card-badge--new">New Arrival</span>
+                <div class="car-pins">
+                  <button class="car-pin" type="button" data-save aria-label="Save">♥</button>
+                  <button class="car-pin" type="button" aria-label="Share">⤴</button>
+                  <button class="car-pin" type="button" aria-label="Text">✉</button>
+                </div>
+              </div>
+              <div class="car-name">
+                <span class="car-name__year">2023</span>
+                <h3 class="car-name__title">Porsche 911 Turbo S</h3>
+                <p class="car-name__trim">Cabriolet</p>
+                <div class="car-price">
+                  <span class="car-price__miles">5,100 mi</span>
+                  <span class="car-price__figure"><span class="car-price__value">$219,900</span></span>
+                </div>
+                <div class="car-share">
+                  <label class="car-compare"><input type="checkbox" /> <span>Compare</span></label>
+                  <div class="car-actions">
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call">✆</button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text">✉</button>
+                  </div>
+                </div>
+                <a class="btn btn-primary btn-sm car-cta" href="#vehicle-card">View details</a>
+              </div>
+            </article>
+
+            <!-- 3 CPO -->
+            <article class="car-card">
+              <div class="car-image">
+                <div class="image frame"><img src="assets/img/demo/car-3.webp" alt="2024 Ferrari Roma" /></div>
+                <span class="card-badge card-badge--cpo">Certified Pre-Owned</span>
+                <div class="car-pins">
+                  <button class="car-pin" type="button" data-save aria-label="Save">♥</button>
+                  <button class="car-pin" type="button" aria-label="Share">⤴</button>
+                  <button class="car-pin" type="button" aria-label="Text">✉</button>
+                </div>
+              </div>
+              <div class="car-name">
+                <span class="car-name__year">2024</span>
+                <h3 class="car-name__title">Ferrari Roma</h3>
+                <p class="car-name__trim">Grand Tourer</p>
+                <div class="car-price">
+                  <span class="car-price__miles">1,250 mi</span>
+                  <span class="car-price__figure"><span class="car-price__value">$258,000</span></span>
+                </div>
+                <div class="car-share">
+                  <label class="car-compare"><input type="checkbox" /> <span>Compare</span></label>
+                  <div class="car-actions">
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call">✆</button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text">✉</button>
+                  </div>
+                </div>
+                <a class="btn btn-primary btn-sm car-cta" href="#vehicle-card">View details</a>
+              </div>
+            </article>
+
+            <!-- 4 Sold (scrim) -->
+            <article class="car-card">
+              <div class="car-image">
+                <div class="image frame"><img src="assets/img/demo/car-1.jpg" alt="2022 McLaren 720S — sold" /></div>
+                <div class="car-pins">
+                  <button class="car-pin" type="button" aria-label="Share">⤴</button>
+                </div>
+                <div class="p-overlay p-overlay-scrim p-overlay--sold"><span>Sold</span></div>
+              </div>
+              <div class="car-name">
+                <span class="car-name__year">2022</span>
+                <h3 class="car-name__title">McLaren 720S</h3>
+                <p class="car-name__trim">Spider</p>
+                <div class="car-price">
+                  <span class="car-price__miles">11,900 mi</span>
+                  <span class="car-price__figure"><span class="car-price__value">$248,000</span></span>
+                </div>
+                <div class="car-share">
+                  <label class="car-compare"><input type="checkbox" disabled /> <span>Compare</span></label>
+                  <div class="car-actions">
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call">✆</button>
+                  </div>
+                </div>
+                <a class="btn btn-primary btn-sm car-cta" href="#vehicle-card">View details</a>
+              </div>
+            </article>
+
+            <!-- 5 Sold (corner) -->
+            <article class="car-card">
+              <div class="car-image">
+                <div class="image frame"><img src="assets/img/demo/car-3.webp" alt="2023 Ferrari Portofino M — sold" /></div>
+                <div class="car-pins">
+                  <button class="car-pin" type="button" aria-label="Share">⤴</button>
+                </div>
+                <div class="p-overlay p-overlay-corner p-overlay--sold p-overlay--tl"><span>Sold</span></div>
+              </div>
+              <div class="car-name">
+                <span class="car-name__year">2023</span>
+                <h3 class="car-name__title">Ferrari Portofino M</h3>
+                <p class="car-name__trim">Convertible</p>
+                <div class="car-price">
+                  <span class="car-price__miles">6,200 mi</span>
+                  <span class="car-price__figure"><span class="car-price__value">$241,000</span></span>
+                </div>
+                <div class="car-share">
+                  <label class="car-compare"><input type="checkbox" disabled /> <span>Compare</span></label>
+                  <div class="car-actions">
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call">✆</button>
+                  </div>
+                </div>
+                <a class="btn btn-primary btn-sm car-cta" href="#vehicle-card">View details</a>
+              </div>
+            </article>
+
+            <!-- 6 Sale Pending (ribbon) -->
+            <article class="car-card">
+              <div class="car-image">
+                <div class="image frame"><img src="assets/img/demo/car-2.jpg" alt="2023 Porsche 911 — sale pending" /></div>
+                <div class="car-pins">
+                  <button class="car-pin" type="button" data-save aria-label="Save">♥</button>
+                  <button class="car-pin" type="button" aria-label="Share">⤴</button>
+                  <button class="car-pin" type="button" aria-label="Text">✉</button>
+                </div>
+                <div class="p-overlay p-overlay-ribbon p-overlay--pending p-overlay--tl"><span>Sale Pending</span></div>
+              </div>
+              <div class="car-name">
+                <span class="car-name__year">2023</span>
+                <h3 class="car-name__title">Porsche 911 GT3</h3>
+                <p class="car-name__trim">Touring</p>
+                <div class="car-price">
+                  <span class="car-price__miles">3,400 mi</span>
+                  <span class="car-price__figure"><span class="car-price__value">$231,500</span></span>
+                </div>
+                <div class="car-share">
+                  <label class="car-compare"><input type="checkbox" /> <span>Compare</span></label>
+                  <div class="car-actions">
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call">✆</button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text">✉</button>
+                  </div>
+                </div>
+                <a class="btn btn-primary btn-sm car-cta" href="#vehicle-card">View details</a>
+              </div>
+            </article>
+
+            <!-- 6 Reduced (bar + struck price) -->
+            <article class="car-card">
+              <div class="car-image">
+                <div class="image frame"><img src="assets/img/demo/car-3.webp" alt="2024 Ferrari Roma — price reduced" /></div>
+                <div class="car-pins">
+                  <button class="car-pin" type="button" data-save aria-label="Save">♥</button>
+                  <button class="car-pin" type="button" aria-label="Share">⤴</button>
+                  <button class="car-pin" type="button" aria-label="Text">✉</button>
+                </div>
+                <div class="p-overlay p-overlay-bar p-overlay--reduced"><span>Reduced</span></div>
+              </div>
+              <div class="car-name">
+                <span class="car-name__year">2024</span>
+                <h3 class="car-name__title">Ferrari Roma</h3>
+                <p class="car-name__trim">Grand Tourer</p>
+                <div class="car-price">
+                  <span class="car-price__miles">2,980 mi</span>
+                  <span class="car-price__figure">
+                    <span class="car-price__old">$272,000</span>
+                    <span class="car-price__value car-price__value--reduced">$258,000</span>
+                  </span>
+                </div>
+                <div class="car-share">
+                  <label class="car-compare"><input type="checkbox" /> <span>Compare</span></label>
+                  <div class="car-actions">
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call">✆</button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text">✉</button>
+                  </div>
+                </div>
+                <a class="btn btn-primary btn-sm car-cta" href="#vehicle-card">View details</a>
+              </div>
+            </article>
+
+            <!-- 7 Coming Soon (no photo) -->
+            <article class="car-card car-card--coming">
+              <div class="car-image">
+                <div class="image frame">Photos Coming</div>
+              </div>
+              <div class="car-name">
+                <span class="car-name__year">2025</span>
+                <h3 class="car-name__title">Lamborghini Revuelto</h3>
+                <p class="car-name__trim">Coupe · Arriving soon</p>
+                <div class="car-price">
+                  <span class="car-price__miles">In transit</span>
+                  <span class="car-price__figure"><span class="car-price__value car-price__value--call">Coming Soon</span></span>
+                </div>
+                <div class="car-share">
+                  <label class="car-compare"><input type="checkbox" /> <span>Notify me</span></label>
+                  <div class="car-actions">
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call">✆</button>
+                  </div>
+                </div>
+                <a class="btn btn-primary btn-sm car-cta" href="#vehicle-card">Get updates</a>
+              </div>
+            </article>
+          </div>
+
+          <h4>Price variants</h4>
+          <div class="ds-card-grid">
+            <article class="car-card">
+              <div class="car-image"><div class="image frame"><img src="assets/img/demo/car-1.jpg" alt="McLaren 720S" /></div></div>
+              <div class="car-name">
+                <span class="car-name__year">2024</span><h3 class="car-name__title">McLaren 720S</h3><p class="car-name__trim">Coupe</p>
+                <div class="car-price"><span class="car-price__miles">8,400 mi</span><span class="car-price__figure"><span class="car-price__value">$284,500</span></span></div>
+              </div>
+            </article>
+            <article class="car-card">
+              <div class="car-image"><div class="image frame"><img src="assets/img/demo/car-2.jpg" alt="Porsche 911" /></div></div>
+              <div class="car-name">
+                <span class="car-name__year">2023</span><h3 class="car-name__title">Porsche 911</h3><p class="car-name__trim">Turbo S</p>
+                <div class="car-price"><span class="car-price__miles">5,100 mi</span><span class="car-price__figure"><span class="car-price__value car-price__value--call">Call for Price</span></span></div>
+              </div>
+            </article>
+            <article class="car-card">
+              <div class="car-image"><div class="image frame"><img src="assets/img/demo/car-3.webp" alt="Ferrari Roma" /></div></div>
+              <div class="car-name">
+                <span class="car-name__year">2024</span><h3 class="car-name__title">Ferrari Roma</h3><p class="car-name__trim">Grand Tourer</p>
+                <div class="car-price"><span class="car-price__miles">1,250 mi</span><span class="car-price__figure"><span class="car-price__value">$258,000</span><span class="car-price__mo">est. $2,450/mo</span></span></div>
+              </div>
+            </article>
+          </div>
+          <p class="ds-note">Left → right: normal · <span class="ds-label">.car-price__value--call</span> (italic display) · with <span class="ds-label">.car-price__mo</span> est. $/mo line.</p>
+
+          <h4>Grid vs list</h4>
+          <div class="ds-cq">
+            <div class="ds-card-grid">
+              <article class="car-card">
+                <div class="car-image"><div class="image frame"><img src="assets/img/demo/car-1.jpg" alt="McLaren 720S" /></div>
+                  <div class="car-pins"><button class="car-pin" type="button" data-save aria-label="Save">♥</button></div>
+                </div>
+                <div class="car-name">
+                  <span class="car-name__year">2024</span><h3 class="car-name__title">McLaren 720S</h3><p class="car-name__trim">Performance · Coupe</p>
+                  <div class="car-price"><span class="car-price__miles">8,400 mi</span><span class="car-price__figure"><span class="car-price__value">$284,500</span></span></div>
+                  <a class="btn btn-primary btn-sm car-cta" href="#vehicle-card">View details</a>
+                </div>
+              </article>
+            </div>
+            <article class="car-card car-card--row">
+              <div class="car-image"><div class="image frame"><img src="assets/img/demo/car-2.jpg" alt="Porsche 911 Turbo S" /></div>
+                <div class="car-pins"><button class="car-pin" type="button" data-save aria-label="Save">♥</button><button class="car-pin" type="button" aria-label="Share">⤴</button></div>
+              </div>
+              <div class="car-name">
+                <span class="car-name__year">2023</span>
+                <h3 class="car-name__title">Porsche 911 Turbo S</h3>
+                <p class="car-name__trim">Cabriolet · AWD · Twin-turbo flat-six</p>
+                <div class="car-price"><span class="car-price__miles">5,100 mi</span><span class="car-price__figure"><span class="car-price__value">$219,900</span><span class="car-price__mo">est. $1,890/mo</span></span></div>
+                <div class="car-share">
+                  <label class="car-compare"><input type="checkbox" /> <span>Compare</span></label>
+                  <div class="car-actions">
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call">✆</button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text">✉</button>
+                    <a class="btn btn-primary btn-sm" href="#vehicle-card">View details</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+          <p class="ds-note">.car-card--row · list view collapses to grid layout when its container drops below 640px (container query, not viewport).</p>
+
+          <h4>Hover &amp; loading</h4>
+          <p class="ds-note">Hover any card: translateY(-4px) + border shift + photo scale 1.03 ($dur-base $ease-out); suppressed under prefers-reduced-motion. Skeleton (below) mirrors the card while data loads.</p>
+          <div class="ds-card-grid">
+            <div class="skeleton-card">
+              <div class="skeleton-card__image skeleton"></div>
+              <div class="skeleton-card__body">
+                <div class="skeleton-card__line skeleton-card__line--title skeleton"></div>
+                <div class="skeleton-card__line skeleton-card__line--sub skeleton"></div>
+                <div class="skeleton-card__plate skeleton"></div>
+              </div>
+            </div>
+            <div class="skeleton-card">
+              <div class="skeleton-card__image skeleton"></div>
+              <div class="skeleton-card__body">
+                <div class="skeleton-card__line skeleton-card__line--title skeleton"></div>
+                <div class="skeleton-card__line skeleton-card__line--sub skeleton"></div>
+                <div class="skeleton-card__plate skeleton"></div>
+              </div>
+            </div>
+            <div class="skeleton-card">
+              <div class="skeleton-card__image skeleton"></div>
+              <div class="skeleton-card__body">
+                <div class="skeleton-card__line skeleton-card__line--title skeleton"></div>
+                <div class="skeleton-card__line skeleton-card__line--sub skeleton"></div>
+                <div class="skeleton-card__plate skeleton"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- NAVIGATION ---------- -->
+        <section id="navigation" class="ds-section">
+          <div class="ds-section__intro">
+            <p class="eyebrow">Navigation</p>
+            <h2>Header</h2>
+            <p class="lead">Sticky frosted header, mono nav links, hover dropdown, mobile off-canvas. Nav buttons are <span class="ds-label">.btn-sm</span>.</p>
+          </div>
+          <div class="ds-nav-demos">
+            <!-- Desktop header (forced desktop, viewport-independent) -->
+            <div class="ds-frame">
+              <div class="site-header">
+                <div class="container">
+                  <nav class="site-nav nav--desktop">
+                    <a href="#navigation" class="site-nav__logo">AAN Motors</a>
+                    <ul class="site-nav__menu">
+                      <li><a href="#navigation" class="site-nav__link">Inventory</a></li>
+                      <li class="nav-dropdown">
+                        <a href="#navigation" class="site-nav__link nav-dropdown__toggle">Services<span class="nav-dropdown__caret" aria-hidden="true"></span></a>
+                        <div class="nav-dropdown__panel">
+                          <a href="#navigation" class="nav-dropdown__item">Financing</a>
+                          <a href="#navigation" class="nav-dropdown__item">Trade-in</a>
+                          <a href="#navigation" class="nav-dropdown__item">Service dept</a>
+                        </div>
+                      </li>
+                      <li><a href="#navigation" class="site-nav__link">About</a></li>
+                    </ul>
+                    <div class="site-nav__actions">
+                      <button class="btn btn-outline btn-sm" type="button">Sign in</button>
+                      <button class="btn btn-primary btn-sm" type="button">Sell</button>
+                    </div>
+                  </nav>
+                </div>
+              </div>
+              <div class="ds-mock-body ds-mock-body--nav">Desktop — hover “Services” for the dropdown.</div>
+            </div>
+
+            <!-- Mobile header (~380px, forced mobile; off-canvas contained in frame) -->
+            <div class="ds-frame ds-frame--device">
+              <div class="site-header">
+                <div class="container">
+                  <nav class="site-nav nav--mobile">
+                    <a href="#navigation" class="site-nav__logo">AAN Motors</a>
+                    <ul class="site-nav__menu">
+                      <li><a href="#navigation" class="site-nav__link">Inventory</a></li>
+                      <li><a href="#navigation" class="site-nav__link">About</a></li>
+                    </ul>
+                    <button class="nav-toggle" type="button" data-nav-demo-toggle aria-label="Toggle menu"><span></span><span></span><span></span></button>
+                  </nav>
+                </div>
+              </div>
+              <div class="ds-mock-body ds-mock-body--nav">Mobile — tap the hamburger.</div>
+              <div class="nav-backdrop nav-backdrop--contained" data-nav-demo-close></div>
+              <aside class="nav-offcanvas nav-offcanvas--contained" aria-label="Mobile menu">
+                <a href="#navigation" class="nav-offcanvas__link" data-nav-demo-close>Inventory</a>
+                <a href="#navigation" class="nav-offcanvas__link" data-nav-demo-close>Services</a>
+                <a href="#navigation" class="nav-offcanvas__link" data-nav-demo-close>About</a>
+                <a href="#navigation" class="nav-offcanvas__link" data-nav-demo-close>Contact</a>
+              </aside>
+            </div>
+          </div>
+          <p class="ds-note">.site-nav + .nav-dropdown (hover, $dur-slow $ease-out) · .nav--desktop / .nav--mobile force the layout on the DS page; the off-canvas is frame-contained here (absolute), viewport-fixed in the real component.</p>
+        </section>
+
+        <!-- ---------- FOOTER ---------- -->
+        <section id="footer" class="ds-section">
+          <div class="ds-section__intro"><p class="eyebrow">Footer</p><h2>Footer</h2></div>
+          <div class="ds-frame">
+            <footer class="site-footer">
+              <div class="container">
+                <div class="site-footer__grid">
+                  <div>
+                    <div class="site-footer__brand">AAN Motors</div>
+                    <p>Luxury &amp; exotic vehicles. Nationwide delivery and wholesale-backed offers.</p>
+                  </div>
+                  <div>
+                    <p class="site-footer__title">Explore</p>
+                    <a class="site-footer__link" href="#footer">Inventory</a>
+                    <a class="site-footer__link" href="#footer">Financing</a>
+                    <a class="site-footer__link" href="#footer">Sell your car</a>
+                  </div>
+                  <div>
+                    <p class="site-footer__title">Contact</p>
+                    <address class="site-footer__contact">1234 Auto Row<br />Salt Lake City, UT<br />(801) 664-2117</address>
+                  </div>
+                </div>
+                <div class="site-footer__legal"><span>© 2026 AAN Motors</span><span>Privacy · Terms</span></div>
+              </div>
+            </footer>
+          </div>
+        </section>
+
+        <!-- ---------- TABLES ---------- -->
+        <section id="tables" class="ds-section">
+          <div class="ds-section__intro"><p class="eyebrow">Tables</p><h2>Tables</h2></div>
+
+          <h4>Zebra</h4>
+          <table class="table table-zebra">
+            <thead><tr><th>Year</th><th>Model</th><th>Miles</th><th>Price</th></tr></thead>
+            <tbody>
+              <tr><td>2024</td><td>Porsche 911 GT3 RS</td><td class="num">540</td><td class="num">$284,500</td></tr>
+              <tr><td>2024</td><td>Ferrari 296 GTB</td><td class="num">1,250</td><td class="num">$389,900</td></tr>
+              <tr><td>2023</td><td>Lamborghini Huracán STO</td><td class="num">2,980</td><td class="num">$364,500</td></tr>
+            </tbody>
+          </table>
+
+          <h4>Compare — sticky first column, mono numerics</h4>
+          <div class="ds-scroll-x">
+            <table class="table compare-table">
+              <thead><tr><th>Spec</th><th>911 GT3 RS</th><th>296 GTB</th><th>Huracán STO</th></tr></thead>
+              <tbody>
+                <tr><td>Horsepower</td><td class="num">518</td><td class="num">819</td><td class="num">631</td></tr>
+                <tr><td>0–60 mph</td><td class="num">3.2s</td><td class="num">2.9s</td><td class="num">3.0s</td></tr>
+                <tr><td>Price</td><td class="num">$284,500</td><td class="num">$389,900</td><td class="num">$364,500</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Hours</h4>
+          <table class="table hours-table">
+            <tbody>
+              <tr><td class="day">Mon–Fri</td><td class="time">9:00 – 19:00</td></tr>
+              <tr class="is-today"><td class="day">Saturday</td><td class="time">10:00 – 17:00</td></tr>
+              <tr><td class="day">Sunday</td><td class="time">Closed</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- ---------- FILTERS ---------- -->
+        <section id="filters" class="ds-section">
+          <div class="ds-section__intro"><p class="eyebrow">Filters</p><h2>SRP filter bar</h2></div>
+          <div class="filters">
+            <div class="filters__field form-field">
+              <label class="form-label" for="flt-make">Make</label>
+              <div class="select"><select class="form-control" id="flt-make"><option>Any make</option><option>Porsche</option><option>Ferrari</option></select></div>
+            </div>
+            <div class="filters__field form-field">
+              <label class="form-label" for="flt-model">Model</label>
+              <input class="form-control" id="flt-model" type="text" placeholder="Any model" />
+            </div>
+            <div class="filters__field form-field">
+              <label class="form-label" for="flt-price">Max price</label>
+              <input class="form-control" id="flt-price" type="number" placeholder="500000" />
+            </div>
+            <div class="filters__actions">
+              <div class="filters__field form-field">
+                <label class="form-label" for="flt-sort">Sort</label>
+                <div class="select"><select class="form-control" id="flt-sort"><option>Newest</option><option>Price ↑</option><option>Price ↓</option></select></div>
+              </div>
+            </div>
+          </div>
+          <div class="filters-active">
+            <span class="filters-active__label">Active</span>
+            <span class="tag tag-muted tag--primary tag-removable">Porsche<button class="tag__remove" type="button" aria-label="Remove">×</button></span>
+            <span class="tag tag-muted tag--primary tag-removable">Under $300k<button class="tag__remove" type="button" aria-label="Remove">×</button></span>
+            <span class="tag tag-muted tag--primary tag-removable">Low Miles<button class="tag__remove" type="button" aria-label="Remove">×</button></span>
+            <span class="filters__count">24 results</span>
+            <button class="btn btn-outline btn-pill btn-sm" type="button">Clear all</button>
+          </div>
+        </section>
+
+        <!-- ---------- PAGINATION ---------- -->
+        <section id="pagination" class="ds-section">
+          <div class="ds-section__intro"><p class="eyebrow">Pagination</p><h2>Pagination</h2></div>
+          <ul class="pagination">
+            <li class="page-item disabled"><a class="page-link" href="#pagination">‹</a></li>
+            <li class="page-item active"><a class="page-link" href="#pagination">1</a></li>
+            <li class="page-item"><a class="page-link" href="#pagination">2</a></li>
+            <li class="page-item"><a class="page-link" href="#pagination">3</a></li>
+            <li class="page-item"><a class="page-link" href="#pagination">…</a></li>
+            <li class="page-item"><a class="page-link" href="#pagination">12</a></li>
+            <li class="page-item"><a class="page-link" href="#pagination">›</a></li>
+          </ul>
+        </section>
+
+        <!-- ---------- BREADCRUMBS ---------- -->
+        <section id="breadcrumbs" class="ds-section">
+          <div class="ds-section__intro"><p class="eyebrow">Breadcrumbs</p><h2>Breadcrumbs</h2></div>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#breadcrumbs">Home</a></li>
+            <li class="breadcrumb-item"><a href="#breadcrumbs">Inventory</a></li>
+            <li class="breadcrumb-item"><a href="#breadcrumbs">Porsche</a></li>
+            <li class="breadcrumb-item active" aria-current="page">911 GT3 RS</li>
+          </ol>
+        </section>
+
+        <!-- ---------- ACCORDION ---------- -->
+        <section id="accordion" class="ds-section">
+          <div class="ds-section__intro"><p class="eyebrow">Accordion</p><h2>FAQ</h2></div>
+          <div class="accordion" id="faqAcc">
+            <div class="accordion__item">
+              <button class="accordion__q" type="button" data-toggle="collapse" data-target="#faq1" aria-expanded="true" aria-controls="faq1">Do you offer financing?<span class="accordion__icon"></span></button>
+              <div id="faq1" class="collapse show" data-parent="#faqAcc"><div class="accordion__panel-inner">Yes — competitive rates via multiple lenders, with pre-approval in minutes.</div></div>
+            </div>
+            <div class="accordion__item">
+              <button class="accordion__q" type="button" data-toggle="collapse" data-target="#faq2" aria-expanded="false" aria-controls="faq2">Can I trade in my vehicle?<span class="accordion__icon"></span></button>
+              <div id="faq2" class="collapse" data-parent="#faqAcc"><div class="accordion__panel-inner">Absolutely — get a wholesale-backed offer within 24 hours.</div></div>
+            </div>
+            <div class="accordion__item">
+              <button class="accordion__q" type="button" data-toggle="collapse" data-target="#faq3" aria-expanded="false" aria-controls="faq3">Do you ship nationwide?<span class="accordion__icon"></span></button>
+              <div id="faq3" class="collapse" data-parent="#faqAcc"><div class="accordion__panel-inner">Yes — enclosed transport anywhere in the continental US.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- ALERTS ---------- -->
+        <section id="alerts" class="ds-section">
+          <div class="ds-section__intro"><p class="eyebrow">Alerts</p><h2>Alerts</h2></div>
+          <div class="stack">
+            <div class="alert alert-success">Your inquiry was sent — we’ll reply within the hour.</div>
+            <div class="alert alert-info">3 new vehicles match your saved search.</div>
+            <div class="alert alert-warning">This vehicle has a sale pending.</div>
+            <div class="alert alert-danger alert-dismissible">Payment could not be processed.<button class="close" type="button" aria-label="Dismiss">×</button></div>
+          </div>
+        </section>
+
+        <!-- ---------- MODAL ---------- -->
+        <section id="modal" class="ds-section">
+          <div class="ds-section__intro"><p class="eyebrow">Modal</p><h2>Modal</h2></div>
+          <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#demoModal">Open modal</button>
+        </section>
+
+        <!-- ---------- SHADOWS (live preview) ---------- -->
+        <section id="shadows" class="ds-section">
+          <div class="ds-section__intro">
+            <p class="eyebrow">Shadows &amp; Elevation</p>
+            <h2>Elevation scale</h2>
+            <p class="lead">Live shadow tokens on card surfaces.</p>
+          </div>
+          <div class="ds-shadows">
+            <div class="ds-shadow-tile" data-shadow="shadow-card">$shadow-card</div>
+            <div class="ds-shadow-tile" data-shadow="shadow-card-hover">$shadow-card-hover</div>
+            <div class="ds-shadow-tile" data-shadow="shadow-dropdown">$shadow-dropdown</div>
+            <div class="ds-shadow-tile" data-shadow="shadow-modal">$shadow-modal</div>
+          </div>
+        </section>
+
+        <!-- ---------- MOTION & TRANSITIONS ---------- -->
+        <section id="motion" class="ds-section">
+          <div class="ds-section__intro">
+            <p class="eyebrow">Motion &amp; Transitions</p>
+            <h2>Motion</h2>
+            <p class="lead">Hover a track to run the dot. Calibrated to PDS standards.</p>
+          </div>
+
+          <h4>Durations</h4>
+          <div class="ds-motion-grid">
+            <div class="ds-motion-item ds-motion--fast"><div class="ds-motion-track" tabindex="0"><span class="ds-motion-dot"></span></div><span class="ds-note">$dur-fast · .15s · micro</span></div>
+            <div class="ds-motion-item ds-motion--base"><div class="ds-motion-track" tabindex="0"><span class="ds-motion-dot"></span></div><span class="ds-note">$dur-base · .25s · default</span></div>
+            <div class="ds-motion-item ds-motion--slow"><div class="ds-motion-track" tabindex="0"><span class="ds-motion-dot"></span></div><span class="ds-note">$dur-slow · .4s · modals/dropdowns</span></div>
+            <div class="ds-motion-item ds-motion--xl"><div class="ds-motion-track" tabindex="0"><span class="ds-motion-dot"></span></div><span class="ds-note">$dur-xl · 1.2s · spinner/skeleton</span></div>
+          </div>
+
+          <h4>Easings</h4>
+          <div class="ds-motion-grid">
+            <div class="ds-motion-item ds-motion--slow ds-motion--ease-io"><div class="ds-motion-track" tabindex="0"><span class="ds-motion-dot"></span></div><span class="ds-note">$ease-in-out · base (symmetric)</span></div>
+            <div class="ds-motion-item ds-motion--slow ds-motion--ease-out"><div class="ds-motion-track" tabindex="0"><span class="ds-motion-dot"></span></div><span class="ds-note">$ease-out · enter (decelerate)</span></div>
+            <div class="ds-motion-item ds-motion--slow ds-motion--ease-in"><div class="ds-motion-track" tabindex="0"><span class="ds-motion-dot"></span></div><span class="ds-note">$ease-in · exit (accelerate)</span></div>
+          </div>
+        </section>
+
+        <!-- ---------- SECTION PATTERNS (placeholder) ---------- -->
+        <section id="patterns" class="ds-section">
+          <div class="ds-section__intro">
+            <p class="eyebrow">Section Patterns</p>
+            <h2>Homepage sections</h2>
+            <p class="lead">Each pattern is assembled on the <a href="index.html">master homepage</a> using <span class="ds-label">.section</span> rhythm + the <span class="ds-label">.sec-head</span> pattern. Open a preview:</p>
+          </div>
+          <div class="ds-patterns">
+            <a class="ds-pattern" href="index.html#hero"><span class="ds-pattern__name">Hero</span><span class="ds-pattern__go">index.html#hero →</span></a>
+            <a class="ds-pattern" href="index.html#quick-search"><span class="ds-pattern__name">Quick search</span><span class="ds-pattern__go">index.html#quick-search →</span></a>
+            <a class="ds-pattern" href="index.html#featured"><span class="ds-pattern__name">Featured</span><span class="ds-pattern__go">index.html#featured →</span></a>
+            <a class="ds-pattern" href="index.html#sell-your-car"><span class="ds-pattern__name">Sell your car</span><span class="ds-pattern__go">index.html#sell-your-car →</span></a>
+            <a class="ds-pattern" href="index.html#services"><span class="ds-pattern__name">Services</span><span class="ds-pattern__go">index.html#services →</span></a>
+            <a class="ds-pattern" href="index.html#showcase"><span class="ds-pattern__name">Showcase (bleed)</span><span class="ds-pattern__go">index.html#showcase →</span></a>
+            <a class="ds-pattern" href="index.html#sell-your-car"><span class="ds-pattern__name">Media-split (bleed)</span><span class="ds-pattern__go">index.html#sell-your-car →</span></a>
+            <a class="ds-pattern" href="index.html#brands"><span class="ds-pattern__name">Brands</span><span class="ds-pattern__go">index.html#brands →</span></a>
+            <a class="ds-pattern" href="index.html#testimonials"><span class="ds-pattern__name">Testimonial</span><span class="ds-pattern__go">index.html#testimonials →</span></a>
+            <a class="ds-pattern" href="index.html#visit"><span class="ds-pattern__name">Visit</span><span class="ds-pattern__go">index.html#visit →</span></a>
+          </div>
+
+          <div class="ds-usage">
+            <p class="ds-usage__title">Hero fold contract</p>
+            <p><code>.hero--full</code>: fills the viewport under the sticky header — <code>height: calc(100svh - $header-h)</code> (fallback 100vh); content vertically centered, spec-strip pinned to the fold bottom, safe-area bottom padding; short landscape (&lt;560px tall) falls back to min-height so nothing clips. NOTHING below it may be visible before scroll — zero bleed at the fold.</p>
+            <p><code>.hero--compact</code>: intentionally shorter — <code>height: clamp(480px, 62svh, 640px)</code>; the next section MUST be visibly peeking above the fold (on 1080p desktop and common mobile heights). If the next section isn't visible, the height values are wrong — fix tokens, not content.</p>
+            <p>Both modes work with both hero styles — the <strong>full × compact</strong> × <strong>photo × plain</strong> 2×2 matrix is verified. Try the <strong>Hero · Full / Compact</strong> toggle (above the skin switcher) on <a href="index.html">the homepage</a>, and switch skins to flip photo ↔ plain (see <a href="#foundations">hero-style</a>).</p>
+          </div>
+
+          <h4>Stats band — optional pattern</h4>
+          <div class="ds-frame">
+            <div class="stats-band">
+              <div class="ds-mock-body">
+                <div class="stats-band__row">
+                  <div class="stat-cell"><span class="stat-cell__num">64</span><span class="stat-cell__label">In stock</span></div>
+                  <div class="stat-cell"><span class="stat-cell__num">17</span><span class="stat-cell__label">Avg days to sell</span></div>
+                  <div class="stat-cell"><span class="stat-cell__num">3,400+</span><span class="stat-cell__label">Cars sold</span></div>
+                  <div class="stat-cell"><span class="stat-cell__num">4.9</span><span class="stat-cell__label">Google rating</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="ds-note"><span class="ds-label">.stats-band</span> — DS-only pattern (removed from the homepage). Use when the hero omits the spec strip.</p>
+
+          <h4>Section surface + spacing modifiers</h4>
+          <div class="ds-mods">
+            <div class="ds-mod section--row"><span class="ds-label">.section--row</span></div>
+            <div class="ds-mod section--alt"><span class="ds-label">.section--alt</span></div>
+          </div>
+          <p class="ds-note"><span class="ds-label">.section--row</span> ($bg-row) / <span class="ds-label">.section--alt</span> ($bg-row-alt) alternate page backgrounds (subtle in every skin). <span class="ds-label">.section--tight</span> steps padding one down; <span class="ds-label">.section--flush</span> removes it. A photo band is its own visual beat — neighbours may share a bg.</p>
+
+          <h4>Bleed image family</h4>
+          <div class="ds-usage">
+            <p class="ds-usage__title">Bleed pattern usage</p>
+            <p><code>.showcase</code> — visual break, once per page, mid-scroll, never two stacked, content max 1 line + 1 link.</p>
+            <p><code>.media-split</code> — feature stories (consignment pitch, showroom intro); <code>--img-left</code> / <code>--img-right</code>, collapses to image-on-top on mobile.</p>
+            <p><code>.media-duo</code> — gallery moments (paired bleed images + optional caption).</p>
+            <p>One bleed pattern per two viewport-heights of scroll; don't chain bleeds back-to-back.</p>
+          </div>
+          <div class="ds-frame">
+            <div class="media-duo">
+              <div class="media-duo__grid">
+                <div class="media-duo__img"><img src="assets/img/demo/car-2.jpg" alt="" /></div>
+                <div class="media-duo__img"><img src="assets/img/demo/car-3.webp" alt="" /></div>
+              </div>
+              <div class="media-duo__caption">.media-duo — delivery day · Scottsdale</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- LIVE INVENTORY (placeholder) ---------- -->
+        <section id="inventory" class="ds-section">
+          <div class="ds-section__intro"><p class="eyebrow">Live Inventory</p><h2>Live inventory</h2></div>
+          <div class="ds-placeholder">Placeholder — live data integration in a later phase.</div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Demo modal (Bootstrap 4 markup) -->
+    <div class="modal fade" id="demoModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Request a test drive</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+          </div>
+          <div class="modal-body"><p>Confirm your details and we’ll schedule your visit.</p></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-tertiary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skin switcher (prototype demo) -->
+    <div class="skin-switch" role="group" aria-label="Theme skin">
+      <span class="skin-switch__label">Skin</span>
+      <button type="button" class="skin-switch__btn is-active" data-skin-set="obsidian">Obsidian</button>
+      <button type="button" class="skin-switch__btn" data-skin-set="gallery">Gallery</button>
+      <button type="button" class="skin-switch__btn" data-skin-set="aurum" title="Clone example — brand hue over neutral master">Aurum*</button>
+    </div>
+
+    <!-- Bootstrap 4.6.2 JS (behavior only): jQuery + bundle (incl. Popper),
+         matching production's self-hosted BS4 stack. -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Prototype UI behavior (extracted to assets/js/ui.js) -->
+    <script src="assets/js/ui.js" defer></script>
+  </body>
+</html>

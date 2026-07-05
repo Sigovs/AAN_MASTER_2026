@@ -1,0 +1,71 @@
+// ============================================================================
+// COMPONENTS / FOOTER — dark footer (bg-footer is dark in both skins, so the
+// foreground is always-light $fg-on-photo). 3 columns + legal bar. Tokens only.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+.site-footer {
+  padding-top: t.$space-16;
+  padding-bottom: t.$space-8;
+  background: t.$bg-footer;
+  color: rgba(t.$fg-on-photo, 0.72);
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: t.$space-12;
+  }
+
+  &__brand {
+    font-family: t.$font-display;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: t.$fg-on-photo;
+    margin-bottom: t.$space-4;
+  }
+
+  &__title {
+    margin-bottom: t.$space-4;
+    font-family: t.$font-mono;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(t.$fg-on-photo, 0.5);
+  }
+
+  &__link {
+    display: block;
+    padding: t.$space-1 0;
+    color: rgba(t.$fg-on-photo, 0.72);
+    text-decoration: none;
+
+    &:hover {
+      color: t.$fg-on-photo;
+    }
+  }
+
+  &__contact {
+    font-style: normal;
+    line-height: 1.9;
+  }
+
+  &__legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: t.$space-4;
+    justify-content: space-between;
+    margin-top: t.$space-12;
+    padding-top: t.$space-5;
+    border-top: 1px solid rgba(t.$fg-on-photo, 0.12);
+    font-family: t.$font-mono;
+    font-size: 12px;
+    color: rgba(t.$fg-on-photo, 0.5);
+  }
+}
+
+@media (max-width: (t.$bp-md - 1px)) {
+  .site-footer__grid {
+    grid-template-columns: 1fr;
+    gap: t.$space-8;
+  }
+}

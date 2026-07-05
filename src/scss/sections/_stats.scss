@@ -1,0 +1,15 @@
+// ============================================================================
+// SECTIONS / STATS — standalone stat-cell band on bg-row-alt. Tokens only.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+.stats-band {
+  background: t.$bg-row-alt;
+
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: t.$space-10 t.$space-12;
+  }
+}

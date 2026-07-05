@@ -1,0 +1,221 @@
+// ============================================================================
+// SECTIONS / SHOWCASE — bleed-image pattern family (visual breaks).
+//   .showcase     — full-bleed photo band (parallax-lite on desktop pointers)
+//   .media-split  — bleed image + contained text (--img-left / --img-right)
+//   .media-duo    — paired bleed images with a thin seam
+// Tokens only. Photo scrims are skin-independent (always dark for legibility).
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+// ---------------------------------------------------------------------------
+// 1. .showcase — full-bleed photo band. Photo via --showcase-img (inline),
+//    bottom-left minimal content, no buttons/cards. A pause.
+// ---------------------------------------------------------------------------
+.showcase {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(420px, 55svh, 640px);
+  overflow: hidden;
+  color: t.$fg-on-photo;
+
+  // Real <img> layer (with overhang so transform-parallax never reveals edges).
+  &__media {
+    position: absolute;
+    inset: -8% 0;
+    z-index: 0;
+    will-change: transform;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.72) 0%,
+      rgba(0, 0, 0, 0.3) 42%,
+      rgba(0, 0, 0, 0.08) 100%
+    );
+  }
+
+  &__inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: t.$space-12;
+  }
+
+  .eyebrow {
+    color: rgba(t.$fg-on-photo, 0.8);
+  }
+
+  &__title {
+    margin: t.$space-3 0 0;
+    font-family: t.$font-display;
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: 0.005em;
+    font-size: clamp(1.75rem, 1.1rem + 2.6vw, 3rem);
+    color: t.$fg-on-photo;
+  }
+
+  // "Our story →" — a light on-photo link (legible in every skin).
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: t.$space-2;
+    margin-top: t.$space-5;
+    color: t.$fg-on-photo;
+    font-family: t.$font-mono;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  &--center {
+    align-items: center;
+    text-align: center;
+
+    .showcase__inner {
+      max-width: 44rem;
+      margin-inline: auto;
+    }
+    .showcase__link {
+      justify-content: center;
+    }
+  }
+}
+
+// Parallax-lite is transform-based (translateY), driven by ui.js, and only on
+// desktop pointer devices / not under prefers-reduced-motion. No CSS needed.
+
+// ---------------------------------------------------------------------------
+// 2. .media-split — image bleeds to the viewport edge, text stays contained.
+// Full-bleed breakout accounts for the scrollbar (100% = parent width, which
+// excludes the scrollbar; 100vw includes it).
+// ---------------------------------------------------------------------------
+.media-split {
+  width: 100vw;
+  max-width: 100vw;
+  margin-inline: calc((100% - 100vw) / 2);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+
+  &__media {
+    position: relative;
+    min-height: 480px;
+    overflow: hidden;
+
+    img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: t.$space-8;
+    max-width: 40rem;
+    padding: t.$section-pt t.$space-10 t.$section-pb;
+  }
+
+  &--img-left {
+    .media-split__media {
+      grid-column: 1;
+    }
+    .media-split__text {
+      grid-column: 2;
+      justify-self: start; // sit near the centre seam (reads "contained")
+    }
+  }
+  &--img-right {
+    .media-split__media {
+      grid-column: 2;
+    }
+    .media-split__text {
+      grid-column: 1;
+      justify-self: end;
+    }
+  }
+}
+
+// Mobile: image on top (full-bleed, 56vw), text below in the container.
+@media (max-width: (t.$bp-md - 1px)) {
+  .media-split {
+    grid-template-columns: 1fr;
+
+    &__media {
+      grid-column: 1;
+      order: -1;
+      min-height: 0;
+      height: 56vw;
+    }
+    &__text {
+      grid-column: 1;
+      justify-self: stretch;
+      max-width: none;
+      padding: t.$section-pt-mobile t.$container-px-mobile t.$section-pb-mobile;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 3. .media-duo — two bleed images with a thin seam + optional caption bar.
+// ---------------------------------------------------------------------------
+.media-duo {
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: t.$grid-gutter; // seam
+    height: clamp(360px, 48svh, 560px);
+  }
+
+  &__img {
+    position: relative;
+    overflow: hidden;
+
+    img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__caption {
+    margin-top: t.$space-4;
+    text-align: center;
+    font-family: t.$font-mono;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: t.$color-muted;
+  }
+}
+
+@media (max-width: (t.$bp-sm - 1px)) {
+  .media-duo__grid {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .media-duo__img {
+    height: 56vw;
+  }
+}

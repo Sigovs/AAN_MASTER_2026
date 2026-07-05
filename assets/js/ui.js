@@ -1,0 +1,242 @@
+// ============================================================================
+// AAN prototype UI behavior (shared by index.html + design-system.html).
+// Loaded with `defer`. All hooks are query-guarded, so the design-system-only
+// bits are no-ops on the empty index shell.
+// ============================================================================
+(function () {
+  var root = document.documentElement;
+
+  // -- Dropzone dragover (demo) ---------------------------------------------
+  var dz = document.getElementById('ds-dropzone');
+  if (dz) {
+    ['dragenter', 'dragover'].forEach(function (e) {
+      dz.addEventListener(e, function (ev) {
+        ev.preventDefault();
+        dz.classList.add('is-dragover');
+      });
+    });
+    ['dragleave', 'drop'].forEach(function (e) {
+      dz.addEventListener(e, function (ev) {
+        ev.preventDefault();
+        dz.classList.remove('is-dragover');
+      });
+    });
+  }
+
+  // -- Delegated clicks: removable chips/rows/alerts + save pins ------------
+  document.addEventListener('click', function (ev) {
+    var rm = ev.target.closest('.tag__remove, .dropzone-file__remove, .alert .close');
+    if (rm) {
+      var host = rm.closest('.tag, .dropzone-file, .alert');
+      if (host) host.remove();
+      return;
+    }
+    var pin = ev.target.closest('.car-pin[data-save]');
+    if (pin) {
+      pin.classList.toggle('is-active'); // save (heart) toggle
+    }
+  });
+
+  // -- Mobile off-canvas demo — scoped to the mockup frame ------------------
+  document.addEventListener('click', function (ev) {
+    var tgl = ev.target.closest('[data-nav-demo-toggle]');
+    var closer = ev.target.closest('[data-nav-demo-close]');
+    var trigger = tgl || closer;
+    if (!trigger) return;
+    var frame = trigger.closest('.ds-frame');
+    if (!frame) return;
+    var panel = frame.querySelector('.nav-offcanvas--contained');
+    var back = frame.querySelector('.nav-backdrop--contained');
+    var toggle = frame.querySelector('.nav-toggle');
+    var open = tgl ? !(panel && panel.classList.contains('is-open')) : false;
+    if (panel) panel.classList.toggle('is-open', open);
+    if (back) back.classList.toggle('is-open', open);
+    if (toggle) toggle.classList.toggle('is-open', open); // hamburger → X
+  });
+
+  // -- Foundations swatches: live custom-property values (match active skin) -
+  function refreshSwatches() {
+    var cs = getComputedStyle(root);
+    document.querySelectorAll('.ds-swatch').forEach(function (sw) {
+      var chip = sw.querySelector('.ds-swatch__chip');
+      var val = sw.querySelector('.ds-swatch__value');
+      if (!chip || !val) return;
+      var v = cs.getPropertyValue('--' + chip.getAttribute('data-token')).trim();
+      if (v) val.textContent = v; // fixed (non-custom-prop) tokens keep their label
+    });
+  }
+
+  // -- Font panel: name each slot's resolved family live from computed CSS ---
+  function readFontNames() {
+    document.querySelectorAll('.ds-font-block').forEach(function (block) {
+      var pan = block.querySelector('.ds-font-pan');
+      var out = block.querySelector('.ds-font-name');
+      if (!pan || !out) return;
+      var stack = getComputedStyle(pan).fontFamily;
+      out.textContent = stack.split(',')[0].trim().replace(/^["']|["']$/g, '');
+      out.title = stack;
+    });
+  }
+
+  refreshSwatches();
+  readFontNames();
+
+  // -- Skin switcher — toggle data-skin on <html> (DOM only, no storage) ----
+  document.querySelectorAll('.skin-switch__btn').forEach(function (b) {
+    b.addEventListener('click', function () {
+      root.setAttribute('data-skin', b.getAttribute('data-skin-set'));
+      document.querySelectorAll('.skin-switch__btn').forEach(function (x) {
+        x.classList.toggle('is-active', x === b);
+      });
+      refreshSwatches();
+    });
+  });
+
+  // -- Hero Full/Compact demo toggle (index.html) ---------------------------
+  var heroEl = document.querySelector('.hero');
+  if (heroEl) {
+    document.querySelectorAll('[data-hero-set]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var mode = b.getAttribute('data-hero-set'); // full | compact
+        heroEl.classList.toggle('hero--full', mode === 'full');
+        heroEl.classList.toggle('hero--compact', mode === 'compact');
+        document.querySelectorAll('[data-hero-set]').forEach(function (x) {
+          x.classList.toggle('is-active', x === b);
+        });
+      });
+    });
+  }
+
+  // -- Real site-header off-canvas (index.html homepage) --------------------
+  // Distinct from the DS demo (which uses the *--contained variants).
+  var siteOc = document.querySelector('.nav-offcanvas:not(.nav-offcanvas--contained)');
+  if (siteOc) {
+    var siteBd = document.querySelector('.nav-backdrop:not(.nav-backdrop--contained)');
+    var siteTg = document.querySelector('.site-header .nav-toggle');
+    document.addEventListener('click', function (ev) {
+      var t = ev.target.closest('[data-site-nav-toggle]');
+      var c = ev.target.closest('[data-site-nav-close]');
+      if (!t && !c) return;
+      var open = t ? !siteOc.classList.contains('is-open') : false;
+      siteOc.classList.toggle('is-open', open);
+      if (siteBd) siteBd.classList.toggle('is-open', open);
+      if (siteTg) siteTg.classList.toggle('is-open', open);
+    });
+  }
+
+  // -- Featured: swap skeletons → real cards after a simulated load ---------
+  var featured = document.querySelector('.featured');
+  if (featured && !featured.classList.contains('is-loaded')) {
+    setTimeout(function () {
+      featured.classList.add('is-loaded');
+    }, 600);
+  }
+
+  // -- Showcase parallax-lite (transform translateY) ------------------------
+  // Desktop pointer devices only; off under prefers-reduced-motion.
+  var reduceMo = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var pxMedia = document.querySelectorAll('.showcase__media');
+  var canParallax =
+    window.matchMedia &&
+    window.matchMedia('(hover: hover)').matches &&
+    window.innerWidth >= 1024 &&
+    !reduceMo;
+  if (pxMedia.length && canParallax) {
+    var pxTicking = false;
+    var runParallax = function () {
+      var vh = window.innerHeight;
+      pxMedia.forEach(function (m) {
+        var r = m.parentElement.getBoundingClientRect();
+        var progress = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
+        progress = Math.max(-1, Math.min(1, progress));
+        m.style.transform = 'translateY(' + (progress * 6).toFixed(2) + '%)'; // ±6%
+      });
+      pxTicking = false;
+    };
+    var onScrollPx = function () {
+      if (!pxTicking) {
+        requestAnimationFrame(runParallax);
+        pxTicking = true;
+      }
+    };
+    window.addEventListener('scroll', onScrollPx, { passive: true });
+    window.addEventListener('resize', onScrollPx);
+    runParallax();
+  }
+
+  // -- Stat counters — count up WHEN SCROLLED INTO VIEW (no loop) -----------
+  // Plays 0 → value on entering the viewport; re-arms when it leaves so it
+  // re-counts on the next visit. Static final value under prefers-reduced-motion.
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var COUNT_DUR = 1200;
+  var counters = [];
+
+  document.querySelectorAll('.stat-cell__num').forEach(function (el) {
+    var raw = (el.getAttribute('data-count') || el.textContent).trim();
+    var m = raw.match(/^([\d.,]+)(.*)$/); // number + optional suffix (e.g. "3,400+")
+    if (!m) return;
+    var numStr = m[1];
+    var suffix = m[2] || '';
+    var target = parseFloat(numStr.replace(/,/g, ''));
+    if (isNaN(target)) return;
+    el.setAttribute('data-count', raw); // preserve the target
+    var decimals = (numStr.split('.')[1] || '').length;
+    var grouped = numStr.indexOf(',') !== -1;
+
+    function fmt(v) {
+      var s = v.toFixed(decimals);
+      if (grouped) {
+        var parts = s.split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        s = parts.join('.');
+      }
+      return s + suffix;
+    }
+
+    var playing = false;
+    function play() {
+      if (reduceMotion) {
+        el.textContent = fmt(target);
+        return;
+      }
+      if (playing) return;
+      playing = true;
+      var start = null;
+      el.textContent = fmt(0);
+      requestAnimationFrame(function step(ts) {
+        if (start === null) start = ts;
+        var p = Math.min((ts - start) / COUNT_DUR, 1);
+        el.textContent = fmt(target * (1 - Math.pow(1 - p, 3))); // easeOutCubic
+        if (p < 1) {
+          requestAnimationFrame(step);
+        } else {
+          el.textContent = fmt(target);
+          playing = false;
+        }
+      });
+    }
+    function arm() {
+      if (!playing) el.textContent = fmt(0); // reset for the next scroll-in
+    }
+    counters.push({ el: el, play: play, arm: arm });
+  });
+
+  if (counters.length) {
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (e) {
+            var c = counters.filter(function (x) { return x.el === e.target; })[0];
+            if (!c) return;
+            if (e.isIntersecting) c.play();
+            else c.arm();
+          });
+        },
+        { threshold: 0.4 }
+      );
+      counters.forEach(function (c) { io.observe(c.el); });
+    } else {
+      counters.forEach(function (c) { c.play(); }); // no IO support → just play once
+    }
+  }
+})();

@@ -1,0 +1,55 @@
+// ============================================================================
+// SECTIONS / SELL-YOUR-CAR — two-column: copy left, 3-step list right.
+// Tokens only.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+.sell__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: t.$space-12;
+  align-items: center;
+
+  @media (max-width: (t.$bp-md - 1px)) {
+    grid-template-columns: 1fr;
+    gap: t.$space-10;
+  }
+}
+
+.sell__title em {
+  font-style: italic;
+  color: t.$color-primary;
+}
+
+.sell-step {
+  display: flex;
+  gap: t.$space-5;
+  padding: t.$space-5 0;
+  border-top: 1px solid t.$color-border;
+
+  &:last-child {
+    border-bottom: 1px solid t.$color-border;
+  }
+
+  &__num {
+    flex: 0 0 auto;
+    font-family: t.$font-mono;
+    font-size: 13px;
+    color: t.$color-muted;
+    padding-top: 2px;
+  }
+
+  &__title {
+    margin: 0 0 t.$space-1;
+    font-family: t.$font-display;
+    font-weight: 500;
+    font-size: 18px;
+    color: t.$color-heading;
+  }
+
+  &__copy {
+    margin: 0;
+    color: t.$color-muted;
+    font-size: 0.9375rem;
+  }
+}

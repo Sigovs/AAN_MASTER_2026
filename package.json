@@ -1,0 +1,15 @@
+{
+  "name": "aan-master-2026",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AAN Master 2026 design system prototype — Phase 1 scaffold + token layer.",
+  "scripts": {
+    "watch": "sass --watch src/scss/main.scss:dist/css/main.css --style=expanded",
+    "serve": "live-server --port=5173",
+    "build": "sass src/scss/main.scss:dist/css/main.css --style=compressed --no-source-map"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "sass": "^1.77.0"
+  }
+}

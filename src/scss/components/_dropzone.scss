@@ -1,0 +1,162 @@
+// ============================================================================
+// COMPONENTS / DROPZONE  (PHASE 4a)
+// File/image upload target. Dashed border, centered prompt, dragover state and
+// an added-files list. Every value from tokens.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: t.$space-3;
+  padding: t.$space-8; // 32px
+  border: 1px dashed t.$color-border;
+  border-radius: t.$radius-md;
+  background: t.$field-bg;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color t.$dur-fast t.$ease, background-color t.$dur-fast t.$ease;
+
+  &:hover {
+    border-color: t.$color-muted;
+  }
+
+  // Active drag.
+  &.is-dragover {
+    border-color: t.$color-primary;
+    background: rgba(t.$color-primary, 0.04);
+  }
+
+  &__icon {
+    width: t.$space-10; // 40px
+    height: t.$space-10;
+    color: t.$color-muted;
+  }
+
+  &__text {
+    color: t.$color-text;
+    font-size: 1rem;
+  }
+
+  &__browse {
+    color: t.$color-accent;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Added files list
+// ---------------------------------------------------------------------------
+.dropzone-files {
+  display: flex;
+  flex-direction: column;
+  gap: t.$space-2; // 8px between rows
+  margin-top: t.$space-4;
+  list-style: none;
+  padding: 0;
+}
+
+.dropzone-file {
+  display: flex;
+  align-items: center;
+  gap: t.$space-3;
+  padding: t.$space-2 t.$space-3;
+  border: 1px solid t.$color-border;
+  border-radius: t.$radius-sm;
+  background: t.$surface-card;
+
+  &__name {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: t.$color-text;
+    font-size: 0.9375rem;
+  }
+
+  &__size {
+    flex: 0 0 auto;
+    font-family: t.$font-mono;
+    font-size: 12px;
+    color: t.$color-muted;
+  }
+
+  &__remove {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5em;
+    height: 1.5em;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: t.$color-muted;
+    font-size: 1.1em;
+    line-height: 1;
+    cursor: pointer;
+    transition: color t.$dur-fast t.$ease;
+
+    &:hover {
+      color: t.$color-danger;
+    }
+  }
+}
+
+// ===========================================================================
+// REAL AAN DROPZONE MARKUP  (reconciliation — no HTML changes)
+// The JS form builder (forms_init.php) emits the uploader as: .uploader-wrap
+// (#file_wrap) > .uploader_text + #drop-area.drop-area + .upload_button
+// (.btn.btn-primary) + .preview (injected thumbnails). Our dropzone styling
+// maps onto those classes.
+// NOTE: the dragover class toggled by forms.js could not be confirmed — the
+// theme's scripts/ folder was not shipped in the reference — so base plus the
+// common state hooks (.is-dragover / .dragover / .highlight) are provided.
+// ===========================================================================
+.drop-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: t.$space-3;
+  padding: t.$space-8;
+  border: 1px dashed t.$color-border;
+  border-radius: t.$radius-md;
+  background: t.$field-bg;
+  text-align: center;
+  color: t.$color-text;
+  cursor: pointer;
+  transition: border-color t.$dur-fast t.$ease, background-color t.$dur-fast t.$ease;
+
+  &:hover {
+    border-color: t.$color-muted;
+  }
+
+  &.is-dragover,
+  &.dragover,
+  &.highlight {
+    border-color: t.$color-primary;
+    background: rgba(t.$color-primary, 0.04);
+  }
+}
+
+.uploader_text {
+  color: t.$color-muted;
+  font-size: 0.9375rem;
+}
+
+.upload_button {
+  margin-top: t.$space-3;
+}
+
+// Thumbnail/row list injected after upload.
+.preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: t.$space-2;
+  margin-top: t.$space-4;
+}

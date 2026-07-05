@@ -1,0 +1,32 @@
+// ============================================================================
+// SECTIONS / FEATURED — sec-head + 3-card grid. Skeletons show first, then
+// ui.js swaps in the real cards (.is-loaded) after a simulated 600ms load.
+// Tokens only.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+.featured__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: t.$grid-gutter;
+
+  @media (max-width: (t.$bp-lg - 1px)) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: (t.$bp-sm - 1px)) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Loading swap: skeletons visible until .featured gains .is-loaded.
+.featured__cards {
+  display: none;
+}
+.featured.is-loaded {
+  .featured__skeletons {
+    display: none;
+  }
+  .featured__cards {
+    display: grid;
+  }
+}

@@ -1,0 +1,114 @@
+// ============================================================================
+// BOOTSTRAP BRIDGE  (Bootstrap 4)
+// The ONLY place our tokens meet Bootstrap. Prototype + production target
+// Bootstrap 4 (4.6 prototype full CSS, 4.0 production), whose buttons are
+// PRECOMPILED — no --bs-* custom properties (BS5) — so we map the Bootstrap
+// button classes to tokens with explicit properties.
+//
+// The brand colors are now runtime custom properties (skinnable), so hover/
+// active shades use CSS color-mix() (darken toward black) instead of Sass
+// color.scale() — the shade re-computes per skin at runtime.
+//
+// SPECIFICITY: the full BS4 stylesheet ships high-specificity interactive rules,
+// so mappings use compound `.btn.btn-*` selectors, qualify `:active` with the
+// same `:not()` pattern BS4 uses, and clear BS4's focus glow so our token
+// focus-visible ring (components/_buttons) shows.
+// ============================================================================
+@use 'aan-theme-kit' as t;
+
+// Clear Bootstrap 4's default button focus glow (our focus-visible ring wins).
+.btn:focus,
+.btn.focus {
+  box-shadow: none;
+}
+
+// -- .btn-primary -----------------------------------------------------------
+.btn.btn-primary {
+  background-color: t.$color-primary;
+  border-color: t.$color-primary;
+  color: t.$on-primary;
+
+  &:hover,
+  &:focus {
+    background-color: color-mix(in srgb, t.$color-primary, #000 12%);
+    border-color: color-mix(in srgb, t.$color-primary, #000 12%);
+    color: t.$on-primary;
+  }
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active {
+    background-color: color-mix(in srgb, t.$color-primary, #000 22%);
+    border-color: color-mix(in srgb, t.$color-primary, #000 22%);
+    color: t.$on-primary;
+  }
+}
+
+// -- .btn-secondary ---------------------------------------------------------
+.btn.btn-secondary {
+  background-color: t.$color-secondary;
+  border-color: t.$color-secondary;
+  color: t.$color-heading;
+
+  &:hover,
+  &:focus {
+    background-color: color-mix(in srgb, t.$color-secondary, #000 12%);
+    border-color: color-mix(in srgb, t.$color-secondary, #000 12%);
+    color: t.$color-heading;
+  }
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active {
+    background-color: color-mix(in srgb, t.$color-secondary, #000 22%);
+    border-color: color-mix(in srgb, t.$color-secondary, #000 22%);
+    color: t.$color-heading;
+  }
+}
+
+// -- .btn-outline-primary ---------------------------------------------------
+.btn.btn-outline-primary {
+  background-color: transparent;
+  border-color: t.$color-primary;
+  color: t.$color-primary;
+
+  &:hover,
+  &:focus {
+    background-color: t.$color-primary;
+    border-color: t.$color-primary;
+    color: t.$on-primary;
+  }
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active {
+    background-color: color-mix(in srgb, t.$color-primary, #000 12%);
+    border-color: color-mix(in srgb, t.$color-primary, #000 12%);
+    color: t.$on-primary;
+  }
+}
+
+// -- .btn-danger (used by the production theme kit) -------------------------
+.btn.btn-danger {
+  background-color: t.$color-danger;
+  border-color: t.$color-danger;
+  color: t.$surface-card;
+
+  &:hover,
+  &:focus {
+    background-color: color-mix(in srgb, t.$color-danger, #000 12%);
+    border-color: color-mix(in srgb, t.$color-danger, #000 12%);
+    color: t.$surface-card;
+  }
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active {
+    background-color: color-mix(in srgb, t.$color-danger, #000 22%);
+    border-color: color-mix(in srgb, t.$color-danger, #000 22%);
+    color: t.$surface-card;
+  }
+}
+
+// -- .btn-link (tertiary) ---------------------------------------------------
+.btn.btn-link {
+  color: t.$color-primary;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: color-mix(in srgb, t.$color-primary, #000 14%);
+  }
+}

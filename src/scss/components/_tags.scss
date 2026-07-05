@@ -1,0 +1,196 @@
+// ============================================================================
+// COMPONENTS / TAGS  (PHASE 4a)
+// Status tags in three render variants (solid / outline / muted) across a set
+// of tones. The 12 named statuses each pick a tone in the markup, so the tone
+// palette stays small and DRY. Every value from tokens.
+//
+// Status → tone mapping (applied in HTML):
+//   primary : New Arrival · Certified Pre-Owned · Lease Special   (merch)
+//   success : Reduced · Just Serviced                             (positive state)
+//   warning : Sale Pending · On Hold                              (pending state)
+//   danger  : Sold                                                (terminal state)
+//   neutral : Coming Soon · In Transit · One Owner · Low Miles    (informational)
+// ============================================================================
+@use 'sass:color';
+@use '../aan-theme-kit' as t;
+
+$_tag-tones: (
+  primary: t.$color-primary,
+  success: t.$color-success,
+  warning: t.$color-warning,
+  danger: t.$color-danger,
+  info: t.$color-info,
+);
+
+// ---------------------------------------------------------------------------
+// Base
+// ---------------------------------------------------------------------------
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: t.$space-2;
+  height: t.$tag-size-md; // 26px
+  padding-inline: t.$tag-px; // 12px
+  border: 1px solid transparent;
+  border-radius: t.$tag-radius; // 4px
+  font-family: t.$tag-font; // mono
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: t.$tag-letter-spacing; // .14em
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tag-sm {
+  height: t.$tag-size-sm; // 20px
+  padding-inline: t.$space-2; // 8px
+  font-size: 10px;
+}
+
+// ---------------------------------------------------------------------------
+// Render variants × tones
+// ---------------------------------------------------------------------------
+@each $tone, $c in $_tag-tones {
+  .tag-solid.tag--#{$tone} {
+    background: $c;
+    border-color: $c;
+    color: t.$surface-card;
+  }
+  .tag-outline.tag--#{$tone} {
+    color: $c;
+    border-color: $c;
+  }
+  .tag-muted.tag--#{$tone} {
+    background: rgba($c, 0.1);
+    color: $c;
+  }
+}
+
+// Primary solid uses the dedicated on-primary fg (primary is skin-neutral now).
+.tag-solid.tag--primary {
+  color: t.$on-primary;
+}
+
+// Neutral tone (informational)
+.tag-solid.tag--neutral {
+  background: t.$bg-row-alt;
+  border-color: t.$bg-row-alt;
+  color: t.$color-text;
+}
+.tag-outline.tag--neutral {
+  color: t.$color-text;
+  border-color: t.$color-border;
+}
+.tag-muted.tag--neutral {
+  background: rgba(t.$color-muted, 0.12);
+  color: t.$color-text;
+}
+
+// Outline is designed to sit on photos: translucent, blurred backdrop so the
+// colored text stays legible over imagery.
+.tag-outline {
+  background: rgba(t.$surface-card, 0.55);
+  backdrop-filter: t.$blur-frosted;
+  -webkit-backdrop-filter: t.$blur-frosted;
+}
+
+// ---------------------------------------------------------------------------
+// Extras
+// ---------------------------------------------------------------------------
+// Leading status dot.
+.tag-dot::before {
+  content: '';
+  width: 0.45em;
+  height: 0.45em;
+  border-radius: 50%;
+  background: currentColor;
+  flex: 0 0 auto;
+}
+
+// Inline icon.
+.tag__icon {
+  display: inline-flex;
+  width: 0.9em;
+  height: 0.9em;
+  flex: 0 0 auto;
+}
+
+// Removable × button.
+.tag__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  margin-left: t.$space-1;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: 1.15em;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity t.$dur-fast t.$ease;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+// Counter, e.g. "Compare (2)".
+.tag__count {
+  margin-left: t.$space-1;
+  opacity: 0.75;
+}
+
+// ===========================================================================
+// REAL AAN TAG / BADGE MARKUP  (reconciliation — no HTML changes)
+// Production uses a BARE `.tag` (bordered chip + leading dot) for stamps, and
+// card status badges `.card-badge` / `.card-badge--cpo` / `.card-badge--new`.
+// The Sold / Sale Pending / Lease Special banners are `.image-overlay` PNGs
+// (see _vehicle-card), NOT tags.
+// ===========================================================================
+
+// Bare production `.tag` (carries no render-variant/tone class): the base .tag
+// above already sets mono/uppercase/padding/transparent border — here we add
+// the visible border + leading dot that define their stamp.
+.tag:not([class*='tag-']) {
+  border-color: t.$color-border;
+  color: t.$color-text;
+
+  &::before {
+    content: '';
+    width: 0.45em;
+    height: 0.45em;
+    border-radius: 50%;
+    background: t.$color-accent;
+    flex: 0 0 auto;
+  }
+}
+
+// Themable card status badges (CPO / New Arrival).
+.card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: t.$space-2;
+  height: t.$tag-size-md;
+  padding-inline: t.$tag-px;
+  border-radius: t.$tag-radius;
+  font-family: t.$tag-font;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: t.$tag-letter-spacing;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: t.$surface-card;
+
+  &--cpo {
+    background: t.$color-accent;
+  }
+  &--new {
+    background: t.$color-success;
+  }
+}

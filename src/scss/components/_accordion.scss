@@ -1,0 +1,82 @@
+// ============================================================================
+// COMPONENTS / ACCORDION — FAQ style, plus/minus indicator, BS4 collapse
+// compatible (panel opens $dur-slow $ease-out; icon rotates $dur-base).
+// Tokens only.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+.accordion {
+  border-top: 1px solid t.$color-border;
+}
+
+.accordion__item {
+  border-bottom: 1px solid t.$color-border;
+}
+
+.accordion__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: t.$space-4;
+  width: 100%;
+  padding: t.$space-4 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: t.$font-body;
+  font-weight: 500;
+  font-size: 16px;
+  color: t.$color-heading;
+}
+
+// Plus → minus indicator.
+.accordion__icon {
+  position: relative;
+  flex: 0 0 auto;
+  width: 1em;
+  height: 1em;
+  transition: transform t.$dur-base t.$ease;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    background: t.$color-muted;
+  }
+  &::before {
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    transform: translateY(-50%);
+  }
+  &::after {
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    transform: translateX(-50%);
+    transition: opacity t.$dur-base t.$ease;
+  }
+}
+
+// Expanded (BS4 sets aria-expanded="true" on the trigger).
+.accordion__q[aria-expanded='true'] .accordion__icon {
+  transform: rotate(180deg);
+
+  &::after {
+    opacity: 0; // becomes a minus
+  }
+}
+
+.accordion__panel-inner {
+  padding-bottom: t.$space-5;
+  color: t.$color-text;
+  max-width: 68ch;
+}
+
+// BS4 collapse height animation timing.
+.accordion .collapsing {
+  transition: height t.$dur-slow t.$ease-out;
+}

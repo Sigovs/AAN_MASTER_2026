@@ -1,0 +1,183 @@
+// ============================================================================
+// SECTIONS / HERO — full-viewport-ish hero (photo backdrop + plain variant).
+// Photo mode: dark scrim + $fg-on-photo text. .hero--plain: bg-page + glow.
+// Tokens only.
+// ============================================================================
+@use 'sass:map';
+@use '../aan-theme-kit' as t;
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: clamp(480px, 62svh, 640px); // sensible default (= compact)
+  overflow: hidden;
+  padding-block: t.$space-16 t.$space-20; // pb > pt
+  color: t.$fg-on-photo;
+
+  &__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.5) 52%,
+      rgba(0, 0, 0, 0.28) 100%
+    );
+  }
+
+  &__inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+
+  &__content {
+    max-width: 42rem;
+  }
+
+  &__title {
+    margin: 0;
+    font-family: t.$font-display;
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: 0.005em;
+    font-size: clamp(2.75rem, 1.6rem + 5vw, 5.75rem); // 44–92px
+
+    em {
+      font-style: italic;
+      color: t.$color-primary; // brand-hue accent word (pops on aurum)
+    }
+  }
+
+  &__lead {
+    margin-top: t.$space-5;
+    max-width: 46ch;
+    font-size: 17px;
+    color: rgba(t.$fg-on-photo, 0.82);
+  }
+
+  &__cta {
+    margin-top: t.$space-8;
+    display: flex;
+    flex-wrap: wrap;
+    gap: t.$space-4;
+  }
+
+  // Two contracted HEIGHT modes — see the "Hero fold contract" (CLAUDE.md + DS).
+  // full: fills the viewport under the header (zero bleed). content centered,
+  // spec-strip pinned to the bottom. compact: shorter, next section must peek.
+  &--full {
+    height: 100vh; // fallback
+    height: calc(100svh - #{t.$header-h});
+    align-items: stretch; // let the inner own the column
+    // Safe-area / breathing room at the bottom (notch home indicator).
+    padding-bottom: max(#{t.$space-16}, env(safe-area-inset-bottom, 0px));
+
+    .hero__inner {
+      display: flex;
+      flex-direction: column;
+    }
+    .hero__content {
+      margin-top: auto; // top spacer → content sits ~centered
+    }
+    .hero__stats {
+      margin-top: auto; // bottom spacer → spec-strip to the fold bottom
+    }
+  }
+
+  &--compact {
+    height: clamp(480px, 62svh, 640px); // shorter — next section peeks
+  }
+
+  // Spec strip — 4 stat cells in a bordered row.
+  &__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: t.$space-8 t.$space-12;
+    margin-top: t.$space-12;
+    padding-top: t.$space-6;
+    border-top: 1px solid rgba(t.$fg-on-photo, 0.2);
+  }
+
+  .stat-cell__num {
+    color: t.$fg-on-photo;
+  }
+  .stat-cell__label {
+    color: rgba(t.$fg-on-photo, 0.6);
+  }
+}
+
+// Photo-free variant — bg-page + radial glow, normal (skin) text colors.
+@mixin hero-plain {
+  background: t.$bg-page;
+  color: t.$color-text;
+
+  .hero__media,
+  .hero__scrim {
+    display: none;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: radial-gradient(
+      55% 55% at 28% 32%,
+      color-mix(in srgb, t.$color-primary, transparent 86%),
+      transparent 70%
+    );
+  }
+
+  .hero__lead {
+    color: t.$color-muted;
+  }
+  .hero__stats {
+    border-top-color: t.$color-border;
+  }
+  .stat-cell__num {
+    color: t.$color-heading;
+  }
+  .stat-cell__label {
+    color: t.$color-muted;
+  }
+}
+
+// Manual modifier (usable anywhere).
+.hero--plain {
+  @include hero-plain;
+}
+
+// SKIN-DRIVEN: any skin whose $hero-style token is `plain` auto-restyles the
+// hero to plain — pure-CSS via [data-skin], so switching skins flips it with no
+// JS and no flash. The photo markup stays in the DOM, just restyled.
+@each $skin, $vars in t.$skins {
+  @if map.get($vars, 'hero-style') == plain {
+    :root[data-skin='#{$skin}'] .hero {
+      @include hero-plain;
+    }
+  }
+}
+
+// Short landscape viewports: --full must never clip its content — fall back to
+// min-height so the hero can grow and the page scrolls normally.
+@media (max-height: 560px) {
+  .hero--full {
+    height: auto;
+    min-height: calc(100svh - #{t.$header-h});
+  }
+}

@@ -1,0 +1,309 @@
+// ============================================================================
+// COMPONENTS / FORMS  (PHASE 4a)
+// Field anatomy: label → $space-2 → control → $space-1 → help/error.
+// Controls, validation, layout and input-group. Every value from tokens.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+// ---------------------------------------------------------------------------
+// Field wrapper + label + help/error
+// ---------------------------------------------------------------------------
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  margin-bottom: t.$space-2; // label → control
+  font-family: t.$font-accent;
+  font-size: t.$label-size; // 12px
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: t.$color-secondary;
+
+  &--required::after {
+    content: '*';
+    margin-left: t.$space-1;
+    color: t.$color-danger;
+  }
+}
+
+.form-help {
+  margin-top: t.$space-1; // control → help
+  font-size: 12px;
+  color: t.$color-muted;
+}
+
+.form-error {
+  margin-top: t.$space-1; // control → error
+  font-size: 12px;
+  color: t.$color-danger;
+}
+
+// ---------------------------------------------------------------------------
+// Text-like controls (input / textarea / select)
+// ---------------------------------------------------------------------------
+.form-control {
+  width: 100%;
+  height: t.$field-h; // 48px
+  padding-inline: t.$field-px; // 16px
+  border: 1px solid t.$color-border;
+  border-radius: t.$field-radius; // 4px
+  background: t.$field-bg;
+  color: t.$color-text;
+  font-family: t.$font-body;
+  font-size: 1rem; // 16px
+  line-height: 1.4;
+  transition: border-color t.$dur-fast t.$ease, box-shadow t.$dur-fast t.$ease;
+
+  &::placeholder {
+    color: t.$color-muted;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: t.$color-accent;
+    box-shadow: 0 0 0 t.$focus-ring-width rgba(t.$color-accent, 0.4);
+  }
+
+  &:disabled {
+    background: t.$bg-row;
+    color: t.$color-muted;
+    cursor: not-allowed;
+  }
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 120px;
+  padding-block: t.$space-3;
+  resize: vertical;
+}
+
+// ---------------------------------------------------------------------------
+// Select — native element inside a wrapper that draws a token-colored caret
+// ---------------------------------------------------------------------------
+.select {
+  position: relative;
+  display: block;
+
+  .form-control {
+    appearance: none;
+    padding-right: t.$space-10; // room for caret
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: t.$field-px;
+    width: 0.5em;
+    height: 0.5em;
+    border-right: 2px solid t.$color-muted;
+    border-bottom: 2px solid t.$color-muted;
+    transform: translateY(-70%) rotate(45deg);
+    pointer-events: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Checkbox / radio (native, token accent color)
+// ---------------------------------------------------------------------------
+.form-check {
+  display: inline-flex;
+  align-items: center;
+  gap: t.$space-3; // 12px box → label
+
+  input[type='checkbox'],
+  input[type='radio'] {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    accent-color: t.$color-primary;
+    cursor: pointer;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Switch
+// ---------------------------------------------------------------------------
+.form-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: t.$space-3;
+
+  input {
+    appearance: none;
+    position: relative;
+    width: 44px;
+    height: 24px;
+    margin: 0;
+    border-radius: t.$radius-pill;
+    background: t.$color-border;
+    cursor: pointer;
+    transition: background-color t.$dur-fast t.$ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: t.$surface-card;
+      box-shadow: t.$shadow-card;
+      transition: transform t.$dur-fast t.$ease;
+    }
+
+    &:checked {
+      background: t.$color-primary;
+    }
+    &:checked::after {
+      transform: translateX(20px);
+    }
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 t.$focus-ring-width rgba(t.$color-accent, 0.4);
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Validation states
+// Our DS classes (.is-invalid / .is-valid) AND the real AAN engine classes
+// (.form-control.missing / .form-control.success emitted by formRender) share
+// the same token-driven treatment, so the live [aanform] output is styled
+// with no HTML change.
+// ---------------------------------------------------------------------------
+.form-control.is-invalid,
+.form-control.missing,
+.select.is-invalid .form-control {
+  border-color: t.$color-danger;
+
+  &:focus {
+    box-shadow: 0 0 0 t.$focus-ring-width rgba(t.$color-danger, 0.35);
+  }
+}
+
+.form-control.is-valid,
+.form-control.success,
+.select.is-valid .form-control {
+  border-color: t.$color-success;
+
+  &:focus {
+    box-shadow: 0 0 0 t.$focus-ring-width rgba(t.$color-success, 0.3);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Layout: rows / columns / fieldsets / submit / input-group
+// ---------------------------------------------------------------------------
+// Vertical stack of rows.
+.form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: t.$form-row-gap; // 20px between rows
+}
+
+// A row of side-by-side fields.
+.form-row {
+  display: flex;
+  gap: t.$form-col-gap; // 16px between columns
+  flex-wrap: wrap;
+
+  > .form-field {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
+.fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+  & + .fieldset {
+    margin-top: t.$fieldset-gap; // 40px between fieldsets
+  }
+
+  &__title {
+    margin: 0 0 t.$fieldset-title-gap; // 20px title → fields
+    font-family: t.$font-display;
+    font-size: 1.25rem;
+    color: t.$color-heading;
+  }
+}
+
+.form-submit {
+  margin-top: t.$form-submit-gap; // 32px fields → submit
+}
+
+// Field + button on one line.
+.input-group {
+  display: flex;
+
+  .form-control {
+    flex: 1 1 auto;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+// ===========================================================================
+// REAL AAN FORM MARKUP  (reconciliation — no HTML changes)
+// Two engines emit forms in the production theme:
+//   • server [aanform] (formRender.class.php): field wrapper .input.clearfix,
+//     label <span> / <span class="require">…<red>*</red></span>, .form-control,
+//     validation .missing/.success (handled above), custom controls .fake-input,
+//     grid via Bootstrap .row/.col-*.
+//   • JS builder (forms_init.php + forms.js): field wrapper .form-group,
+//     .form-control, file uploader .drop-area (see _dropzone), submit
+//     .btn.btn-primary (themed via the bridge).
+// These selectors apply our token styling to that output verbatim.
+// ===========================================================================
+
+// Field wrappers → same column rhythm as our .form-field.
+.form-group,
+.input.clearfix {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: t.$form-row-gap;
+}
+
+// Field labels are <span> / .require (server engine). Match .form-label.
+.input > span,
+.require {
+  margin-bottom: t.$space-2;
+  font-family: t.$font-accent;
+  font-size: t.$label-size;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: t.$color-secondary;
+}
+
+// The required asterisk is a literal <red> element in the engine output.
+red {
+  color: t.$color-danger;
+  font-style: normal;
+}
+
+// .fake-input (phone / ssn / date display spans) styled as a control.
+.fake-input {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: t.$field-h;
+  padding-inline: t.$field-px;
+  border: 1px solid t.$color-border;
+  border-radius: t.$field-radius;
+  background: t.$field-bg;
+  color: t.$color-text;
+}

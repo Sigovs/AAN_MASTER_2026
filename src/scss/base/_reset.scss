@@ -1,0 +1,53 @@
+// ============================================================================
+// BASE / RESET  (+ page-level global defaults)
+// A small modern reset on top of Bootstrap Reboot, plus page canvas defaults.
+// All values from tokens.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  overflow-x: clip; // contain full-bleed breakouts (100vw) — no horizontal scroll
+  background-color: t.$bg-page;
+  color: t.$color-text;
+  font-family: t.$font-body;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+// Accessible focus ring, tokenised.
+:focus-visible {
+  outline: 2px solid t.$color-accent;
+  outline-offset: t.$focus-ring-offset;
+}
+
+::selection {
+  background: rgba(t.$color-accent, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

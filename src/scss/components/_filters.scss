@@ -1,0 +1,54 @@
+// ============================================================================
+// COMPONENTS / FILTERS — SRP filter bar: fields in a row, active filters as
+// removable chips, sort select, results count, Clear all. Reuses form + tag
+// tokens/classes. Tokens only.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: t.$form-col-gap;
+  padding: t.$space-4;
+  background: t.$bg-row;
+  border: 1px solid t.$color-border;
+  border-radius: t.$radius-md;
+
+  &__field {
+    flex: 1 1 160px;
+    min-width: 0;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: t.$space-4;
+    margin-left: auto;
+  }
+
+  &__count {
+    font-family: t.$font-mono;
+    font-size: 12px;
+    color: t.$color-muted;
+    white-space: nowrap;
+  }
+}
+
+// Active-filter chip row (uses .tag .tag-removable).
+.filters-active {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: t.$space-2;
+  margin-top: t.$space-4;
+
+  &__label {
+    font-family: t.$font-mono;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: t.$color-muted;
+    margin-right: t.$space-1;
+  }
+}

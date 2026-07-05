@@ -1,0 +1,30 @@
+// ============================================================================
+// SECTIONS / BRANDS — bordered band of display-uppercase brand names.
+// muted → text on hover, wraps gracefully. Tokens only.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+.brands__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: t.$space-6 t.$space-12;
+  padding-block: t.$space-6;
+  border-top: 1px solid t.$color-border;
+  border-bottom: 1px solid t.$color-border;
+}
+
+.brand {
+  font-family: t.$font-display;
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: t.$color-muted;
+  text-decoration: none;
+  transition: color t.$dur-fast t.$ease;
+
+  &:hover {
+    color: t.$color-text;
+  }
+}

@@ -1,0 +1,17 @@
+# Dependencies & build output (regenerated: npm install / npm run build)
+node_modules/
+dist/
+
+# Playwright self-check output
+screenshots/
+
+# Client-owned reference sources — MUST NEVER be published
+reference/
+FROM FERRARI/
+FROM IVAYLO/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp

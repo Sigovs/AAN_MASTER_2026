@@ -1,0 +1,53 @@
+// ============================================================================
+// COMPONENTS / BREADCRUMBS — mono uppercase, muted "/" separators, current in
+// heading color. BS4 .breadcrumb compatible. Tokens only.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: t.$space-2;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: transparent;
+  border-radius: 0;
+  font-family: t.$font-mono;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: t.$space-2;
+  color: t.$color-muted;
+
+  a {
+    color: t.$color-muted;
+    text-decoration: none;
+    transition: color t.$dur-fast t.$ease;
+
+    &:hover {
+      color: t.$color-heading;
+    }
+  }
+
+  // Override BS4's default separator with a token-colored slash.
+  & + .breadcrumb-item {
+    padding-left: 0;
+
+    &::before {
+      content: '/';
+      padding: 0;
+      color: t.$color-muted;
+    }
+  }
+
+  &.active {
+    color: t.$color-heading;
+  }
+}

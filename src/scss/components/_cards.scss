@@ -1,0 +1,124 @@
+// ============================================================================
+// COMPONENTS / CARDS
+// Card surfaces + the skeleton loader (loading placeholder for .car-card).
+// Every value from tokens.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+// ---------------------------------------------------------------------------
+// Skeleton — shimmer placeholder. Base tint + a moving highlight on the xl
+// duration bucket. Under prefers-reduced-motion the shimmer is removed and a
+// static tint remains.
+// ---------------------------------------------------------------------------
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: t.$bg-row-alt; // static tint (also the reduced-motion state)
+  border-radius: t.$radius-sm;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(t.$surface-card, 0.6),
+      transparent
+    );
+    animation: skeleton-shimmer t.$dur-xl t.$ease-in-out infinite;
+  }
+}
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after {
+    display: none; // static tint only
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Skeleton card — mirrors .car-card proportions (image, two text lines,
+// spec-plate line).
+// ---------------------------------------------------------------------------
+.skeleton-card {
+  display: flex;
+  flex-direction: column;
+  background: t.$surface-card;
+  border: 1px solid t.$color-border;
+  border-radius: t.$radius-md;
+  overflow: hidden;
+  box-shadow: t.$shadow-card;
+
+  &__image {
+    aspect-ratio: 4 / 3;
+    border-radius: 0;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: t.$space-3;
+    padding: t.$space-4;
+  }
+
+  &__line {
+    height: t.$space-3;
+
+    &--title {
+      width: 80%;
+    }
+    &--sub {
+      width: 55%;
+    }
+  }
+
+  // Spec / price plate line.
+  &__plate {
+    height: t.$space-5;
+    width: 45%;
+    margin-top: t.$space-1;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Generic surface panel.
+// ---------------------------------------------------------------------------
+.panel {
+  padding: t.$space-6;
+  background: t.$surface-card;
+  border: 1px solid t.$color-border;
+  border-radius: t.$radius-md;
+  box-shadow: t.$shadow-card;
+}
+
+// ---------------------------------------------------------------------------
+// Stat cell — mono label + display number (spec strip).
+// ---------------------------------------------------------------------------
+.stat-cell {
+  display: flex;
+  flex-direction: column;
+  gap: t.$space-2;
+
+  &__num {
+    font-family: t.$font-display;
+    font-weight: 500;
+    font-size: 2.5rem;
+    line-height: 1;
+    color: t.$color-heading;
+  }
+
+  &__label {
+    font-family: t.$font-mono;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: t.$color-muted;
+  }
+}

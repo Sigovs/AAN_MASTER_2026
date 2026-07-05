@@ -1,0 +1,28 @@
+// ============================================================================
+// SECTIONS / VISIT — two-column: copy + directions button left, hours right.
+// Tokens only.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+.visit__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: t.$space-12;
+  align-items: center;
+
+  @media (max-width: (t.$bp-md - 1px)) {
+    grid-template-columns: 1fr;
+    gap: t.$space-10;
+  }
+}
+
+.visit__address {
+  margin-top: t.$space-4;
+  font-style: normal;
+  line-height: 1.9;
+  color: t.$color-muted;
+}
+
+.visit__cta {
+  margin-top: t.$space-6;
+}

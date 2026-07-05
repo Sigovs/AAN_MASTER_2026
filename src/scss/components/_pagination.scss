@@ -1,0 +1,51 @@
+// ============================================================================
+// COMPONENTS / PAGINATION — mono numerals, filled-square current (per soft
+// $btn-shape), prev/next, disabled. BS4 .pagination compatible. Tokens only.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: t.$space-1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page-item {
+  display: inline-flex;
+}
+
+.page-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: t.$space-8; // 32px
+  height: t.$space-8;
+  padding: 0 t.$space-2;
+  border: 0;
+  border-radius: t.$btn-radius; // soft square
+  background: transparent;
+  color: t.$color-text;
+  font-family: t.$font-mono;
+  font-size: 13px;
+  text-decoration: none;
+  transition: background-color t.$dur-fast t.$ease, color t.$dur-fast t.$ease;
+
+  &:hover {
+    background: t.$bg-row-alt;
+    color: t.$color-heading;
+  }
+}
+
+.page-item.active .page-link {
+  background: t.$color-primary;
+  color: t.$on-primary;
+}
+
+.page-item.disabled .page-link {
+  color: t.$color-muted;
+  opacity: 0.5;
+  pointer-events: none;
+}

@@ -1,0 +1,36 @@
+// ============================================================================
+// SECTIONS / QUICK-SEARCH — full-width band (bg-row) with a bordered field row:
+// Make / Model / Year / Price + Search. Stacks 2×2 on mobile. Tokens only.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+.quick-search {
+  // Tight functional strip between hero and featured (not a full section).
+  padding-block: t.$space-8; // 32px top/bottom — kills the dead air
+  background: t.$bg-row;
+
+  &__form {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto;
+    align-items: end;
+    gap: t.$form-col-gap;
+    padding: t.$space-5;
+    background: t.$surface-card;
+    border: 1px solid t.$color-border;
+    border-radius: t.$radius-md;
+  }
+
+  &__submit {
+    height: t.$field-h; // align with the fields
+  }
+
+  @media (max-width: (t.$bp-md - 1px)) {
+    &__form {
+      grid-template-columns: 1fr 1fr; // 2×2 selects
+    }
+    &__submit {
+      grid-column: 1 / -1; // full-width button
+      width: 100%;
+    }
+  }
+}

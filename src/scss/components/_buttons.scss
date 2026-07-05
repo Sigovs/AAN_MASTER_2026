@@ -1,0 +1,224 @@
+// ============================================================================
+// COMPONENTS / BUTTONS  (PHASE 4a)
+// Variants × shapes × sizes × states × content-forms. Every value from tokens.
+// Brand colors are runtime custom properties (skinnable), so hover/active shades
+// use CSS color-mix() (darken toward black) — they re-compute per skin.
+// Mono label buttons (uppercase, .16em) per the approved direction.
+// No gradient fills (CLAUDE.md §4).
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+// ---------------------------------------------------------------------------
+// Base
+// ---------------------------------------------------------------------------
+.btn {
+  --btn-fg: currentColor; // spinner/text color hook, set per variant
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: t.$btn-icon-gap;
+  height: t.$btn-h-md; // 48px
+  padding-inline: t.$btn-px-md; // 24px
+  border: 1px solid transparent;
+  border-radius: t.$btn-radius; // soft (8px) — global $btn-shape
+  font-family: t.$btn-font;
+  font-weight: t.$btn-weight;
+  line-height: 1;
+  text-transform: t.$btn-text-transform;
+  letter-spacing: t.$btn-letter-spacing;
+  font-size: 0.75rem; // 12px — mono label
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color t.$dur-fast t.$ease, border-color t.$dur-fast t.$ease,
+    color t.$dur-fast t.$ease, box-shadow t.$dur-fast t.$ease;
+}
+
+// ---------------------------------------------------------------------------
+// Sizes
+// ---------------------------------------------------------------------------
+.btn-sm {
+  height: t.$btn-h-sm; // 36px
+  padding-inline: t.$btn-px-sm; // 16px
+  font-size: 0.6875rem; // 11px
+}
+
+.btn-lg {
+  height: t.$btn-h-lg; // 56px
+  padding-inline: t.$btn-px-lg; // 32px
+  font-size: 0.8125rem; // 13px
+}
+
+// ---------------------------------------------------------------------------
+// Variants
+// ---------------------------------------------------------------------------
+.btn-primary {
+  --btn-fg: #{t.$on-primary};
+  background: t.$color-primary;
+  border-color: t.$color-primary;
+  color: t.$on-primary;
+
+  &:hover {
+    background: color-mix(in srgb, t.$color-primary, #000 12%);
+    border-color: color-mix(in srgb, t.$color-primary, #000 12%);
+  }
+  &:active {
+    background: color-mix(in srgb, t.$color-primary, #000 22%);
+    border-color: color-mix(in srgb, t.$color-primary, #000 22%);
+  }
+}
+
+.btn-secondary {
+  --btn-fg: #{t.$color-heading};
+  background: t.$color-secondary;
+  border-color: t.$color-secondary;
+  color: t.$color-heading;
+
+  &:hover {
+    background: color-mix(in srgb, t.$color-secondary, #000 12%);
+    border-color: color-mix(in srgb, t.$color-secondary, #000 12%);
+  }
+  &:active {
+    background: color-mix(in srgb, t.$color-secondary, #000 22%);
+    border-color: color-mix(in srgb, t.$color-secondary, #000 22%);
+  }
+}
+
+.btn-outline {
+  --btn-fg: #{t.$color-primary};
+  background: transparent;
+  border-color: t.$color-primary;
+  color: t.$color-primary;
+
+  &:hover {
+    background: rgba(t.$color-primary, 0.06);
+  }
+  &:active {
+    background: rgba(t.$color-primary, 0.12);
+  }
+}
+
+.btn-tertiary {
+  --btn-fg: #{t.$color-primary};
+  height: auto;
+  padding-inline: t.$space-2;
+  background: transparent;
+  border-color: transparent;
+  color: t.$color-primary;
+  text-decoration: none;
+
+  &:hover {
+    color: color-mix(in srgb, t.$color-primary, #000 14%);
+  }
+}
+
+// For dark / photographic backgrounds — always-light fg (does not flip per skin).
+.btn-on-invert {
+  --btn-fg: #{t.$fg-on-photo};
+  background: transparent;
+  border-color: rgba(t.$fg-on-photo, 0.5);
+  color: t.$fg-on-photo;
+
+  &:hover {
+    background: rgba(t.$fg-on-photo, 0.14);
+    border-color: t.$fg-on-photo;
+  }
+  &:active {
+    background: rgba(t.$fg-on-photo, 0.24);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Shape overrides (default = soft via $btn-radius)
+// ---------------------------------------------------------------------------
+.btn-pill {
+  border-radius: t.$radius-pill;
+}
+.btn-square {
+  border-radius: t.$radius-0;
+}
+.btn-soft {
+  border-radius: t.$btn-radius;
+}
+
+// ---------------------------------------------------------------------------
+// States
+// ---------------------------------------------------------------------------
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 t.$focus-ring-width rgba(t.$color-accent, 0.4);
+}
+
+.btn:disabled,
+.btn.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+// Loading — hide label, show a token-timed spinner in the variant's fg color.
+.btn.is-loading {
+  color: transparent !important;
+  pointer-events: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: t.$spinner-size;
+    height: t.$spinner-size;
+    border: t.$spinner-border solid var(--btn-fg);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: btn-spin t.$spinner-dur linear infinite;
+  }
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn.is-loading::after {
+    animation-duration: 1.4s;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Content forms
+// ---------------------------------------------------------------------------
+// Trailing arrow that nudges right on hover.
+.btn__arrow {
+  display: inline-block;
+  transition: transform t.$dur-fast t.$ease;
+}
+.btn:hover .btn__arrow {
+  transform: translateX(4px);
+}
+
+// Leading/inline icon.
+.btn__icon {
+  display: inline-flex;
+  width: 1.15em;
+  height: 1.15em;
+  flex: 0 0 auto;
+}
+
+// Icon-only: round, equal width/height (call / text / compare actions).
+.btn-icon-only {
+  width: t.$btn-h-md;
+  padding-inline: 0;
+  gap: 0;
+  border-radius: t.$radius-pill;
+
+  &.btn-sm {
+    width: t.$btn-h-sm;
+  }
+  &.btn-lg {
+    width: t.$btn-h-lg;
+  }
+}

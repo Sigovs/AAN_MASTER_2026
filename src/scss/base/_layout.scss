@@ -1,0 +1,81 @@
+// ============================================================================
+// BASE / LAYOUT  (PHASE 2)
+// Container, section rhythm, and the section-heading pattern. All spacing from
+// tokens. The section rule enforces bottom-padding > top-padding (CLAUDE.md §5).
+// (Absorbs the former layout/_section.scss.)
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+// ---------------------------------------------------------------------------
+// Container
+// ---------------------------------------------------------------------------
+.container {
+  width: 100%;
+  max-width: t.$container-max;
+  margin-inline: auto;
+  padding-inline: t.$container-px-mobile; // mobile first
+
+  @media (min-width: t.$bp-md) {
+    padding-inline: t.$container-px;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Section rhythm  (mobile-first: mobile pad first, desktop pad at $bp-md)
+// ---------------------------------------------------------------------------
+.section {
+  padding-top: t.$section-pt-mobile;    // 64px
+  padding-bottom: t.$section-pb-mobile; // 80px
+
+  @media (min-width: t.$bp-md) {
+    padding-top: t.$section-pt;    // 96px
+    padding-bottom: t.$section-pb; // 120px
+  }
+
+  // One step down the scale on each edge.
+  &--tight {
+    padding-top: t.$section-pt-mobile;    // stays comfortable on mobile
+    padding-bottom: t.$section-pb-mobile;
+
+    @media (min-width: t.$bp-md) {
+      padding-top: t.$space-20;    // 96 → 80
+      padding-bottom: t.$space-24; // 120 → 96
+    }
+  }
+
+  // No vertical padding (butts against neighbours).
+  &--flush {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  // Surface modifiers — alternate page backgrounds (subtle in every skin).
+  &--row {
+    background: t.$bg-row;
+  }
+  &--alt {
+    background: t.$bg-row-alt;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Section heading pattern: eyebrow + h2 (+ optional .lead) with an optional
+// action slot pinned right. Separated from the body by $section-head-gap.
+// ---------------------------------------------------------------------------
+.sec-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: t.$space-6;
+  margin-bottom: t.$section-head-gap; // 48px
+
+  &__text {
+    max-width: 60ch;
+  }
+
+  &__action {
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+}

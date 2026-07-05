@@ -1,0 +1,852 @@
+// ============================================================================
+// PAGES / DESIGN-SYSTEM  (PHASE 2)
+// Chrome + specimen helpers for design-system.html. The DS chrome is deliberately
+// quiet (neutral, low-contrast) so the specimens are the heroes. Every specimen
+// visual is GENERATED from the token variables (via @each over token maps), so
+// no swatch/ruler/tile hard-codes a value — change a token, the specimen moves.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+// ---------------------------------------------------------------------------
+// Token maps (keys are names shown in the UI; values ARE the tokens)
+// ---------------------------------------------------------------------------
+$_ds-colors: (
+  'color-primary': t.$color-primary,
+  'color-secondary': t.$color-secondary,
+  'color-accent': t.$color-accent,
+  'color-text': t.$color-text,
+  'color-heading': t.$color-heading,
+  'color-muted': t.$color-muted,
+  'bg-page': t.$bg-page,
+  'bg-row': t.$bg-row,
+  'bg-row-alt': t.$bg-row-alt,
+  'surface-card': t.$surface-card,
+  'bg-header': t.$bg-header,
+  'bg-invert': t.$bg-invert,
+  'bg-footer': t.$bg-footer,
+  'color-border': t.$color-border,
+  'color-success': t.$color-success,
+  'color-danger': t.$color-danger,
+  'color-warning': t.$color-warning,
+  'color-info': t.$color-info,
+  'on-primary': t.$on-primary,
+  'fg-on-photo': t.$fg-on-photo,
+);
+
+$_ds-space: (
+  '1': t.$space-1, '2': t.$space-2, '3': t.$space-3, '4': t.$space-4,
+  '5': t.$space-5, '6': t.$space-6, '8': t.$space-8, '10': t.$space-10,
+  '12': t.$space-12, '16': t.$space-16, '20': t.$space-20, '24': t.$space-24,
+  '30': t.$space-30,
+);
+
+$_ds-radii: (
+  'radius-0': t.$radius-0,
+  'radius-sm': t.$radius-sm,
+  'radius-md': t.$radius-md,
+  'radius-lg': t.$radius-lg,
+  'radius-pill': t.$radius-pill,
+);
+
+$_ds-shadows: (
+  'shadow-card': t.$shadow-card,
+  'shadow-card-hover': t.$shadow-card-hover,
+  'shadow-dropdown': t.$shadow-dropdown,
+  'shadow-modal': t.$shadow-modal,
+);
+
+// ===========================================================================
+// LAYOUT / CHROME
+// ===========================================================================
+.ds-shell {
+  display: flex;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.ds-nav {
+  flex: 0 0 260px;
+  align-self: stretch;
+  background: t.$bg-row;
+  border-right: 1px solid t.$color-border;
+  padding: t.$space-8 t.$space-6;
+
+  &__brand {
+    margin: 0 0 t.$space-6;
+    font-family: t.$font-mono;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: t.$color-heading;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: t.$space-1;
+    counter-reset: nav;
+  }
+
+  &__link {
+    display: block;
+    padding: t.$space-2 t.$space-3;
+    border-radius: t.$radius-sm;
+    font-size: 14px;
+    text-decoration: none;
+    color: t.$color-muted;
+    transition: color t.$dur-fast t.$ease, background-color t.$dur-fast t.$ease;
+
+    &:hover {
+      color: t.$color-heading;
+      background: rgba(t.$color-accent, 0.08);
+    }
+  }
+
+  @media (min-width: t.$bp-lg) {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+}
+
+.ds-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: t.$space-10 t.$space-8 t.$space-30;
+  max-width: 1080px;
+}
+
+// Stack the shell on small screens.
+@media (max-width: (t.$bp-lg - 1px)) {
+  .ds-shell {
+    flex-direction: column;
+  }
+  .ds-nav {
+    flex-basis: auto;
+    width: 100%;
+    border-right: 0;
+    border-bottom: 1px solid t.$color-border;
+  }
+}
+
+// ===========================================================================
+// SECTIONS
+// ===========================================================================
+.ds-section {
+  padding-block: t.$space-16;
+  border-top: 1px solid t.$color-border;
+
+  &:first-of-type {
+    border-top: 0;
+    padding-top: t.$space-6;
+  }
+
+  &__intro {
+    max-width: 60ch;
+    margin-bottom: t.$section-head-gap;
+  }
+
+  // Token-driven in-section rhythm (keeps the HTML free of inline spacing).
+  > h3,
+  > h4 {
+    margin-top: t.$space-12;
+    margin-bottom: t.$space-4;
+  }
+
+  > .ds-swatches,
+  > .ds-fonts,
+  > .ds-rulers,
+  > .ds-radii {
+    margin-top: t.$space-4;
+    margin-bottom: t.$space-12;
+  }
+
+  > .row {
+    margin-top: t.$space-8;
+  }
+
+  .stack {
+    margin-top: t.$space-4;
+  }
+}
+
+// A neutral label chip that names the class/token a specimen demonstrates.
+.ds-label {
+  display: inline-block;
+  font-family: t.$font-mono;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: t.$color-muted;
+  background: t.$bg-row-alt;
+  padding: 2px t.$space-2;
+  border-radius: t.$radius-sm;
+}
+
+.ds-note {
+  font-family: t.$font-mono;
+  font-size: 11px;
+  color: t.$color-muted;
+}
+
+// ===========================================================================
+// FOUNDATIONS — color swatches
+// ===========================================================================
+.ds-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: t.$grid-gutter;
+}
+
+.ds-swatch {
+  border: 1px solid t.$color-border;
+  border-radius: t.$radius-md;
+  overflow: hidden;
+  background: t.$surface-card;
+
+  &__chip {
+    height: 72px;
+    border-bottom: 1px solid t.$color-border;
+  }
+
+  &__meta {
+    padding: t.$space-3;
+  }
+
+  &__name {
+    display: block;
+    font-family: t.$font-mono;
+    font-size: 12px;
+    color: t.$color-heading;
+  }
+
+  &__value {
+    display: block;
+    margin-top: 2px;
+    font-family: t.$font-mono;
+    font-size: 11px;
+    color: t.$color-muted;
+    text-transform: uppercase;
+  }
+}
+
+// Generated chip backgrounds — one rule per color token.
+@each $name, $val in $_ds-colors {
+  .ds-swatch__chip[data-token='#{$name}'] {
+    background-color: $val;
+  }
+}
+
+// ===========================================================================
+// FOUNDATIONS — font slot cards
+// ===========================================================================
+.ds-fonts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: t.$grid-gutter;
+}
+
+.ds-font-card {
+  border: 1px solid t.$color-border;
+  border-radius: t.$radius-md;
+  background: t.$surface-card;
+  padding: t.$space-6;
+
+  &__sample {
+    margin: 0 0 t.$space-4;
+    font-size: 34px;
+    line-height: 1.1;
+    color: t.$color-heading;
+  }
+  &--display .ds-font-card__sample { font-family: t.$font-display; }
+  &--body .ds-font-card__sample { font-family: t.$font-body; }
+  &--accent .ds-font-card__sample { font-family: t.$font-accent; }
+  &--mono .ds-font-card__sample { font-family: t.$font-mono; }
+}
+
+// ===========================================================================
+// FOUNDATIONS — spacing rulers
+// ===========================================================================
+.ds-rulers {
+  display: flex;
+  flex-direction: column;
+  gap: t.$space-3;
+}
+
+.ds-ruler {
+  display: flex;
+  align-items: center;
+  gap: t.$space-4;
+
+  &__bar {
+    height: 16px;
+    background: rgba(t.$color-accent, 0.85);
+    border-radius: t.$radius-sm;
+    flex: 0 0 auto;
+  }
+
+  &__label {
+    font-family: t.$font-mono;
+    font-size: 12px;
+    color: t.$color-muted;
+  }
+}
+
+@each $n, $val in $_ds-space {
+  .ds-ruler__bar[data-space='#{$n}'] {
+    width: $val;
+  }
+}
+
+// ===========================================================================
+// FOUNDATIONS — radii tiles
+// ===========================================================================
+.ds-radii {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: t.$grid-gutter;
+}
+
+.ds-radii-tile {
+  &__box {
+    height: 88px;
+    background: rgba(t.$color-accent, 0.14);
+    border: 1px solid t.$color-accent;
+    margin-bottom: t.$space-2;
+  }
+  &__label {
+    font-family: t.$font-mono;
+    font-size: 12px;
+    color: t.$color-muted;
+  }
+}
+
+@each $name, $val in $_ds-radii {
+  .ds-radii-tile__box[data-radius='#{$name}'] {
+    border-radius: $val;
+  }
+}
+
+// ===========================================================================
+// RHYTHM demo — stacked gap bars at the exact token heights
+// ===========================================================================
+.ds-rhythm {
+  border: 1px dashed t.$color-border;
+  border-radius: t.$radius-md;
+  overflow: hidden;
+  max-width: 520px;
+}
+
+.ds-rhythm__bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: t.$font-mono;
+  font-size: 11px;
+  color: t.$color-heading;
+  text-align: center;
+
+  &--pt {
+    height: t.$section-pt;
+    background: rgba(t.$color-info, 0.16);
+  }
+  &--head {
+    height: t.$section-head-gap;
+    background: rgba(t.$color-warning, 0.20);
+  }
+  &--object {
+    height: t.$object-gap;
+    background: rgba(t.$color-success, 0.20);
+  }
+  &--pb {
+    height: t.$section-pb;
+    background: rgba(t.$color-danger, 0.16);
+  }
+}
+
+.ds-rhythm__content {
+  padding-inline: t.$space-6;
+  text-align: center;
+  font-family: t.$font-body;
+  color: t.$color-muted;
+  font-size: 13px;
+}
+
+// ===========================================================================
+// TYPOGRAPHY specimens — class label + measured gap notes
+// ===========================================================================
+.ds-specimen {
+  padding: t.$space-6 0;
+  border-top: 1px solid t.$color-border;
+
+  &:first-child {
+    border-top: 0;
+  }
+
+  &__head {
+    display: flex;
+    align-items: baseline;
+    gap: t.$space-3;
+    margin-bottom: t.$space-4;
+  }
+}
+
+// Vertical gap annotation used between stacked text elements.
+.ds-gap {
+  display: flex;
+  align-items: center;
+  gap: t.$space-2;
+  margin: t.$space-2 0;
+  font-family: t.$font-mono;
+  font-size: 11px;
+  color: t.$color-info;
+
+  &::before {
+    content: '↕';
+  }
+}
+
+// ===========================================================================
+// SHADOW specimens (used by the Shadows placeholder preview)
+// ===========================================================================
+.ds-shadows {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: t.$space-10;
+  padding: t.$space-6 0;
+}
+
+.ds-shadow-tile {
+  height: 120px;
+  border-radius: t.$radius-md;
+  background: t.$surface-card;
+  display: flex;
+  align-items: flex-end;
+  padding: t.$space-3;
+  font-family: t.$font-mono;
+  font-size: 11px;
+  color: t.$color-muted;
+}
+
+@each $name, $val in $_ds-shadows {
+  .ds-shadow-tile[data-shadow='#{$name}'] {
+    box-shadow: $val;
+  }
+}
+
+// ===========================================================================
+// COMPONENT MATRICES (Buttons / Tags / Forms specimens)
+// ===========================================================================
+// Matrix table (variants × shapes, statuses × renders).
+.ds-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-block: t.$space-4 t.$space-12;
+
+  th,
+  td {
+    padding: t.$space-4;
+    border: 1px solid t.$color-border;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  thead th,
+  tbody th {
+    font-family: t.$font-mono;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: t.$color-muted;
+    background: t.$bg-row;
+    white-space: nowrap;
+  }
+
+  td.is-invert {
+    background: t.$bg-invert;
+  }
+}
+
+// Inline cluster of specimens.
+.ds-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: t.$space-4;
+  margin-bottom: t.$space-8;
+}
+
+// Replays the focus-visible ring for a static "forced focus" example.
+.ds-force-focus {
+  box-shadow: 0 0 0 3px rgba(t.$color-accent, 0.4);
+}
+
+// Dark stand-in "photo" to prove .tag-outline legibility over imagery.
+.ds-photo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: t.$space-3;
+  min-height: 200px;
+  padding: t.$space-4;
+  border-radius: t.$radius-md;
+  background: t.$bg-invert; // represents a dark photograph
+}
+
+// Form specimen width.
+.ds-form-demo {
+  max-width: 640px;
+}
+
+// Photo-overlay specimen tiles (gradient photo placeholder + overlay).
+.ds-ov-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: t.$grid-gutter;
+  margin: t.$space-4 0 t.$space-12;
+}
+
+.ds-ov {
+  margin: 0;
+
+  figcaption {
+    margin-top: t.$space-2;
+  }
+}
+
+.ds-ph {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  border-radius: t.$radius-md;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, t.$color-secondary, t.$bg-invert 25%),
+    t.$bg-invert
+  );
+
+  &__label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(t.$surface-card, 0.25);
+    font-family: t.$font-mono;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+}
+
+// Card grid (loading-state skeletons + vehicle-card status grid).
+.ds-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: t.$grid-gutter;
+  margin: t.$space-4 0 t.$space-12;
+}
+
+// Container-query context so .car-card--row can collapse by container width
+// (not viewport), matching how a real SRP list column would behave.
+.ds-cq {
+  container-type: inline-size;
+  margin: t.$space-4 0 t.$space-8;
+}
+
+// ===========================================================================
+// MOTION specimens — live duration + easing demos
+// A dot travels a track on hover; --demo-dur / --demo-ease drive the transition.
+// ===========================================================================
+.ds-motion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: t.$grid-gutter;
+  margin: t.$space-4 0 t.$space-12;
+}
+
+.ds-motion-item {
+  display: flex;
+  flex-direction: column;
+  gap: t.$space-2;
+}
+
+.ds-motion-track {
+  position: relative;
+  height: t.$space-8;
+  background: t.$bg-row-alt;
+  border-radius: t.$radius-pill;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.ds-motion-dot {
+  position: absolute;
+  top: t.$space-1;
+  left: t.$space-1;
+  width: t.$space-6;
+  height: t.$space-6;
+  border-radius: 50%;
+  background: t.$color-primary;
+  transition: left var(--demo-dur, #{t.$dur-base}) var(--demo-ease, #{t.$ease-in-out});
+}
+
+.ds-motion-track:hover .ds-motion-dot,
+.ds-motion-track:focus-visible .ds-motion-dot {
+  left: calc(100% - #{t.$space-6} - #{t.$space-1});
+}
+
+// Duration presets.
+.ds-motion--fast { --demo-dur: #{t.$dur-fast}; }
+.ds-motion--base { --demo-dur: #{t.$dur-base}; }
+.ds-motion--slow { --demo-dur: #{t.$dur-slow}; }
+.ds-motion--xl   { --demo-dur: #{t.$dur-xl}; }
+
+// Easing presets (paired with a slow duration so the curve reads).
+.ds-motion--ease-io  { --demo-ease: #{t.$ease-in-out}; }
+.ds-motion--ease-out { --demo-ease: #{t.$ease-out}; }
+.ds-motion--ease-in  { --demo-ease: #{t.$ease-in}; }
+
+// ===========================================================================
+// FONT DIAGNOSTIC PANEL (Foundations)
+// One block per slot: token + live-read family + a 100–900 pangram ladder.
+// ===========================================================================
+.ds-font-panel {
+  display: flex;
+  flex-direction: column;
+  gap: t.$space-10;
+  margin: t.$space-4 0 t.$space-12;
+}
+
+.ds-font-block__head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: t.$space-3;
+  margin: 0 0 t.$space-3;
+  font-family: t.$font-mono;
+  font-size: 13px;
+  font-weight: 500;
+  color: t.$color-heading;
+}
+
+.ds-font-name {
+  font-family: t.$font-mono;
+  font-size: 12px;
+  color: t.$color-accent;
+
+  &::before {
+    content: '→ ';
+    color: t.$color-muted;
+  }
+  &:empty::before {
+    content: '… (font not loaded)';
+    color: t.$color-danger;
+  }
+}
+
+.ds-font-row {
+  display: flex;
+  align-items: baseline;
+  gap: t.$space-4;
+  padding: t.$space-1 0;
+  border-top: 1px solid t.$color-border;
+}
+
+.ds-font-weight {
+  flex: 0 0 t.$space-10; // 40px gutter
+  font-family: t.$font-mono;
+  font-size: 11px;
+  color: t.$color-muted;
+}
+
+.ds-font-pan {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 20px;
+  line-height: 1.3;
+  color: t.$color-heading;
+}
+
+.ds-font-block[data-font='display'] .ds-font-pan { font-family: t.$font-display; }
+.ds-font-block[data-font='body'] .ds-font-pan { font-family: t.$font-body; }
+.ds-font-block[data-font='accent'] .ds-font-pan { font-family: t.$font-accent; }
+.ds-font-block[data-font='mono'] .ds-font-pan { font-family: t.$font-mono; }
+
+@each $w in 100, 200, 300, 400, 500, 600, 700, 800, 900 {
+  .ds-fw-#{$w} {
+    font-weight: $w;
+  }
+}
+
+// ===========================================================================
+// MINI-MOCKUP FRAME (nav / footer specimens)
+// ===========================================================================
+.ds-frame {
+  position: relative; // positioning context for a frame-contained off-canvas
+  margin: t.$space-4 0 t.$space-8;
+  border: 1px solid t.$color-border;
+  border-radius: t.$radius-md;
+  overflow: hidden;
+  background: t.$bg-page;
+}
+
+.ds-mock-body {
+  padding: t.$space-6;
+  color: t.$color-muted;
+  font-size: 0.9375rem;
+
+  // Tall enough that the hover dropdown is fully contained (never clipped) and
+  // the caption sits below the panel's reach (bottom-aligned).
+  &--nav {
+    display: flex;
+    align-items: flex-end;
+    min-height: 220px;
+  }
+}
+
+// Desktop header mockup gets a full-width row (so nav + dropdown never clip);
+// the mobile mockup wraps to its own row below at device width.
+.ds-nav-demos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: t.$grid-gutter;
+  margin: t.$space-4 0 t.$space-8;
+
+  > .ds-frame {
+    margin: 0;
+    flex: 1 1 100%;
+  }
+
+  .ds-frame--device {
+    flex: 0 0 380px;
+    max-width: 380px;
+  }
+}
+
+// Stat strip specimen.
+.ds-stat-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: t.$space-12;
+}
+
+// Horizontal scroll wrapper (compare table).
+.ds-scroll-x {
+  overflow-x: auto;
+}
+
+// Usage/contract callout (e.g. the hero fold contract).
+.ds-usage {
+  margin: t.$space-6 0 t.$space-12;
+  padding: t.$space-5 t.$space-6;
+  border: 1px solid t.$color-border;
+  border-left: 2px solid t.$color-primary;
+  border-radius: t.$radius-md;
+  background: t.$bg-row;
+
+  &__title {
+    margin: 0 0 t.$space-3;
+    font-family: t.$font-mono;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: t.$color-muted;
+  }
+
+  p {
+    margin: 0 0 t.$space-2;
+    color: t.$color-text;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  code {
+    font-family: t.$font-mono;
+    font-size: 0.875em;
+    color: t.$color-heading;
+  }
+}
+
+// Section surface/spacing modifier specimens.
+.ds-mods {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: t.$grid-gutter;
+  margin: t.$space-4 0 t.$space-8;
+}
+.ds-mod {
+  padding: t.$space-6;
+  border: 1px solid t.$color-border;
+  border-radius: t.$radius-md;
+
+  .ds-label {
+    background: t.$surface-card;
+  }
+}
+
+// Section-pattern previews — framed tiles linking to the homepage anchors.
+.ds-patterns {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: t.$grid-gutter;
+  margin: t.$space-4 0 t.$space-12;
+}
+
+.ds-pattern {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: t.$space-8;
+  min-height: 128px;
+  padding: t.$space-5;
+  border: 1px solid t.$color-border;
+  border-radius: t.$radius-md;
+  background: t.$bg-row;
+  color: t.$color-heading;
+  text-decoration: none;
+  transition: border-color t.$dur-fast t.$ease, background-color t.$dur-fast t.$ease;
+
+  &:hover {
+    border-color: t.$color-muted;
+    background: t.$bg-row-alt;
+    color: t.$color-heading;
+  }
+
+  &__name {
+    font-family: t.$font-display;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  &__go {
+    font-family: t.$font-mono;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: t.$color-muted;
+  }
+}
+
+// ===========================================================================
+// Placeholder note for sections not yet built
+// ===========================================================================
+.ds-placeholder {
+  padding: t.$space-10;
+  border: 1px dashed t.$color-border;
+  border-radius: t.$radius-md;
+  text-align: center;
+  color: t.$color-muted;
+  font-family: t.$font-mono;
+  font-size: 13px;
+}

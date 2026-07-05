@@ -1,0 +1,64 @@
+// ============================================================================
+// COMPONENTS / MODAL — Bootstrap 4 .modal markup, tokenized.
+// surface-card, $radius-lg, $shadow-modal, frosted backdrop; enter on
+// $dur-slow $ease-out. Tokens only.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+.modal-content {
+  background: t.$surface-card;
+  border: 1px solid t.$color-border;
+  border-radius: t.$radius-lg;
+  box-shadow: t.$shadow-modal;
+  color: t.$color-text;
+}
+
+.modal-header {
+  align-items: center;
+  padding: t.$space-5 t.$space-6;
+  border-bottom: 1px solid t.$color-border;
+}
+
+.modal-title {
+  font-family: t.$font-display;
+  font-weight: 500;
+  font-size: 1.375rem;
+  color: t.$color-heading;
+}
+
+.modal-body {
+  padding: t.$space-6;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: t.$space-3;
+  padding: t.$space-4 t.$space-6;
+  border-top: 1px solid t.$color-border;
+}
+
+// BS4 close button (×) tokenized.
+.modal .close {
+  color: t.$color-muted;
+  text-shadow: none;
+  opacity: 1;
+
+  &:hover {
+    color: t.$color-heading;
+  }
+}
+
+// Frosted, dimmed backdrop.
+.modal-backdrop,
+.modal-backdrop.show {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: t.$blur-frosted;
+  -webkit-backdrop-filter: t.$blur-frosted;
+  opacity: 1;
+}
+
+// Enter/exit motion (BS4 .fade .modal-dialog).
+.modal.fade .modal-dialog {
+  transition: transform t.$dur-slow t.$ease-out, opacity t.$dur-slow t.$ease-out;
+}

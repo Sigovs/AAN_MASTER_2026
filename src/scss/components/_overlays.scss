@@ -1,0 +1,218 @@
+// ============================================================================
+// COMPONENTS / OVERLAYS  (CSS photo-overlay system)
+// A token-driven, CSS-text replacement for the legacy PNG status banners.
+// The legacy path (<img class="image-overlay"> positioned by _vehicle-card)
+// stays untouched — this is additive.
+//
+// TYPE: all variants inherit the condensed label face ($ov-label-font = Oswald)
+// with tight tracking ($ov-label-spacing) so text fits the bands without
+// clipping. Sizes: ribbon/corner = sm, bar/pill = md, scrim = lg.
+//
+// Color is driven by two custom properties so any status can be themed inline:
+//   --ov-color : the overlay's brand/status color (default $color-primary)
+//   --ov-on    : text color when sitting ON --ov-color (default $surface-card)
+//
+// All overlays are absolutely positioned inside the photo container, which must
+// be positioned (see the .car-image / .frame rule at the bottom).
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+// ---------------------------------------------------------------------------
+// Base
+// ---------------------------------------------------------------------------
+.p-overlay {
+  --ov-color: #{t.$color-primary};
+  --ov-on: #{t.$surface-card};
+
+  position: absolute;
+  z-index: 2; // above the photo (and the .overlay hover spec list)
+  margin: 0;
+  pointer-events: none;
+  font-family: t.$ov-label-font;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: t.$ov-label-spacing;
+  white-space: nowrap;
+  color: var(--ov-on);
+}
+
+// ---------------------------------------------------------------------------
+// Color modifiers
+// ---------------------------------------------------------------------------
+.p-overlay--sold {
+  --ov-color: #{t.$bg-invert};
+  --ov-on: #{t.$surface-card};
+}
+.p-overlay--pending {
+  --ov-color: #{t.$color-warning};
+  --ov-on: #{t.$surface-card};
+}
+.p-overlay--special {
+  --ov-color: #{t.$color-primary};
+  --ov-on: #{t.$on-primary};
+}
+.p-overlay--reduced {
+  --ov-color: #{t.$color-danger};
+  --ov-on: #{t.$surface-card};
+}
+
+// ---------------------------------------------------------------------------
+// a) Scrim — full-photo cover, centered condensed text between two rules
+// ---------------------------------------------------------------------------
+.p-overlay-scrim {
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: t.$space-3;
+  background: t.$overlay-scrim; // dark, opaque veil — hides the photo (both skins)
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  color: t.$overlay-scrim-text; // fixed light text — legible on the dark veil
+  font-size: t.$ov-label-size-xl; // 20px
+  line-height: 1.1;
+  text-align: center;
+
+  // 1px rule above and below the word.
+  &::before,
+  &::after {
+    content: '';
+    width: 2.5em;
+    height: 1px;
+    background: currentColor;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// b) Ribbon — diagonal band across a top corner (default top-right)
+// Geometry is intrinsic (em-based, relative to the sm label size); padding /
+// shadow are tokens. Needs an overflow-hidden photo container.
+// ---------------------------------------------------------------------------
+.p-overlay-ribbon {
+  top: 1.7em;
+  right: -3em;
+  width: 12em;
+  padding-block: t.$space-2; // thicker band (+~0.4em air)
+  background: var(--ov-color);
+  color: var(--ov-on);
+  font-size: t.$ov-label-size-lg; // 14px (unified)
+  line-height: 1.15;
+  text-align: center;
+  white-space: normal; // may wrap to two lines ("SALE PENDING")
+  box-shadow: t.$shadow-card;
+  transform: rotate(45deg);
+  transform-origin: center;
+
+  &.p-overlay--tl {
+    right: auto;
+    left: -3em;
+    transform: rotate(-45deg);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// c) Corner — triangle (clip-path) with the label centered on the triangle
+// centroid, so it keeps even air off the hypotenuse AND the photo edges.
+// Centroid offsets are derived from $ov-corner-size (2/3, 1/3), so the label
+// stays anchored if the size is tuned. Two-line labels allowed.
+// ---------------------------------------------------------------------------
+.p-overlay-corner {
+  top: 0;
+  right: 0;
+  width: t.$ov-corner-size; // 8em
+  height: t.$ov-corner-size;
+  background: var(--ov-color);
+  color: var(--ov-on);
+  clip-path: polygon(0 0, 100% 0, 100% 100%); // top-right
+  font-size: t.$ov-label-size-lg; // 14px (unified)
+
+  // Centroid of the tr triangle = (2/3, 1/3) of the leg.
+  > span {
+    position: absolute;
+    top: calc(#{t.$ov-corner-size} / 3);
+    left: calc(#{t.$ov-corner-size} * 2 / 3);
+    width: calc(#{t.$ov-corner-size} * 0.72);
+    text-align: center;
+    line-height: 1.15;
+    white-space: normal; // may wrap to two lines ("SALE PENDING")
+    transform: translate(-50%, -50%) rotate(45deg);
+    transform-origin: center;
+  }
+
+  &.p-overlay--tl {
+    right: auto;
+    left: 0;
+    clip-path: polygon(0 0, 100% 0, 0 100%); // top-left
+
+    // Centroid of the tl triangle = (1/3, 1/3).
+    > span {
+      top: calc(#{t.$ov-corner-size} / 3);
+      left: calc(#{t.$ov-corner-size} / 3);
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// d) Bar — full-width strip (default bottom)
+// ---------------------------------------------------------------------------
+.p-overlay-bar {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: t.$space-2 t.$space-4;
+  background: color-mix(in srgb, var(--ov-color) 92%, transparent);
+  color: var(--ov-on);
+  font-size: t.$ov-label-size-lg; // 14px (unified)
+  line-height: 1.4;
+  text-align: center;
+
+  &.p-overlay--top {
+    top: 0;
+    bottom: auto;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// e) Pill — floating frosted chip (like .tag-outline). Default top-right.
+// ---------------------------------------------------------------------------
+.p-overlay-pill {
+  top: t.$space-3;
+  right: t.$space-3;
+  padding: t.$space-2 t.$space-3;
+  border: 1px solid var(--ov-color);
+  border-radius: t.$radius-pill;
+  background: color-mix(in srgb, t.$surface-card 55%, transparent);
+  backdrop-filter: t.$blur-frosted;
+  -webkit-backdrop-filter: t.$blur-frosted;
+  color: var(--ov-color);
+  font-size: t.$ov-label-size-lg; // 14px (unified)
+  line-height: 1;
+
+  &.p-overlay--tl {
+    left: t.$space-3;
+    right: auto;
+  }
+  &.p-overlay--bl {
+    left: t.$space-3;
+    right: auto;
+    top: auto;
+    bottom: t.$space-3;
+  }
+  &.p-overlay--br {
+    right: t.$space-3;
+    left: auto;
+    top: auto;
+    bottom: t.$space-3;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Positioning context — the photo container must be positioned for the
+// overlays (and the legacy .image-overlay PNG) to anchor to it.
+// ---------------------------------------------------------------------------
+.car-image,
+.car-image .image.frame {
+  position: relative;
+}

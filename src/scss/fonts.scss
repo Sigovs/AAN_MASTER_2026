@@ -1,0 +1,16 @@
+// ============================================================================
+// FONTS
+// Web-font loading lives here and NOWHERE else. The font FAMILIES are token
+// slots in aan-theme-kit.scss ($font-display / $font-body / $font-accent /
+// $font-mono). To swap the real type pair: change the load below and repoint
+// those tokens — a one-place change, no partial touches.
+//
+// accent = condensed label face for photo overlays and technical plates —
+// swappable per clone. Oswald (Google Fonts, weights 400/500).
+//
+// display / body / mono are PLACEHOLDER faces (the dealer's real pair arrives
+// later — swap here + repoint the tokens, one place):
+//   display = Bodoni Moda (400–600) · body = Archivo (300–600) ·
+//   mono = IBM Plex Mono (400–500).
+// ============================================================================
+@import 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;600&family=Archivo:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Oswald:wght@400;500&display=swap';
