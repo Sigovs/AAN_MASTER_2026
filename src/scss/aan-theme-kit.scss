@@ -65,7 +65,7 @@ $skins: (
     color-accent:    #ECEAE3,
     color-text:      #C9CBD1,
     color-heading:   #ECEAE3,
-    color-muted:     #8E9097,
+    color-muted:     #9A9CA3, // AA 4.5:1 on bg-row/surface-card (6.3–6.9:1)
     bg-page:         #101114,
     bg-row:          #141519,
     bg-row-alt:      #17181C,
@@ -90,7 +90,7 @@ $skins: (
     color-accent:    #1E1F22,
     color-text:      #3A3B40,
     color-heading:   #1B1C1F,
-    color-muted:     #77787E,
+    color-muted:     #696A6F, // darkened for AA 4.5:1 on light bg-row (was #77787E → 3.8:1)
     bg-page:         #F7F6F2,
     bg-row:          #EFEDE7,
     bg-row-alt:      #F2F0EB,
@@ -117,7 +117,7 @@ $skins: (
     color-accent:    #C2A878,
     color-text:      #C9CBD1,
     color-heading:   #ECEAE3,
-    color-muted:     #8E9097,
+    color-muted:     #9A9CA3, // AA 4.5:1 on bg-row/surface-card (6.3–6.9:1)
     bg-page:         #101114,
     bg-row:          #141519,
     bg-row-alt:      #17181C,
