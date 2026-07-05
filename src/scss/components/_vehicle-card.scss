@@ -106,6 +106,20 @@
   }
 }
 
+// Save pin holds both heart states; .is-active (toggled by ui.js) swaps
+// outline → filled (and .car-pin.is-active colours it danger).
+.car-pin[data-save] .car-pin__filled {
+  display: none;
+}
+.car-pin[data-save].is-active {
+  .car-pin__outline {
+    display: none;
+  }
+  .car-pin__filled {
+    display: inline-flex;
+  }
+}
+
 // C2-driven PNG banner (legacy path).
 .image-overlay {
   position: absolute;

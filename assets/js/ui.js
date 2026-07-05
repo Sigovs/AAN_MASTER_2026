@@ -66,6 +66,41 @@
     });
   }
 
+  // -- Foundations contrast: compute live WCAG ratios per skin --------------
+  function hexToRgb(h) {
+    h = h.trim().replace('#', '');
+    if (h.length === 3) h = h.charAt(0) + h.charAt(0) + h.charAt(1) + h.charAt(1) + h.charAt(2) + h.charAt(2);
+    return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+  }
+  function relLum(rgb) {
+    var a = rgb.map(function (v) {
+      v /= 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+  }
+  function contrastRatio(fg, bg) {
+    var l1 = relLum(fg), l2 = relLum(bg);
+    return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+  }
+  function refreshContrast() {
+    var cs = getComputedStyle(root);
+    document.querySelectorAll('[data-contrast]').forEach(function (row) {
+      var fg = cs.getPropertyValue('--' + row.getAttribute('data-fg')).trim();
+      var bg = cs.getPropertyValue('--' + row.getAttribute('data-bg')).trim();
+      if (!fg || !bg || fg.charAt(0) !== '#' || bg.charAt(0) !== '#') return;
+      var ratio = contrastRatio(hexToRgb(fg), hexToRgb(bg));
+      var sample = row.querySelector('[data-contrast-sample]');
+      if (sample) { sample.style.color = fg; sample.style.background = bg; }
+      var out = row.querySelector('[data-contrast-ratio]');
+      if (out) {
+        out.textContent = ratio.toFixed(2) + ':1 ' + (ratio >= 4.5 ? 'AA' : ratio >= 3 ? 'AA large only' : 'fail');
+      }
+      row.classList.toggle('is-pass', ratio >= 4.5);
+      row.classList.toggle('is-fail', ratio < 4.5);
+    });
+  }
+
   // -- Font panel: name each slot's resolved family live from computed CSS ---
   function readFontNames() {
     document.querySelectorAll('.ds-font-block').forEach(function (block) {
@@ -79,6 +114,7 @@
   }
 
   refreshSwatches();
+  refreshContrast();
   readFontNames();
 
   // -- Skin switcher — toggle data-skin on <html> (DOM only, no storage) ----
@@ -89,6 +125,7 @@
         x.classList.toggle('is-active', x === b);
       });
       refreshSwatches();
+      refreshContrast();
     });
   });
 

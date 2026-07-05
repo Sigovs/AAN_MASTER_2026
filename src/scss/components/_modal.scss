@@ -38,11 +38,17 @@
   border-top: 1px solid t.$color-border;
 }
 
-// BS4 close button (×) tokenized.
+// BS4 close button (sprite close icon) tokenized.
 .modal .close {
   color: t.$color-muted;
   text-shadow: none;
   opacity: 1;
+
+  .icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+  }
 
   &:hover {
     color: t.$color-heading;

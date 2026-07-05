@@ -112,6 +112,15 @@ does not affect the centering). `.hero--compact` HIDES the spec-strip and may
 reduce the display size (smaller h1 clamp) so the whole reduced set — including
 both CTAs — sits fully above the fold with the next section still peeking.
 
+## 5c. Accessibility is a contract
+
+WCAG AA is a system contract, not a nice-to-have: all text/background token
+pairs pass AA contrast (4.5:1 small, 3:1 large), every interactive element shows
+a visible `:focus-visible` ring, and keyboard + reduced-motion paths are
+first-class — any clone that changes colors MUST re-verify contrast (a one-file
+check, because color lives in the skin map; the DS Foundations section computes
+the live ratios per skin).
+
 ## 6. Working style
 
 - **Never ask yes/no or confirmation questions; never pause for permission

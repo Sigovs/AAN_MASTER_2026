@@ -891,3 +891,165 @@ $_ds-text: (
   font-family: t.$font-mono;
   font-size: 13px;
 }
+
+// ===========================================================================
+// Principle callout (Overview) — a quiet emphasis card for the AA contract.
+// ===========================================================================
+.ds-callout {
+  margin-top: t.$space-6;
+  padding: t.$space-5 t.$space-6;
+  border: 1px solid t.$color-border;
+  border-left: 3px solid t.$color-accent;
+  border-radius: t.$radius-md;
+  background: t.$bg-row;
+
+  &__title {
+    margin: 0 0 t.$space-2;
+    font-family: t.$font-display;
+    font-size: t.$text-lead;
+    font-weight: 500;
+    color: t.$color-heading;
+  }
+
+  p:last-child {
+    margin: 0;
+    color: t.$color-text;
+  }
+}
+
+// ===========================================================================
+// Live contrast readout (Foundations) — ui.js fills ratio + pass/fail state.
+// ===========================================================================
+.ds-contrast {
+  display: flex;
+  flex-direction: column;
+  gap: t.$space-2;
+  max-width: 34rem;
+}
+
+.ds-contrast__row {
+  display: flex;
+  align-items: center;
+  gap: t.$space-3;
+  padding: t.$space-2 t.$space-3;
+  border: 1px solid t.$color-border;
+  border-radius: t.$radius-sm;
+}
+
+.ds-contrast__sample {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: t.$space-10;
+  height: t.$space-8;
+  border-radius: t.$radius-sm;
+  font-family: t.$font-display;
+  font-size: t.$text-base;
+  // colours (fg + bg) are set inline by ui.js from the live tokens.
+}
+
+.ds-contrast__pair {
+  flex: 1 1 auto;
+  font-family: t.$font-mono;
+  font-size: t.$text-xs;
+  color: t.$color-text;
+}
+
+.ds-contrast__ratio {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: t.$space-2;
+  font-family: t.$font-mono;
+  font-size: t.$text-xs;
+  font-weight: 500;
+  color: t.$color-muted;
+
+  &::before {
+    // pass/fail pill, coloured by the row state class.
+    content: '';
+    width: 0.55em;
+    height: 0.55em;
+    border-radius: 50%;
+    background: t.$color-muted;
+  }
+}
+
+.ds-contrast__row.is-pass .ds-contrast__ratio {
+  color: t.$color-success;
+  &::before {
+    background: t.$color-success;
+  }
+}
+.ds-contrast__row.is-fail .ds-contrast__ratio {
+  color: t.$color-danger;
+  &::before {
+    background: t.$color-danger;
+  }
+}
+
+// ===========================================================================
+// Iconography specimens
+// ===========================================================================
+.ds-icons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: t.$space-3;
+}
+
+.ds-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: t.$space-2;
+  padding: t.$space-4 t.$space-2;
+  border: 1px solid t.$color-border;
+  border-radius: t.$radius-md;
+  background: t.$surface-card;
+  color: t.$color-text;
+
+  &__name {
+    font-family: t.$font-mono;
+    font-size: t.$text-2xs;
+    letter-spacing: 0.02em;
+    color: t.$color-muted;
+    text-align: center;
+    word-break: break-word;
+  }
+}
+
+.ds-icon-sizes {
+  display: flex;
+  align-items: flex-end;
+  gap: t.$space-6;
+  margin-top: t.$space-2;
+}
+.ds-icon-size {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: t.$space-2;
+  color: t.$color-text;
+
+  .ds-icon__name {
+    font-family: t.$font-mono;
+    font-size: t.$text-2xs;
+    color: t.$color-muted;
+  }
+}
+
+.ds-icon-color {
+  display: flex;
+  flex-wrap: wrap;
+  gap: t.$space-6;
+  margin-top: t.$space-2;
+}
+.ds-icon-color__demo {
+  display: inline-flex;
+  align-items: center;
+  gap: t.$space-2;
+  font-family: t.$font-mono;
+  font-size: t.$text-sm;
+  letter-spacing: 0.04em;
+}

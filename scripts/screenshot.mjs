@@ -127,6 +127,30 @@ for (const w of [390, 768]) {
   await page.close();
 }
 
+// Iconography + live-contrast verification (element clips, obsidian + gallery).
+for (const skin of ['obsidian', 'gallery']) {
+  const page = await browser.newPage({ viewport: { width: 1100, height: 900 } });
+  await page.goto(`${base}/design-system.html`, { waitUntil: 'networkidle' });
+  await settle(page, skin);
+  for (const [sel, name] of [['#iconography', `icons-${skin}`], ['#foundations', `foundations-contrast-${skin}`]]) {
+    const el = await page.$(sel);
+    if (el) await el.screenshot({ path: `screenshots/${name}.png` });
+    shots.push(`${name}.png`);
+  }
+  await page.close();
+}
+
+// Index featured cards (icon pins) — obsidian.
+{
+  const page = await browser.newPage({ viewport: { width: 1200, height: 900 } });
+  await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
+  await settle(page, 'obsidian');
+  const el = await page.$('#featured');
+  if (el) await el.screenshot({ path: 'screenshots/featured-icons.png' });
+  shots.push('featured-icons.png');
+  await page.close();
+}
+
 await browser.close();
 server.close();
 console.log('SCREENSHOTS:\n' + shots.join('\n'));

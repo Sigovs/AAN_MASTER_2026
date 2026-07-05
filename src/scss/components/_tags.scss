@@ -134,6 +134,11 @@ $_tag-tones: (
   opacity: 0.7;
   transition: opacity t.$dur-fast t.$ease;
 
+  .icon {
+    width: 1em;
+    height: 1em;
+  }
+
   &:hover {
     opacity: 1;
   }

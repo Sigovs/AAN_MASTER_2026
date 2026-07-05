@@ -22,6 +22,7 @@
           <ul class="ds-nav__list">
             <li><a class="ds-nav__link" href="#overview">Overview</a></li>
             <li><a class="ds-nav__link" href="#foundations">Foundations</a></li>
+            <li><a class="ds-nav__link" href="#iconography">Iconography</a></li>
             <li><a class="ds-nav__link" href="#rhythm">Rhythm</a></li>
             <li><a class="ds-nav__link" href="#typography">Typography</a></li>
             <li><a class="ds-nav__link" href="#buttons">Buttons</a></li>
@@ -70,6 +71,12 @@
             <p>3. Section rhythm is deliberate — bottom padding is always larger than top.</p>
             <p>4. Nothing "AI-default": no cream+terracotta, no acid green, no gradient buttons.</p>
             <p>5. Hero has two contracted modes — full (no fold bleed) and compact (next section visible above the fold).</p>
+            <p>6. Accessibility is a system contract, not a nice-to-have (see below).</p>
+          </div>
+
+          <div class="ds-callout ds-callout--principle">
+            <p class="ds-callout__title">WCAG AA is a system contract, not a nice-to-have.</p>
+            <p>All text/background token pairs pass AA contrast (4.5:1 small, 3:1 large); every interactive element has a visible <span class="ds-label">:focus-visible</span> ring; keyboard and reduced-motion paths are first-class. Clones changing colors <strong>MUST</strong> re-verify contrast — because color lives in the skin map, the token structure makes this a one-file check (the live ratios in <a href="#foundations">Foundations</a> re-compute per skin).</p>
           </div>
 
           <div class="row">
@@ -128,6 +135,16 @@
             <div class="ds-swatch"><div class="ds-swatch__chip" data-token="fg-on-photo"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$fg-on-photo</span><span class="ds-swatch__value">#ECEAE3</span></div></div>
           </div>
           <p class="ds-note">Tiles show each skin's <em>live</em> value (any stale hex here is overwritten on load). <span class="ds-label">$color-muted</span> clears WCAG AA 4.5:1 on every surface it lands on, per skin — dark skins (obsidian/aurum) <strong>6.3–6.9:1</strong> on <span class="ds-label">$bg-row</span> / <span class="ds-label">$surface-card</span>; gallery <strong>4.6–5.4:1</strong> on its light surfaces — while still reading a clear step below <span class="ds-label">$color-text</span>.</p>
+
+          <h4>Contrast — live AA check</h4>
+          <p class="ds-note">Ratios below are computed by <span class="ds-label">ui.js</span> from the <em>live</em> token colors and re-run on every skin switch — the AA contract, visibly true on the page. AA needs <strong>4.5:1</strong> (small text) / <strong>3:1</strong> (large).</p>
+          <div class="ds-contrast">
+            <div class="ds-contrast__row" data-contrast data-fg="color-text" data-bg="bg-page"><span class="ds-contrast__sample" data-contrast-sample>Aa</span><span class="ds-contrast__pair"><span class="ds-label">$color-text</span> on <span class="ds-label">$bg-page</span></span><span class="ds-contrast__ratio" data-contrast-ratio>—</span></div>
+            <div class="ds-contrast__row" data-contrast data-fg="color-text" data-bg="surface-card"><span class="ds-contrast__sample" data-contrast-sample>Aa</span><span class="ds-contrast__pair"><span class="ds-label">$color-text</span> on <span class="ds-label">$surface-card</span></span><span class="ds-contrast__ratio" data-contrast-ratio>—</span></div>
+            <div class="ds-contrast__row" data-contrast data-fg="color-muted" data-bg="bg-page"><span class="ds-contrast__sample" data-contrast-sample>Aa</span><span class="ds-contrast__pair"><span class="ds-label">$color-muted</span> on <span class="ds-label">$bg-page</span></span><span class="ds-contrast__ratio" data-contrast-ratio>—</span></div>
+            <div class="ds-contrast__row" data-contrast data-fg="color-muted" data-bg="bg-row"><span class="ds-contrast__sample" data-contrast-sample>Aa</span><span class="ds-contrast__pair"><span class="ds-label">$color-muted</span> on <span class="ds-label">$bg-row</span></span><span class="ds-contrast__ratio" data-contrast-ratio>—</span></div>
+            <div class="ds-contrast__row" data-contrast data-fg="color-muted" data-bg="surface-card"><span class="ds-contrast__sample" data-contrast-sample>Aa</span><span class="ds-contrast__pair"><span class="ds-label">$color-muted</span> on <span class="ds-label">$surface-card</span></span><span class="ds-contrast__ratio" data-contrast-ratio>—</span></div>
+          </div>
 
           <h4>System &amp; effect tokens</h4>
           <p class="ds-note">Structural / effect tokens (not skin colors): <span class="ds-label">$on-primary</span> text-on-primary-fill (per skin) · <span class="ds-label">$fg-on-photo</span> always-light on photos (never flips) · <span class="ds-label">$blur-frosted</span> blur(8px) (frosted backdrops) · <span class="ds-label">$focus-ring-width</span> 2px / <span class="ds-label">$focus-ring-offset</span> 2px · <span class="ds-label">$spinner-size</span> 1em / <span class="ds-label">$spinner-border</span> 2px / <span class="ds-label">$spinner-dur</span> 1.2s · <span class="ds-label">$header-h</span> 76px · <span class="ds-label">$overlay-scrim</span> dark veil · <span class="ds-label">hero-style</span> skin token (photo | plain).</p>
@@ -222,6 +239,64 @@
             <div class="ds-radii-tile"><div class="ds-radii-tile__box" data-radius="radius-lg"></div><span class="ds-radii-tile__label">$radius-lg · 14px</span></div>
             <div class="ds-radii-tile"><div class="ds-radii-tile__box" data-radius="radius-pill"></div><span class="ds-radii-tile__label">$radius-pill · 999px</span></div>
           </div>
+        </section>
+
+        <!-- ---------- ICONOGRAPHY ---------- -->
+        <section id="iconography" class="ds-section">
+          <div class="ds-section__intro">
+            <p class="eyebrow">Iconography</p>
+            <h2>One sprite, one language</h2>
+            <p class="lead">A single canonical sprite — <span class="ds-label">assets/img/icons.svg</span> — of stroke-only line icons, referenced via <span class="ds-label">&lt;svg class="icon"&gt;&lt;use href="…#icon-name"&gt;</span>. Color is always <span class="ds-label">currentColor</span>, so an icon inherits the text color around it.</p>
+          </div>
+
+          <h4>The set</h4>
+          <div class="ds-icons">
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-search"/></svg><span class="ds-icon__name">search</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-heart"/></svg><span class="ds-icon__name">heart</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-heart-filled"/></svg><span class="ds-icon__name">heart-filled</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-share"/></svg><span class="ds-icon__name">share</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-phone"/></svg><span class="ds-icon__name">phone</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-message"/></svg><span class="ds-icon__name">message</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-compare-arrows"/></svg><span class="ds-icon__name">compare-arrows</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-exchange"/></svg><span class="ds-icon__name">exchange</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-arrow-right"/></svg><span class="ds-icon__name">arrow-right</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-chevron-up"/></svg><span class="ds-icon__name">chevron-up</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-chevron-down"/></svg><span class="ds-icon__name">chevron-down</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-chevron-left"/></svg><span class="ds-icon__name">chevron-left</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-chevron-right"/></svg><span class="ds-icon__name">chevron-right</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-close"/></svg><span class="ds-icon__name">close</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-plus"/></svg><span class="ds-icon__name">plus</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-minus"/></svg><span class="ds-icon__name">minus</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-check"/></svg><span class="ds-icon__name">check</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-info"/></svg><span class="ds-icon__name">info</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-alert-triangle"/></svg><span class="ds-icon__name">alert-triangle</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-percent"/></svg><span class="ds-icon__name">percent</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-truck"/></svg><span class="ds-icon__name">truck</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-clipboard-check"/></svg><span class="ds-icon__name">clipboard-check</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-upload-cloud"/></svg><span class="ds-icon__name">upload-cloud</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-pin"/></svg><span class="ds-icon__name">pin</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-clock"/></svg><span class="ds-icon__name">clock</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-external"/></svg><span class="ds-icon__name">external</span></div>
+            <div class="ds-icon"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-menu"/></svg><span class="ds-icon__name">menu</span></div>
+          </div>
+
+          <h4>Sizes</h4>
+          <p class="ds-note"><span class="ds-label">$icon-sm</span> 16 · <span class="ds-label">$icon-md</span> 20 (default) · <span class="ds-label">$icon-lg</span> 24 — set via <span class="ds-label">.icon--sm</span> / <span class="ds-label">.icon--lg</span>.</p>
+          <div class="ds-icon-sizes">
+            <span class="ds-icon-size"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-compare-arrows"/></svg><span class="ds-icon__name">sm · 16</span></span>
+            <span class="ds-icon-size"><svg class="icon"><use href="assets/img/icons.svg#icon-compare-arrows"/></svg><span class="ds-icon__name">md · 20</span></span>
+            <span class="ds-icon-size"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-compare-arrows"/></svg><span class="ds-icon__name">lg · 24</span></span>
+          </div>
+
+          <h4>currentColor</h4>
+          <p class="ds-note">The same icon inherits whatever text color surrounds it — no per-color variants.</p>
+          <div class="ds-icon-color">
+            <span class="ds-icon-color__demo" style="color: var(--color-muted)"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-heart"/></svg> muted</span>
+            <span class="ds-icon-color__demo" style="color: var(--color-text)"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-heart"/></svg> text</span>
+            <span class="ds-icon-color__demo" style="color: var(--color-primary)"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-heart"/></svg> primary</span>
+          </div>
+
+          <p class="ds-usage"><strong>Usage.</strong> Stroke 1.5, round caps &amp; joins, 24 grid, <span class="ds-label">currentColor</span> — new icons MUST match this language. No filled/duotone/emoji icons (heart-filled is the one intentional fill: the saved state). Reference the sprite; never paste inline path data into components.</p>
         </section>
 
         <!-- ---------- RHYTHM ---------- -->
@@ -383,10 +458,10 @@
           <h4>Content forms</h4>
           <div class="ds-cluster">
             <button class="btn btn-primary">Text only</button>
-            <button class="btn btn-primary">Explore Inventory <span class="btn__arrow" aria-hidden="true">→</span></button>
-            <button class="btn btn-outline"><span class="btn__icon" aria-hidden="true">◧</span> With icon</button>
-            <button class="btn btn-primary btn-icon-only" aria-label="Call"><span aria-hidden="true">✆</span></button>
-            <button class="btn btn-outline btn-icon-only" aria-label="Compare"><span aria-hidden="true">⇄</span></button>
+            <button class="btn btn-primary">Explore Inventory <span class="btn__arrow" aria-hidden="true"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-arrow-right"/></svg></span></button>
+            <button class="btn btn-outline"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-search"/></svg> With icon</button>
+            <button class="btn btn-primary btn-icon-only" aria-label="Call"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-phone"/></svg></button>
+            <button class="btn btn-outline btn-icon-only" aria-label="Compare"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-compare-arrows"/></svg></button>
           </div>
         </section>
 
@@ -465,7 +540,7 @@
           <div class="ds-cluster">
             <span class="tag tag-muted tag--success tag-dot">Available</span>
             <span class="tag tag-solid tag--primary"><span class="tag__icon" aria-hidden="true">★</span>Featured</span>
-            <span class="tag tag-muted tag--neutral tag-removable">Under $30k<button class="tag__remove" type="button" aria-label="Remove filter">×</button></span>
+            <span class="tag tag-muted tag--neutral tag-removable">Under $30k<button class="tag__remove" type="button" aria-label="Remove filter"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-close"/></svg></button></span>
             <span class="tag tag-outline tag--primary tag-counter">Compare<span class="tag__count">(2)</span></span>
           </div>
 
@@ -633,12 +708,12 @@
               <fieldset class="fieldset">
                 <legend class="fieldset__title">Upload photos</legend>
                 <div class="dropzone" id="ds-dropzone" tabindex="0" role="button" aria-label="Upload photos — drag &amp; drop or browse">
-                  <span class="dropzone__icon" aria-hidden="true">⤒</span>
+                  <span class="dropzone__icon" aria-hidden="true"><svg class="icon"><use href="assets/img/icons.svg#icon-upload-cloud"/></svg></span>
                   <p class="dropzone__text">Drag &amp; drop your files or <span class="dropzone__browse">browse</span></p>
                 </div>
                 <ul class="dropzone-files" id="ds-dropzone-files">
-                  <li class="dropzone-file"><span class="dropzone-file__name">porsche-front.jpg</span><span class="dropzone-file__size">2.4 MB</span><button class="dropzone-file__remove" type="button" aria-label="Remove file">×</button></li>
-                  <li class="dropzone-file"><span class="dropzone-file__name">porsche-interior.jpg</span><span class="dropzone-file__size">1.8 MB</span><button class="dropzone-file__remove" type="button" aria-label="Remove file">×</button></li>
+                  <li class="dropzone-file"><span class="dropzone-file__name">porsche-front.jpg</span><span class="dropzone-file__size">2.4 MB</span><button class="dropzone-file__remove" type="button" aria-label="Remove file"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-close"/></svg></button></li>
+                  <li class="dropzone-file"><span class="dropzone-file__name">porsche-interior.jpg</span><span class="dropzone-file__size">1.8 MB</span><button class="dropzone-file__remove" type="button" aria-label="Remove file"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-close"/></svg></button></li>
                 </ul>
               </fieldset>
 
@@ -697,9 +772,9 @@
               <div class="car-image">
                 <div class="image frame"><img src="assets/img/demo/car-1.jpg" alt="2024 McLaren 720S" /></div>
                 <div class="car-pins">
-                  <button class="car-pin" type="button" data-save aria-label="Save">♥</button>
-                  <button class="car-pin" type="button" aria-label="Share">⤴</button>
-                  <button class="car-pin" type="button" aria-label="Text">✉</button>
+                  <button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon icon--sm car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon icon--sm car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button>
+                  <button class="car-pin" type="button" aria-label="Share"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button>
+                  <button class="car-pin" type="button" aria-label="Text"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-message"/></svg></button>
                 </div>
               </div>
               <div class="car-name">
@@ -713,8 +788,8 @@
                 <div class="car-share">
                   <label class="car-compare"><input type="checkbox" /> <span>Compare</span></label>
                   <div class="car-actions">
-                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call">✆</button>
-                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text">✉</button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-phone"/></svg></button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-message"/></svg></button>
                   </div>
                 </div>
                 <a class="btn btn-primary btn-sm car-cta" href="#vehicle-card">View details</a>
@@ -727,9 +802,9 @@
                 <div class="image frame"><img src="assets/img/demo/car-2.jpg" alt="2023 Porsche 911 Turbo S" /></div>
                 <span class="card-badge card-badge--new">New Arrival</span>
                 <div class="car-pins">
-                  <button class="car-pin" type="button" data-save aria-label="Save">♥</button>
-                  <button class="car-pin" type="button" aria-label="Share">⤴</button>
-                  <button class="car-pin" type="button" aria-label="Text">✉</button>
+                  <button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon icon--sm car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon icon--sm car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button>
+                  <button class="car-pin" type="button" aria-label="Share"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button>
+                  <button class="car-pin" type="button" aria-label="Text"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-message"/></svg></button>
                 </div>
               </div>
               <div class="car-name">
@@ -743,8 +818,8 @@
                 <div class="car-share">
                   <label class="car-compare"><input type="checkbox" /> <span>Compare</span></label>
                   <div class="car-actions">
-                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call">✆</button>
-                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text">✉</button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-phone"/></svg></button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-message"/></svg></button>
                   </div>
                 </div>
                 <a class="btn btn-primary btn-sm car-cta" href="#vehicle-card">View details</a>
@@ -757,9 +832,9 @@
                 <div class="image frame"><img src="assets/img/demo/car-3.webp" alt="2024 Ferrari Roma" /></div>
                 <span class="card-badge card-badge--cpo">Certified Pre-Owned</span>
                 <div class="car-pins">
-                  <button class="car-pin" type="button" data-save aria-label="Save">♥</button>
-                  <button class="car-pin" type="button" aria-label="Share">⤴</button>
-                  <button class="car-pin" type="button" aria-label="Text">✉</button>
+                  <button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon icon--sm car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon icon--sm car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button>
+                  <button class="car-pin" type="button" aria-label="Share"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button>
+                  <button class="car-pin" type="button" aria-label="Text"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-message"/></svg></button>
                 </div>
               </div>
               <div class="car-name">
@@ -773,8 +848,8 @@
                 <div class="car-share">
                   <label class="car-compare"><input type="checkbox" /> <span>Compare</span></label>
                   <div class="car-actions">
-                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call">✆</button>
-                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text">✉</button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-phone"/></svg></button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-message"/></svg></button>
                   </div>
                 </div>
                 <a class="btn btn-primary btn-sm car-cta" href="#vehicle-card">View details</a>
@@ -786,7 +861,7 @@
               <div class="car-image">
                 <div class="image frame"><img src="assets/img/demo/car-1.jpg" alt="2022 McLaren 720S — sold" /></div>
                 <div class="car-pins">
-                  <button class="car-pin" type="button" aria-label="Share">⤴</button>
+                  <button class="car-pin" type="button" aria-label="Share"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button>
                 </div>
                 <div class="p-overlay p-overlay-scrim p-overlay--sold"><span>Sold</span></div>
               </div>
@@ -801,7 +876,7 @@
                 <div class="car-share">
                   <label class="car-compare"><input type="checkbox" disabled /> <span>Compare</span></label>
                   <div class="car-actions">
-                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call">✆</button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-phone"/></svg></button>
                   </div>
                 </div>
                 <a class="btn btn-primary btn-sm car-cta" href="#vehicle-card">View details</a>
@@ -813,7 +888,7 @@
               <div class="car-image">
                 <div class="image frame"><img src="assets/img/demo/car-3.webp" alt="2023 Ferrari Portofino M — sold" /></div>
                 <div class="car-pins">
-                  <button class="car-pin" type="button" aria-label="Share">⤴</button>
+                  <button class="car-pin" type="button" aria-label="Share"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button>
                 </div>
                 <div class="p-overlay p-overlay-corner p-overlay--sold p-overlay--tl"><span>Sold</span></div>
               </div>
@@ -828,7 +903,7 @@
                 <div class="car-share">
                   <label class="car-compare"><input type="checkbox" disabled /> <span>Compare</span></label>
                   <div class="car-actions">
-                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call">✆</button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-phone"/></svg></button>
                   </div>
                 </div>
                 <a class="btn btn-primary btn-sm car-cta" href="#vehicle-card">View details</a>
@@ -840,9 +915,9 @@
               <div class="car-image">
                 <div class="image frame"><img src="assets/img/demo/car-2.jpg" alt="2023 Porsche 911 — sale pending" /></div>
                 <div class="car-pins">
-                  <button class="car-pin" type="button" data-save aria-label="Save">♥</button>
-                  <button class="car-pin" type="button" aria-label="Share">⤴</button>
-                  <button class="car-pin" type="button" aria-label="Text">✉</button>
+                  <button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon icon--sm car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon icon--sm car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button>
+                  <button class="car-pin" type="button" aria-label="Share"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button>
+                  <button class="car-pin" type="button" aria-label="Text"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-message"/></svg></button>
                 </div>
                 <div class="p-overlay p-overlay-ribbon p-overlay--pending p-overlay--tl"><span>Sale Pending</span></div>
               </div>
@@ -857,8 +932,8 @@
                 <div class="car-share">
                   <label class="car-compare"><input type="checkbox" /> <span>Compare</span></label>
                   <div class="car-actions">
-                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call">✆</button>
-                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text">✉</button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-phone"/></svg></button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-message"/></svg></button>
                   </div>
                 </div>
                 <a class="btn btn-primary btn-sm car-cta" href="#vehicle-card">View details</a>
@@ -870,9 +945,9 @@
               <div class="car-image">
                 <div class="image frame"><img src="assets/img/demo/car-3.webp" alt="2024 Ferrari Roma — price reduced" /></div>
                 <div class="car-pins">
-                  <button class="car-pin" type="button" data-save aria-label="Save">♥</button>
-                  <button class="car-pin" type="button" aria-label="Share">⤴</button>
-                  <button class="car-pin" type="button" aria-label="Text">✉</button>
+                  <button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon icon--sm car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon icon--sm car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button>
+                  <button class="car-pin" type="button" aria-label="Share"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button>
+                  <button class="car-pin" type="button" aria-label="Text"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-message"/></svg></button>
                 </div>
                 <div class="p-overlay p-overlay-bar p-overlay--reduced"><span>Reduced</span></div>
               </div>
@@ -890,8 +965,8 @@
                 <div class="car-share">
                   <label class="car-compare"><input type="checkbox" /> <span>Compare</span></label>
                   <div class="car-actions">
-                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call">✆</button>
-                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text">✉</button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-phone"/></svg></button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-message"/></svg></button>
                   </div>
                 </div>
                 <a class="btn btn-primary btn-sm car-cta" href="#vehicle-card">View details</a>
@@ -914,7 +989,7 @@
                 <div class="car-share">
                   <label class="car-compare"><input type="checkbox" /> <span>Notify me</span></label>
                   <div class="car-actions">
-                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call">✆</button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-phone"/></svg></button>
                   </div>
                 </div>
                 <a class="btn btn-primary btn-sm car-cta" href="#vehicle-card">Get updates</a>
@@ -953,7 +1028,7 @@
             <div class="ds-card-grid">
               <article class="car-card">
                 <div class="car-image"><div class="image frame"><img src="assets/img/demo/car-1.jpg" alt="McLaren 720S" /></div>
-                  <div class="car-pins"><button class="car-pin" type="button" data-save aria-label="Save">♥</button></div>
+                  <div class="car-pins"><button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon icon--sm car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon icon--sm car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button></div>
                 </div>
                 <div class="car-name">
                   <span class="car-name__year">2024</span><h3 class="car-name__title">McLaren 720S</h3><p class="car-name__trim">Performance · Coupe</p>
@@ -964,7 +1039,7 @@
             </div>
             <article class="car-card car-card--row">
               <div class="car-image"><div class="image frame"><img src="assets/img/demo/car-2.jpg" alt="Porsche 911 Turbo S" /></div>
-                <div class="car-pins"><button class="car-pin" type="button" data-save aria-label="Save">♥</button><button class="car-pin" type="button" aria-label="Share">⤴</button></div>
+                <div class="car-pins"><button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon icon--sm car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon icon--sm car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button><button class="car-pin" type="button" aria-label="Share"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button></div>
               </div>
               <div class="car-name">
                 <span class="car-name__year">2023</span>
@@ -974,8 +1049,8 @@
                 <div class="car-share">
                   <label class="car-compare"><input type="checkbox" /> <span>Compare</span></label>
                   <div class="car-actions">
-                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call">✆</button>
-                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text">✉</button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-phone"/></svg></button>
+                    <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-message"/></svg></button>
                     <a class="btn btn-primary btn-sm" href="#vehicle-card">View details</a>
                   </div>
                 </div>
@@ -1031,7 +1106,7 @@
                     <ul class="site-nav__menu">
                       <li><a href="#navigation" class="site-nav__link">Inventory</a></li>
                       <li class="nav-dropdown">
-                        <a href="#navigation" class="site-nav__link nav-dropdown__toggle">Services<span class="nav-dropdown__caret" aria-hidden="true"></span></a>
+                        <a href="#navigation" class="site-nav__link nav-dropdown__toggle">Services<span class="nav-dropdown__caret" aria-hidden="true"><svg class="icon"><use href="assets/img/icons.svg#icon-chevron-down"/></svg></span></a>
                         <div class="nav-dropdown__panel">
                           <a href="#navigation" class="nav-dropdown__item">Financing</a>
                           <a href="#navigation" class="nav-dropdown__item">Trade-in</a>
@@ -1172,9 +1247,9 @@
           </div>
           <div class="filters-active">
             <span class="filters-active__label">Active</span>
-            <span class="tag tag-muted tag--primary tag-removable">Porsche<button class="tag__remove" type="button" aria-label="Remove">×</button></span>
-            <span class="tag tag-muted tag--primary tag-removable">Under $300k<button class="tag__remove" type="button" aria-label="Remove">×</button></span>
-            <span class="tag tag-muted tag--primary tag-removable">Low Miles<button class="tag__remove" type="button" aria-label="Remove">×</button></span>
+            <span class="tag tag-muted tag--primary tag-removable">Porsche<button class="tag__remove" type="button" aria-label="Remove"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-close"/></svg></button></span>
+            <span class="tag tag-muted tag--primary tag-removable">Under $300k<button class="tag__remove" type="button" aria-label="Remove"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-close"/></svg></button></span>
+            <span class="tag tag-muted tag--primary tag-removable">Low Miles<button class="tag__remove" type="button" aria-label="Remove"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-close"/></svg></button></span>
             <span class="filters__count">24 results</span>
             <button class="btn btn-outline btn-pill btn-sm" type="button">Clear all</button>
           </div>
@@ -1184,13 +1259,13 @@
         <section id="pagination" class="ds-section">
           <div class="ds-section__intro"><p class="eyebrow">Pagination</p><h2>Pagination</h2></div>
           <ul class="pagination">
-            <li class="page-item disabled"><a class="page-link" href="#pagination">‹</a></li>
+            <li class="page-item disabled"><a class="page-link" href="#pagination" aria-label="Previous"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-chevron-left"/></svg></a></li>
             <li class="page-item active"><a class="page-link" href="#pagination">1</a></li>
             <li class="page-item"><a class="page-link" href="#pagination">2</a></li>
             <li class="page-item"><a class="page-link" href="#pagination">3</a></li>
             <li class="page-item"><a class="page-link" href="#pagination">…</a></li>
             <li class="page-item"><a class="page-link" href="#pagination">12</a></li>
-            <li class="page-item"><a class="page-link" href="#pagination">›</a></li>
+            <li class="page-item"><a class="page-link" href="#pagination" aria-label="Next"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-chevron-right"/></svg></a></li>
           </ul>
         </section>
 
@@ -1210,15 +1285,15 @@
           <div class="ds-section__intro"><p class="eyebrow">Accordion</p><h2>FAQ</h2></div>
           <div class="accordion" id="faqAcc">
             <div class="accordion__item">
-              <button class="accordion__q" type="button" data-toggle="collapse" data-target="#faq1" aria-expanded="true" aria-controls="faq1">Do you offer financing?<span class="accordion__icon"></span></button>
+              <button class="accordion__q" type="button" data-toggle="collapse" data-target="#faq1" aria-expanded="true" aria-controls="faq1">Do you offer financing?<span class="accordion__icon" aria-hidden="true"><svg class="icon icon--sm accordion__plus"><use href="assets/img/icons.svg#icon-plus"/></svg><svg class="icon icon--sm accordion__minus"><use href="assets/img/icons.svg#icon-minus"/></svg></span></button>
               <div id="faq1" class="collapse show" data-parent="#faqAcc"><div class="accordion__panel-inner">Yes — competitive rates via multiple lenders, with pre-approval in minutes.</div></div>
             </div>
             <div class="accordion__item">
-              <button class="accordion__q" type="button" data-toggle="collapse" data-target="#faq2" aria-expanded="false" aria-controls="faq2">Can I trade in my vehicle?<span class="accordion__icon"></span></button>
+              <button class="accordion__q" type="button" data-toggle="collapse" data-target="#faq2" aria-expanded="false" aria-controls="faq2">Can I trade in my vehicle?<span class="accordion__icon" aria-hidden="true"><svg class="icon icon--sm accordion__plus"><use href="assets/img/icons.svg#icon-plus"/></svg><svg class="icon icon--sm accordion__minus"><use href="assets/img/icons.svg#icon-minus"/></svg></span></button>
               <div id="faq2" class="collapse" data-parent="#faqAcc"><div class="accordion__panel-inner">Absolutely — get a wholesale-backed offer within 24 hours.</div></div>
             </div>
             <div class="accordion__item">
-              <button class="accordion__q" type="button" data-toggle="collapse" data-target="#faq3" aria-expanded="false" aria-controls="faq3">Do you ship nationwide?<span class="accordion__icon"></span></button>
+              <button class="accordion__q" type="button" data-toggle="collapse" data-target="#faq3" aria-expanded="false" aria-controls="faq3">Do you ship nationwide?<span class="accordion__icon" aria-hidden="true"><svg class="icon icon--sm accordion__plus"><use href="assets/img/icons.svg#icon-plus"/></svg><svg class="icon icon--sm accordion__minus"><use href="assets/img/icons.svg#icon-minus"/></svg></span></button>
               <div id="faq3" class="collapse" data-parent="#faqAcc"><div class="accordion__panel-inner">Yes — enclosed transport anywhere in the continental US.</div></div>
             </div>
           </div>
@@ -1231,7 +1306,7 @@
             <div class="alert alert-success">Your inquiry was sent — we’ll reply within the hour.</div>
             <div class="alert alert-info">3 new vehicles match your saved search.</div>
             <div class="alert alert-warning">This vehicle has a sale pending.</div>
-            <div class="alert alert-danger alert-dismissible">Payment could not be processed.<button class="close" type="button" aria-label="Dismiss">×</button></div>
+            <div class="alert alert-danger alert-dismissible">Payment could not be processed.<button class="close" type="button" aria-label="Dismiss"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-close"/></svg></button></div>
           </div>
         </section>
 
@@ -1288,16 +1363,16 @@
             <p class="lead">Each pattern is assembled on the <a href="index.html">master homepage</a> using <span class="ds-label">.section</span> rhythm + the <span class="ds-label">.sec-head</span> pattern. Open a preview:</p>
           </div>
           <div class="ds-patterns">
-            <a class="ds-pattern" href="index.html#hero"><span class="ds-pattern__name">Hero</span><span class="ds-pattern__go">index.html#hero →</span></a>
-            <a class="ds-pattern" href="index.html#quick-search"><span class="ds-pattern__name">Quick search</span><span class="ds-pattern__go">index.html#quick-search →</span></a>
-            <a class="ds-pattern" href="index.html#featured"><span class="ds-pattern__name">Featured</span><span class="ds-pattern__go">index.html#featured →</span></a>
-            <a class="ds-pattern" href="index.html#sell-your-car"><span class="ds-pattern__name">Sell your car</span><span class="ds-pattern__go">index.html#sell-your-car →</span></a>
-            <a class="ds-pattern" href="index.html#services"><span class="ds-pattern__name">Services</span><span class="ds-pattern__go">index.html#services →</span></a>
-            <a class="ds-pattern" href="index.html#showcase"><span class="ds-pattern__name">Showcase (bleed)</span><span class="ds-pattern__go">index.html#showcase →</span></a>
-            <a class="ds-pattern" href="index.html#sell-your-car"><span class="ds-pattern__name">Media-split (bleed)</span><span class="ds-pattern__go">index.html#sell-your-car →</span></a>
-            <a class="ds-pattern" href="index.html#brands"><span class="ds-pattern__name">Brands</span><span class="ds-pattern__go">index.html#brands →</span></a>
-            <a class="ds-pattern" href="index.html#testimonials"><span class="ds-pattern__name">Testimonial</span><span class="ds-pattern__go">index.html#testimonials →</span></a>
-            <a class="ds-pattern" href="index.html#visit"><span class="ds-pattern__name">Visit</span><span class="ds-pattern__go">index.html#visit →</span></a>
+            <a class="ds-pattern" href="index.html#hero"><span class="ds-pattern__name">Hero</span><span class="ds-pattern__go">index.html#hero <svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-external"/></svg></span></a>
+            <a class="ds-pattern" href="index.html#quick-search"><span class="ds-pattern__name">Quick search</span><span class="ds-pattern__go">index.html#quick-search <svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-external"/></svg></span></a>
+            <a class="ds-pattern" href="index.html#featured"><span class="ds-pattern__name">Featured</span><span class="ds-pattern__go">index.html#featured <svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-external"/></svg></span></a>
+            <a class="ds-pattern" href="index.html#sell-your-car"><span class="ds-pattern__name">Sell your car</span><span class="ds-pattern__go">index.html#sell-your-car <svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-external"/></svg></span></a>
+            <a class="ds-pattern" href="index.html#services"><span class="ds-pattern__name">Services</span><span class="ds-pattern__go">index.html#services <svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-external"/></svg></span></a>
+            <a class="ds-pattern" href="index.html#showcase"><span class="ds-pattern__name">Showcase (bleed)</span><span class="ds-pattern__go">index.html#showcase <svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-external"/></svg></span></a>
+            <a class="ds-pattern" href="index.html#sell-your-car"><span class="ds-pattern__name">Media-split (bleed)</span><span class="ds-pattern__go">index.html#sell-your-car <svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-external"/></svg></span></a>
+            <a class="ds-pattern" href="index.html#brands"><span class="ds-pattern__name">Brands</span><span class="ds-pattern__go">index.html#brands <svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-external"/></svg></span></a>
+            <a class="ds-pattern" href="index.html#testimonials"><span class="ds-pattern__name">Testimonial</span><span class="ds-pattern__go">index.html#testimonials <svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-external"/></svg></span></a>
+            <a class="ds-pattern" href="index.html#visit"><span class="ds-pattern__name">Visit</span><span class="ds-pattern__go">index.html#visit <svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-external"/></svg></span></a>
           </div>
 
           <div class="ds-usage">
@@ -1363,7 +1438,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Request a test drive</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-close"/></svg></button>
           </div>
           <div class="modal-body"><p>Confirm your details and we’ll schedule your visit.</p></div>
           <div class="modal-footer">

@@ -30,43 +30,24 @@
   color: t.$color-heading;
 }
 
-// Plus → minus indicator.
+// Plus → minus indicator (sprite icons, toggled by aria-expanded).
 .accordion__icon {
-  position: relative;
   flex: 0 0 auto;
-  width: 1em;
-  height: 1em;
-  transition: transform t.$dur-base t.$ease;
+  display: inline-flex;
+  color: t.$color-muted;
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    background: t.$color-muted;
-  }
-  &::before {
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 2px;
-    transform: translateY(-50%);
-  }
-  &::after {
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    transform: translateX(-50%);
-    transition: opacity t.$dur-base t.$ease;
+  .accordion__minus {
+    display: none;
   }
 }
 
-// Expanded (BS4 sets aria-expanded="true" on the trigger).
+// Expanded (BS4 sets aria-expanded="true" on the trigger): plus → minus.
 .accordion__q[aria-expanded='true'] .accordion__icon {
-  transform: rotate(180deg);
-
-  &::after {
-    opacity: 0; // becomes a minus
+  .accordion__plus {
+    display: none;
+  }
+  .accordion__minus {
+    display: inline-flex;
   }
 }
 

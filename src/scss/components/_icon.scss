@@ -1,0 +1,32 @@
+// ============================================================================
+// COMPONENTS / ICON — the .icon helper for sprite references.
+// Usage: <svg class="icon"><use href="assets/img/icons.svg#icon-name"/></svg>
+// Sprite symbols carry their own stroke presentation (1.5 round), so an icon
+// renders even without this class; .icon standardises size + inline alignment
+// and re-asserts the stroke contract so host CSS colour flows via currentColor.
+// Size defaults to md; --sm / --lg opt in. Colour is always currentColor.
+// ============================================================================
+@use '../aan-theme-kit' as t;
+
+.icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: t.$icon-md;
+  height: t.$icon-md;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: middle; // sits on the text baseline when inline with a label
+}
+
+.icon--sm {
+  width: t.$icon-sm;
+  height: t.$icon-sm;
+}
+
+.icon--lg {
+  width: t.$icon-lg;
+  height: t.$icon-lg;
+}

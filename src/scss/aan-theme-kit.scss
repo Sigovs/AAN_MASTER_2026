@@ -159,6 +159,11 @@ $text-lead: 17px !default; // lead paragraphs
 $card-title-size: 22px !default; // vehicle-card title
 $hover-lift:      -4px !default; // card / button hover translateY
 
+// Icon sizes — the .icon helper defaults to md; --sm / --lg opt in.
+$icon-sm: 16px !default; // inline with small/mono text, chips, pins-in-list
+$icon-md: 20px !default; // default — buttons, inline actions, pagination
+$icon-lg: 24px !default; // feature glyphs, section-level affordances
+
 // A single border-width token (1px borders may otherwise stay literal).
 $border-w: 1px !default;
 
