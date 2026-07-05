@@ -162,6 +162,19 @@ for (const skin of ['obsidian', 'gallery', 'aurum']) {
   await page.close();
 }
 
+// DS sidebar — scrolled into Components (accordion follows the active section).
+{
+  const page = await browser.newPage({ viewport: { width: 1280, height: 1000 } });
+  await page.goto(`${base}/design-system.html`, { waitUntil: 'networkidle' });
+  await settle(page, 'obsidian');
+  await page.evaluate(() => document.getElementById('forms').scrollIntoView());
+  await page.waitForTimeout(500);
+  const nav = await page.$('.ds-nav');
+  if (nav) await nav.screenshot({ path: 'screenshots/ds-sidebar-scrolled.png' });
+  shots.push('ds-sidebar-scrolled.png');
+  await page.close();
+}
+
 // DS sidebar — filtered search state.
 {
   const page = await browser.newPage({ viewport: { width: 1280, height: 1000 } });

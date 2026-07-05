@@ -333,14 +333,37 @@
     }
   }
 
-  // -- DS sidebar: keyword search filter (name + per-item keywords) ----------
-  var navSearch = document.getElementById('ds-nav-search');
-  if (navSearch) {
-    var navItems = Array.prototype.slice.call(document.querySelectorAll('.ds-nav__item'));
-    var navGroups = Array.prototype.slice.call(document.querySelectorAll('.ds-nav__group'));
-    var navEmpty = document.querySelector('[data-nav-empty]');
+  // -- DS sidebar: accordion groups + keyword search + active-section sync ---
+  var dsNav = document.querySelector('.ds-nav');
+  if (dsNav) {
+    var navSearch = document.getElementById('ds-nav-search');
+    var navItems = Array.prototype.slice.call(dsNav.querySelectorAll('.ds-nav__item'));
+    var navGroups = Array.prototype.slice.call(dsNav.querySelectorAll('.ds-nav__group'));
+    var navEmpty = dsNav.querySelector('[data-nav-empty]');
+    var userPinned = []; // groups the user explicitly expanded this session
+
+    function setGroupOpen(group, open) {
+      group.classList.toggle('is-open', open);
+      var trg = group.querySelector('[data-nav-group]');
+      if (trg) trg.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    // Trigger click → toggle the group + (un)pin it against auto-collapse.
+    dsNav.querySelectorAll('[data-nav-group]').forEach(function (trg) {
+      trg.addEventListener('click', function () {
+        var group = trg.closest('.ds-nav__group');
+        var open = !group.classList.contains('is-open');
+        setGroupOpen(group, open);
+        var idx = userPinned.indexOf(group);
+        if (open && idx === -1) userPinned.push(group);
+        if (!open && idx !== -1) userPinned.splice(idx, 1);
+      });
+    });
+
+    // Keyword search — overrides collapse (is-searching forces panels open).
     function filterNav() {
-      var q = navSearch.value.trim().toLowerCase();
+      var q = navSearch ? navSearch.value.trim().toLowerCase() : '';
+      dsNav.classList.toggle('is-searching', q.length > 0);
       var anyVisible = false;
       navItems.forEach(function (it) {
         var link = it.querySelector('.ds-nav__link');
@@ -351,51 +374,61 @@
       });
       navGroups.forEach(function (g) {
         var visible = g.querySelectorAll('.ds-nav__item:not(.is-hidden)').length;
-        g.classList.toggle('is-hidden', visible === 0);
+        g.classList.toggle('is-hidden', q.length > 0 && visible === 0);
       });
       if (navEmpty) navEmpty.hidden = anyVisible;
     }
-    navSearch.addEventListener('input', filterNav);
-    navSearch.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { navSearch.value = ''; filterNav(); navSearch.blur(); }
-    });
-  }
-
-  // -- DS sidebar: active-section highlight (topmost in an upper band) -------
-  var navAnchors = document.querySelectorAll('.ds-nav__item > .ds-nav__link[href^="#"]');
-  if (navAnchors.length && 'IntersectionObserver' in window) {
-    var itemById = {};
-    var sections = [];
-    navAnchors.forEach(function (a) {
-      var id = a.getAttribute('href').slice(1);
-      var sec = document.getElementById(id);
-      if (!sec) return;
-      itemById[id] = a.parentElement;
-      sections.push(sec);
-    });
-    var visibleTops = {};
-    var currentId = null;
-    function setActive(id) {
-      if (id === currentId) return;
-      currentId = id;
-      Object.keys(itemById).forEach(function (k) {
-        itemById[k].classList.toggle('is-active', k === id);
+    if (navSearch) {
+      navSearch.addEventListener('input', filterNav);
+      navSearch.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { navSearch.value = ''; filterNav(); navSearch.blur(); }
       });
     }
-    var secObs = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) visibleTops[e.target.id] = e.boundingClientRect.top;
-          else delete visibleTops[e.target.id];
+
+    // Active-section highlight + accordion sync (topmost section in an upper band).
+    var navAnchors = dsNav.querySelectorAll('.ds-nav__item > .ds-nav__link[href^="#"]');
+    if (navAnchors.length && 'IntersectionObserver' in window) {
+      var itemById = {};
+      var groupBySection = {};
+      var sections = [];
+      navAnchors.forEach(function (a) {
+        var id = a.getAttribute('href').slice(1);
+        var sec = document.getElementById(id);
+        if (!sec) return;
+        itemById[id] = a.parentElement;
+        groupBySection[id] = a.closest('.ds-nav__group');
+        sections.push(sec);
+      });
+      var visibleTops = {};
+      var currentId = null;
+      function syncGroups(activeGroup) {
+        navGroups.forEach(function (g) {
+          setGroupOpen(g, g === activeGroup || userPinned.indexOf(g) !== -1);
         });
-        var ids = Object.keys(visibleTops);
-        if (!ids.length) return;
-        ids.sort(function (a, b) { return visibleTops[a] - visibleTops[b]; });
-        setActive(ids[0]);
-      },
-      { rootMargin: '-30% 0px -60% 0px', threshold: 0 }
-    );
-    sections.forEach(function (s) { secObs.observe(s); });
+      }
+      function setActive(id) {
+        if (id === currentId) return;
+        currentId = id;
+        Object.keys(itemById).forEach(function (k) {
+          itemById[k].classList.toggle('is-active', k === id);
+        });
+        syncGroups(groupBySection[id]); // open the active section's group
+      }
+      var secObs = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) visibleTops[e.target.id] = e.boundingClientRect.top;
+            else delete visibleTops[e.target.id];
+          });
+          var ids = Object.keys(visibleTops);
+          if (!ids.length) return;
+          ids.sort(function (a, b) { return visibleTops[a] - visibleTops[b]; });
+          setActive(ids[0]);
+        },
+        { rootMargin: '-30% 0px -60% 0px', threshold: 0 }
+      );
+      sections.forEach(function (s) { secObs.observe(s); });
+    }
   }
 
   // -- DS viewport DESK/MOBILE toggle ---------------------------------------

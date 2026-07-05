@@ -27,23 +27,28 @@
           <p class="ds-nav__empty" data-nav-empty hidden>No matches — try another term.</p>
 
           <ul class="ds-nav__list">
-            <li class="ds-nav__group">
-              <p class="ds-nav__group-label">Start</p>
+            <li class="ds-nav__group is-open">
+              <button class="ds-nav__group-label" type="button" aria-expanded="true" aria-controls="dsg-start" data-nav-group>Start<svg class="icon icon--sm ds-nav__group-caret" aria-hidden="true"><use href="assets/img/icons.svg#icon-chevron-down"/></svg></button>
+              <div class="ds-nav__group-panel" id="dsg-start">
               <ul class="ds-nav__group-items">
                 <li class="ds-nav__item" data-keywords="overview intro principles get started aa accessibility"><a class="ds-nav__link" href="#overview"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-info"/></svg><span>Overview</span></a></li>
               </ul>
+              </div>
             </li>
             <li class="ds-nav__group">
-              <p class="ds-nav__group-label">Foundations</p>
+              <button class="ds-nav__group-label" type="button" aria-expanded="false" aria-controls="dsg-foundations" data-nav-group>Foundations<svg class="icon icon--sm ds-nav__group-caret" aria-hidden="true"><use href="assets/img/icons.svg#icon-chevron-down"/></svg></button>
+              <div class="ds-nav__group-panel" id="dsg-foundations">
               <ul class="ds-nav__group-items">
                 <li class="ds-nav__item" data-keywords="color colour palette swatch token contrast aa surface background hue"><a class="ds-nav__link" href="#colors"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-palette"/></svg><span>Colors &amp; Tokens</span></a></li>
                 <li class="ds-nav__item" data-keywords="icon iconography sprite svg glyph symbol stroke"><a class="ds-nav__link" href="#iconography"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-grid"/></svg><span>Iconography</span></a></li>
                 <li class="ds-nav__item" data-keywords="rhythm spacing scale gap padding radius radii margin"><a class="ds-nav__link" href="#rhythm-spacing"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-ruler"/></svg><span>Rhythm &amp; Spacing</span></a></li>
                 <li class="ds-nav__item" data-keywords="type typography font text heading pangram weight lead body mono display"><a class="ds-nav__link" href="#typography"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-type"/></svg><span>Typography</span></a></li>
               </ul>
+              </div>
             </li>
             <li class="ds-nav__group">
-              <p class="ds-nav__group-label">Components</p>
+              <button class="ds-nav__group-label" type="button" aria-expanded="false" aria-controls="dsg-components" data-nav-group>Components<svg class="icon icon--sm ds-nav__group-caret" aria-hidden="true"><use href="assets/img/icons.svg#icon-chevron-down"/></svg></button>
+              <div class="ds-nav__group-panel" id="dsg-components">
               <ul class="ds-nav__group-items">
                 <li class="ds-nav__item" data-keywords="button btn cta primary outline tertiary link action"><a class="ds-nav__link" href="#buttons"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-square"/></svg><span>Buttons</span></a></li>
                 <li class="ds-nav__item" data-keywords="tag badge chip status label pill sold pending new cpo"><a class="ds-nav__link" href="#tags"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-pin"/></svg><span>Tags &amp; Badges</span></a></li>
@@ -61,20 +66,25 @@
                 <li class="ds-nav__item" data-keywords="navigation nav header menu dropdown offcanvas hamburger caret"><a class="ds-nav__link" href="#navigation"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-menu"/></svg><span>Navigation</span></a></li>
                 <li class="ds-nav__item" data-keywords="footer bottom links legal contact columns"><a class="ds-nav__link" href="#footer"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-layout"/></svg><span>Footer</span></a></li>
               </ul>
+              </div>
             </li>
             <li class="ds-nav__group">
-              <p class="ds-nav__group-label">Motion &amp; Depth</p>
+              <button class="ds-nav__group-label" type="button" aria-expanded="false" aria-controls="dsg-motion" data-nav-group>Motion &amp; Depth<svg class="icon icon--sm ds-nav__group-caret" aria-hidden="true"><use href="assets/img/icons.svg#icon-chevron-down"/></svg></button>
+              <div class="ds-nav__group-panel" id="dsg-motion">
               <ul class="ds-nav__group-items">
                 <li class="ds-nav__item" data-keywords="shadow elevation depth surface layer"><a class="ds-nav__link" href="#shadows"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-layers"/></svg><span>Shadows &amp; Elevation</span></a></li>
                 <li class="ds-nav__item" data-keywords="motion transition duration easing animation timing"><a class="ds-nav__link" href="#motion"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-clock"/></svg><span>Motion &amp; Transitions</span></a></li>
               </ul>
+              </div>
             </li>
             <li class="ds-nav__group">
-              <p class="ds-nav__group-label">Patterns</p>
+              <button class="ds-nav__group-label" type="button" aria-expanded="false" aria-controls="dsg-patterns" data-nav-group>Patterns<svg class="icon icon--sm ds-nav__group-caret" aria-hidden="true"><use href="assets/img/icons.svg#icon-chevron-down"/></svg></button>
+              <div class="ds-nav__group-panel" id="dsg-patterns">
               <ul class="ds-nav__group-items">
                 <li class="ds-nav__item" data-keywords="pattern section homepage hero media split showcase bleed rhythm"><a class="ds-nav__link" href="#patterns"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-layout"/></svg><span>Section Patterns</span></a></li>
                 <li class="ds-nav__item" data-keywords="inventory live srp listings vehicles grid"><a class="ds-nav__link" href="#inventory"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-search"/></svg><span>Live Inventory</span></a></li>
               </ul>
+              </div>
             </li>
           </ul>
         </nav>
@@ -94,7 +104,7 @@
               and rhythm foundations; components arrive next.
             </p>
             <p class="ds-note">Default master ships neutral (premium comes from type + spacing, not a brand hue); clones set <span class="ds-label">$color-primary</span> — see <strong>Aurum</strong> in the skin switcher for an example.</p>
-            <p class="ds-note">Find any component with the sidebar <strong>search</strong> (name or keyword). Specimens are fluid (they respond to the page width) unless a <strong>Desk / Mobile</strong> toggle is shown — those wrap a fixed frame so you can preview the component's mobile state on the spot.</p>
+            <p class="ds-note">The sidebar groups are collapsible accordions — the group of the section you're viewing opens automatically as you scroll (click a group heading to pin it open). Or <strong>search</strong> (name or keyword) to jump straight to a component. Specimens are fluid (they respond to the page width) unless a <strong>Desk / Mobile</strong> toggle is shown — those wrap a fixed frame so you can preview the component's mobile state on the spot.</p>
           </div>
 
           <h3>Principles</h3>

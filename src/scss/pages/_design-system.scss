@@ -134,17 +134,65 @@ $_ds-shadows: (
   &__group.is-hidden {
     display: none; // search hides a group whose items all filtered out
   }
+
+  // Group label is now an accordion trigger (whole row is the button).
   &__group-label {
-    margin: 0 0 t.$space-2 t.$space-3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: t.$space-2;
+    width: 100%;
+    margin: 0;
+    padding: t.$space-3;
+    border: 0;
+    border-radius: t.$radius-sm;
+    background: none;
+    cursor: pointer;
     font-family: t.$font-mono;
-    font-size: 10px;
-    letter-spacing: 0.14em;
+    font-size: 11px;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: t.$color-muted;
+    text-align: left;
+    color: t.$color-text;
+    transition: color t.$dur-fast t.$ease;
+
+    &:hover {
+      color: t.$color-heading;
+    }
+    &:focus-visible {
+      outline: t.$focus-ring-width solid t.$color-accent;
+      outline-offset: t.$focus-ring-offset;
+    }
   }
+  &__group-caret {
+    flex: 0 0 auto;
+    color: t.$color-muted;
+    transition: transform t.$dur-base t.$ease;
+  }
+  &__group.is-open &__group-caret {
+    transform: rotate(180deg); // chevron-down → up
+  }
+
+  // Collapsible panel — grid-rows 0fr→1fr gives a real height animation.
+  &__group-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows t.$dur-slow t.$ease-out;
+
+    > * {
+      overflow: hidden; // enables the 0fr collapse (clears grid min-size)
+      min-height: 0;
+    }
+  }
+  // Open by state, OR forced open while a search query is active.
+  &__group.is-open &__group-panel,
+  &.is-searching &__group-panel {
+    grid-template-rows: 1fr;
+  }
+
   &__group-items {
     margin: 0;
-    padding: 0;
+    padding: 0 0 t.$space-3;
     list-style: none;
     display: flex;
     flex-direction: column;
