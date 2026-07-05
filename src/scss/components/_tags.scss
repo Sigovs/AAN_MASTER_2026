@@ -34,7 +34,7 @@ $_tag-tones: (
   border: 1px solid transparent;
   border-radius: t.$tag-radius; // 4px
   font-family: t.$tag-font; // mono
-  font-size: 11px;
+  font-size: t.$text-2xs;
   font-weight: 600;
   line-height: 1;
   letter-spacing: t.$tag-letter-spacing; // .14em
@@ -179,7 +179,7 @@ $_tag-tones: (
   padding-inline: t.$tag-px;
   border-radius: t.$tag-radius;
   font-family: t.$tag-font;
-  font-size: 11px;
+  font-size: t.$text-2xs;
   font-weight: 600;
   line-height: 1;
   letter-spacing: t.$tag-letter-spacing;

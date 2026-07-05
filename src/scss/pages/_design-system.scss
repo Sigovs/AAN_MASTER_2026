@@ -612,6 +612,41 @@ $_ds-shadows: (
 .ds-motion--ease-in  { --demo-ease: #{t.$ease-in}; }
 
 // ===========================================================================
+// COMPONENT TEXT SCALE specimen (Foundations)
+// ===========================================================================
+$_ds-text: (
+  '2xs': t.$text-2xs, 'xs': t.$text-xs, 'sm': t.$text-sm, 'md': t.$text-md,
+  'base': t.$text-base, 'body': t.$text-body, 'lead': t.$text-lead,
+);
+
+.ds-textscale {
+  display: flex;
+  flex-direction: column;
+  margin: t.$space-4 0 t.$space-12;
+}
+.ds-textscale__row {
+  display: flex;
+  align-items: baseline;
+  gap: t.$space-4;
+  padding: t.$space-3 0;
+  border-top: 1px solid t.$color-border;
+}
+.ds-textscale__label {
+  flex: 0 0 t.$space-24;
+  font-family: t.$font-mono;
+  font-size: t.$text-2xs;
+  color: t.$color-muted;
+}
+.ds-textscale__sample {
+  color: t.$color-heading;
+}
+@each $k, $v in $_ds-text {
+  .ds-ts-#{$k} {
+    font-size: $v;
+  }
+}
+
+// ===========================================================================
 // FONT DIAGNOSTIC PANEL (Foundations)
 // One block per slot: token + live-read family + a 100–900 pangram ladder.
 // ===========================================================================

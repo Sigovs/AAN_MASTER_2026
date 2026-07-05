@@ -31,13 +31,13 @@
 
 .form-help {
   margin-top: t.$space-1; // control → help
-  font-size: 12px;
+  font-size: t.$text-xs;
   color: t.$color-muted;
 }
 
 .form-error {
   margin-top: t.$space-1; // control → error
-  font-size: 12px;
+  font-size: t.$text-xs;
   color: t.$color-danger;
 }
 

@@ -29,7 +29,7 @@
 
   &__count {
     font-family: t.$font-mono;
-    font-size: 12px;
+    font-size: t.$text-xs;
     color: t.$color-muted;
     white-space: nowrap;
   }
@@ -45,7 +45,7 @@
 
   &__label {
     font-family: t.$font-mono;
-    font-size: 11px;
+    font-size: t.$text-2xs;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: t.$color-muted;

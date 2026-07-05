@@ -131,6 +131,18 @@
           <h4>System &amp; effect tokens</h4>
           <p class="ds-note">Structural / effect tokens (not skin colors): <span class="ds-label">$on-primary</span> text-on-primary-fill (per skin) · <span class="ds-label">$fg-on-photo</span> always-light on photos (never flips) · <span class="ds-label">$blur-frosted</span> blur(8px) (frosted backdrops) · <span class="ds-label">$focus-ring-width</span> 2px / <span class="ds-label">$focus-ring-offset</span> 2px · <span class="ds-label">$spinner-size</span> 1em / <span class="ds-label">$spinner-border</span> 2px / <span class="ds-label">$spinner-dur</span> 1.2s · <span class="ds-label">$header-h</span> 76px · <span class="ds-label">$overlay-scrim</span> dark veil · <span class="ds-label">hero-style</span> skin token (photo | plain).</p>
 
+          <h4>Component text scale</h4>
+          <p class="ds-note">The fixed px UI text roles (fluid display/heading sizes use <span class="ds-label">clamp()</span> in typography). <span class="ds-label">$card-title-size</span> 22px · <span class="ds-label">$hover-lift</span> −4px · <span class="ds-label">$border-w</span> 1px.</p>
+          <div class="ds-textscale">
+            <div class="ds-textscale__row"><span class="ds-textscale__label">$text-2xs · 11px</span><span class="ds-textscale__sample ds-ts-2xs">The quick brown fox — micro labels, tags, eyebrows</span></div>
+            <div class="ds-textscale__row"><span class="ds-textscale__label">$text-xs · 12px</span><span class="ds-textscale__sample ds-ts-xs">The quick brown fox — captions, help, legal</span></div>
+            <div class="ds-textscale__row"><span class="ds-textscale__label">$text-sm · 13px</span><span class="ds-textscale__sample ds-ts-sm">The quick brown fox — nav links, mono meta</span></div>
+            <div class="ds-textscale__row"><span class="ds-textscale__label">$text-md · 14px</span><span class="ds-textscale__sample ds-ts-md">The quick brown fox — small copy, off-canvas</span></div>
+            <div class="ds-textscale__row"><span class="ds-textscale__label">$text-base · 15px</span><span class="ds-textscale__sample ds-ts-base">The quick brown fox — service titles, compact body</span></div>
+            <div class="ds-textscale__row"><span class="ds-textscale__label">$text-body · 16px</span><span class="ds-textscale__sample ds-ts-body">The quick brown fox — base body / control text</span></div>
+            <div class="ds-textscale__row"><span class="ds-textscale__label">$text-lead · 17px</span><span class="ds-textscale__sample ds-ts-lead">The quick brown fox — lead paragraphs</span></div>
+          </div>
+
           <h4>Font slots — diagnostic</h4>
           <p class="ds-note">Family is read live from the compiled CSS (not hardcoded) — a failed load shows in red. The pangram runs weights 100–900 at 20px; weights the face doesn't ship render browser-synthesized, exposing which cuts truly load.</p>
           <div class="ds-font-panel">

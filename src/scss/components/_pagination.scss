@@ -29,7 +29,7 @@
   background: transparent;
   color: t.$color-text;
   font-family: t.$font-mono;
-  font-size: 13px;
+  font-size: t.$text-sm;
   text-decoration: none;
   transition: background-color t.$dur-fast t.$ease, color t.$dur-fast t.$ease;
 

@@ -44,7 +44,7 @@
   // No underlines in the header (legacy carry-over); hover = muted → text.
   &__link {
     font-family: t.$font-mono;
-    font-size: 13px;
+    font-size: t.$text-sm;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: t.$color-muted;
@@ -123,7 +123,7 @@
     border-radius: t.$radius-sm;
     color: t.$color-text;
     font-family: t.$font-body;
-    font-size: 13px;
+    font-size: t.$text-sm;
     text-decoration: none;
 
     &:hover {
@@ -191,7 +191,7 @@
     padding: t.$space-3 0;
     border-bottom: 1px solid t.$color-border;
     font-family: t.$font-mono;
-    font-size: 14px;
+    font-size: t.$text-md;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: t.$color-text;

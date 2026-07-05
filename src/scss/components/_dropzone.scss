@@ -81,7 +81,7 @@
   &__size {
     flex: 0 0 auto;
     font-family: t.$font-mono;
-    font-size: 12px;
+    font-size: t.$text-xs;
     color: t.$color-muted;
   }
 

@@ -26,7 +26,7 @@
   }
 
   &:hover {
-    transform: translateY(-4px);
+    transform: translateY(t.$hover-lift);
     border-color: t.$color-muted;
     box-shadow: t.$shadow-card-hover;
   }
@@ -92,7 +92,7 @@
   backdrop-filter: t.$blur-frosted;
   -webkit-backdrop-filter: t.$blur-frosted;
   color: t.$fg-on-photo;
-  font-size: 15px;
+  font-size: t.$text-base;
   line-height: 1;
   cursor: pointer;
   transition: background-color t.$dur-fast t.$ease, color t.$dur-fast t.$ease;
@@ -145,20 +145,20 @@
 
   &__year {
     font-family: t.$font-mono;
-    font-size: 13px;
+    font-size: t.$text-sm;
     color: t.$color-muted;
   }
   &__title {
     margin: 0;
     font-family: t.$font-display;
     font-weight: 500;
-    font-size: 22px;
+    font-size: t.$card-title-size;
     line-height: 1.15;
     color: t.$color-heading;
   }
   &__trim {
     margin: 0;
-    font-size: 13px;
+    font-size: t.$text-sm;
     color: t.$color-muted;
   }
 }
@@ -175,7 +175,7 @@
   font-family: t.$font-mono;
 
   &__miles {
-    font-size: 13px;
+    font-size: t.$text-sm;
     color: t.$color-muted;
     padding-top: t.$space-1;
   }
@@ -188,13 +188,13 @@
   }
 
   &__old {
-    font-size: 12px;
+    font-size: t.$text-xs;
     color: t.$color-muted;
     text-decoration: line-through;
   }
 
   &__value {
-    font-size: 16px;
+    font-size: t.$text-body;
     font-weight: 600;
     color: t.$color-primary;
 
@@ -210,7 +210,7 @@
   }
 
   &__mo {
-    font-size: 11px;
+    font-size: t.$text-2xs;
     color: t.$color-muted;
   }
 }
@@ -230,7 +230,7 @@
   gap: t.$space-2;
   margin: 0;
   font-family: t.$font-mono;
-  font-size: 11px;
+  font-size: t.$text-2xs;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: t.$color-muted;
@@ -262,7 +262,7 @@
   justify-content: center;
   color: t.$color-muted;
   font-family: t.$ov-label-font;
-  font-size: 14px;
+  font-size: t.$text-md;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }

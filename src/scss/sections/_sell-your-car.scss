@@ -34,7 +34,7 @@
   &__num {
     flex: 0 0 auto;
     font-family: t.$font-mono;
-    font-size: 13px;
+    font-size: t.$text-sm;
     color: t.$color-muted;
     padding-top: 2px;
   }

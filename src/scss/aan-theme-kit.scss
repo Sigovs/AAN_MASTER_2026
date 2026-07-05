@@ -141,6 +141,25 @@ $font-accent:  'Oswald', 'Arial Narrow', system-ui, sans-serif !default;    // c
 $font-mono:    'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace !default; // mono (placeholder) — eyebrow/tag/caption/buttons
 
 // ----------------------------------------------------------------------------
+// COMPONENT TEXT SCALE — the fixed px sizes used across components/sections.
+// (Fluid display/heading sizes live in _typography via clamp(); these are the
+// discrete UI text roles.)
+// ----------------------------------------------------------------------------
+$text-2xs:  11px !default; // micro labels — tags, badges, eyebrows, captions
+$text-xs:   12px !default; // captions, help/meta, legal
+$text-sm:   13px !default; // nav links, mono meta, dropdown items
+$text-md:   14px !default; // small copy, off-canvas links
+$text-base: 15px !default; // service titles, compact body
+$text-body: 16px !default; // base body / control text
+$text-lead: 17px !default; // lead paragraphs
+
+$card-title-size: 22px !default; // vehicle-card title
+$hover-lift:      -4px !default; // card / button hover translateY
+
+// A single border-width token (1px borders may otherwise stay literal).
+$border-w: 1px !default;
+
+// ----------------------------------------------------------------------------
 // RADII
 // ----------------------------------------------------------------------------
 $radius-0:    0     !default;

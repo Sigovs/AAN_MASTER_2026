@@ -14,7 +14,7 @@
 // ---------------------------------------------------------------------------
 body {
   font-family: t.$font-body;
-  font-size: 16px;
+  font-size: t.$text-body;
   line-height: 1.6;
   color: t.$color-text;
 }
@@ -44,7 +44,7 @@ a {
   gap: t.$space-3;
   margin: 0;
   font-family: t.$font-mono;
-  font-size: 11px;
+  font-size: t.$text-2xs;
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -130,20 +130,20 @@ h6 {
 .lead {
   margin: 0;
   font-family: t.$font-body;
-  font-size: 17px;
+  font-size: t.$text-lead;
   line-height: 1.55;
   color: t.$color-muted;
   max-width: 52ch;
 }
 
 .small {
-  font-size: 14px;
+  font-size: t.$text-md;
   line-height: 1.5;
 }
 
 .caption {
   font-family: t.$font-mono;
-  font-size: 12px;
+  font-size: t.$text-xs;
   line-height: 1.4;
   color: t.$color-muted;
 }

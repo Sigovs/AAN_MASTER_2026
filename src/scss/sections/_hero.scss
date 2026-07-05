@@ -66,7 +66,7 @@
   &__lead {
     margin-top: t.$space-5;
     max-width: 46ch;
-    font-size: 17px;
+    font-size: t.$text-lead;
     color: rgba(t.$fg-on-photo, 0.82);
   }
 

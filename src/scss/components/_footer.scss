@@ -27,7 +27,7 @@
   &__title {
     margin-bottom: t.$space-4;
     font-family: t.$font-mono;
-    font-size: 11px;
+    font-size: t.$text-2xs;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: rgba(t.$fg-on-photo, 0.5);
@@ -58,7 +58,7 @@
     padding-top: t.$space-5;
     border-top: 1px solid rgba(t.$fg-on-photo, 0.12);
     font-family: t.$font-mono;
-    font-size: 12px;
+    font-size: t.$text-xs;
     color: rgba(t.$fg-on-photo, 0.5);
   }
 }
