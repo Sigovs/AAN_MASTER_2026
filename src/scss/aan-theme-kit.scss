@@ -53,13 +53,13 @@ $shadow-card-hover: var(--shadow-card-hover) !default;
 // obsidian = dark (default) · gallery = light.
 // ----------------------------------------------------------------------------
 // Master default is chromatically NEUTRAL — premium comes from type + spacing,
-// not a brand hue. A clone sets $color-primary (see the "aurum" example).
+// not a brand hue. A clone sets $color-primary (see the "midnight" example).
 // States (success/danger/warning/info) are functional and NOT brand.
 $skins: (
   obsidian: (
     hero-style:      photo, // skin-level: photo | plain (drives the hero)
     header-top-fg:   #ECEAE3, // transparent-header text at top (over dark photo)
-    color-primary:   #ECEAE3, // neutral warm-white (was champagne)
+    color-primary:   #ECEAE3, // neutral warm-white
     on-primary:      #101114,
     color-secondary: #2A2D34,
     color-accent:    #ECEAE3,
@@ -106,28 +106,29 @@ $skins: (
     shadow-card:       (0 1px 2px rgba(0, 0, 0, 0.06)),
     shadow-card-hover: (0 12px 32px rgba(0, 0, 0, 0.10)),
   ),
-  // CLONE EXAMPLE — obsidian surfaces + champagne primary. Shows how a dealer
-  // clone injects a brand hue over the neutral master.
-  aurum: (
-    hero-style:      photo,
-    header-top-fg:   #ECEAE3,
-    color-primary:   #C2A878,
-    on-primary:      #101114,
-    color-secondary: #2A2D34,
-    color-accent:    #C2A878,
-    color-text:      #C9CBD1,
-    color-heading:   #ECEAE3,
-    color-muted:     #9A9CA3, // AA 4.5:1 on bg-row/surface-card (6.3–6.9:1)
-    bg-page:         #101114,
-    bg-row:          #141519,
-    bg-row-alt:      #17181C,
-    surface-card:    #191B20,
-    bg-header:       rgba(16, 17, 20, 0.86),
-    bg-invert:       #ECEAE3,
-    bg-footer:       #0C0D10,
-    color-border:    rgba(236, 234, 227, 0.12),
+  // CLONE EXAMPLE — "Midnight": the smoky graphite base pushed cooler and deeper,
+  // a subtle violet-blue mood. Reads "dark" first, "violet" second. All values
+  // original (not derived from any brand palette); AA-tuned on the new surfaces.
+  midnight: (
+    hero-style:      photo, // dark family → photo hero
+    header-top-fg:   #E9EAF0,
+    color-primary:   #AEB6CC, // smoky steel-blue (not saturated)
+    on-primary:      #0F1018,
+    color-secondary: #262A38,
+    color-accent:    #AEB6CC,
+    color-text:      #C6C8D4,
+    color-heading:   #E9EAF0,
+    color-muted:     #9B9EB0, // cool grey-violet · AA on bg-row/surface-card (6.5–6.9:1)
+    bg-page:         #0F1018,
+    bg-row:          #13141D,
+    bg-row-alt:      #161723,
+    surface-card:    #181A26,
+    bg-header:       rgba(15, 16, 24, 0.86), // = bg-page @ .86
+    bg-invert:       #E9EAF0,
+    bg-footer:       #0B0C12,
+    color-border:    rgba(233, 234, 240, 0.12),
     color-success:   #3E9C72,
-    color-danger:    #D9564B,
+    color-danger:    #E06256, // lifted vs obsidian for AA 4.5:1 on the cooler card
     color-warning:   #D8A63F,
     color-info:      #5A93B8,
     shadow-card:       (0 1px 2px rgba(0, 0, 0, 0.35)),

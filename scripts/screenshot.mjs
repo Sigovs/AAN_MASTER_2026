@@ -74,7 +74,7 @@ for (const [w, h] of sizes) {
 
 // 3-skin full pages.
 for (const [file, prefix] of [['index.html', 'index'], ['design-system.html', 'ds']]) {
-  for (const skin of ['obsidian', 'gallery', 'aurum']) {
+  for (const skin of ['obsidian', 'gallery', 'midnight']) {
     const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
     await page.goto(`${base}/${file}`, { waitUntil: 'networkidle' });
     await settle(page, skin);
@@ -132,7 +132,7 @@ for (const skin of ['obsidian', 'gallery']) {
   const page = await browser.newPage({ viewport: { width: 1100, height: 900 } });
   await page.goto(`${base}/design-system.html`, { waitUntil: 'networkidle' });
   await settle(page, skin);
-  for (const [sel, name] of [['#iconography', `icons-${skin}`], ['#foundations', `foundations-contrast-${skin}`]]) {
+  for (const [sel, name] of [['#iconography', `icons-${skin}`], ['#colors', `foundations-contrast-${skin}`]]) {
     const el = await page.$(sel);
     if (el) await el.screenshot({ path: `screenshots/${name}.png` });
     shots.push(`${name}.png`);
@@ -152,7 +152,7 @@ for (const skin of ['obsidian', 'gallery']) {
 }
 
 // DS sidebar overhaul — grouped nav in three skins.
-for (const skin of ['obsidian', 'gallery', 'aurum']) {
+for (const skin of ['obsidian', 'gallery', 'midnight']) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 1000 } });
   await page.goto(`${base}/design-system.html`, { waitUntil: 'networkidle' });
   await settle(page, skin);

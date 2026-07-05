@@ -30,8 +30,8 @@ Toggle with the bottom-right **Skin** switcher (JS sets `data-skin` on `<html>`)
 
 - **Obsidian** — dark, chromatically neutral (the default master).
 - **Gallery** — light, neutral.
-- **Aurum** — a *clone example*: obsidian surfaces + a champagne brand hue,
-  showing how a dealer injects a color over the neutral master.
+- **Midnight** — a *clone example*: the graphite base pushed cooler and deeper
+  into a subtle violet-blue mood, showing how a dealer re-skins the neutral master.
 
 The master ships neutral on purpose — premium comes from type and spacing, not a
 brand hue; a clone sets `$color-primary`.

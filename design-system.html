@@ -103,7 +103,7 @@
               and consumed everywhere else. Phase 2 establishes the typography
               and rhythm foundations; components arrive next.
             </p>
-            <p class="ds-note">Default master ships neutral (premium comes from type + spacing, not a brand hue); clones set <span class="ds-label">$color-primary</span> — see <strong>Aurum</strong> in the skin switcher for an example.</p>
+            <p class="ds-note">Default master ships neutral (premium comes from type + spacing, not a brand hue); a clone re-skins by editing tokens — the <strong>Midnight</strong> demo skin in the switcher illustrates clone theming (a cool violet-blue mood over the neutral master).</p>
             <p class="ds-note">The sidebar groups are collapsible accordions — the group of the section you're viewing opens automatically as you scroll (click a group heading to pin it open). Or <strong>search</strong> (name or keyword) to jump straight to a component. Specimens are fluid (they respond to the page width) unless a <strong>Desk / Mobile</strong> toggle is shown — those wrap a fixed frame so you can preview the component's mobile state on the spot.</p>
           </div>
 
@@ -177,7 +177,7 @@
             <div class="ds-swatch"><div class="ds-swatch__chip" data-token="on-primary"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$on-primary</span><span class="ds-swatch__value"></span></div></div>
             <div class="ds-swatch"><div class="ds-swatch__chip" data-token="fg-on-photo"></div><div class="ds-swatch__meta"><span class="ds-swatch__name">$fg-on-photo</span><span class="ds-swatch__value">#ECEAE3</span></div></div>
           </div>
-          <p class="ds-note">Tiles show each skin's <em>live</em> value (any stale hex here is overwritten on load). <span class="ds-label">$color-muted</span> clears WCAG AA 4.5:1 on every surface it lands on, per skin — dark skins (obsidian/aurum) <strong>6.3–6.9:1</strong> on <span class="ds-label">$bg-row</span> / <span class="ds-label">$surface-card</span>; gallery <strong>4.6–5.4:1</strong> on its light surfaces — while still reading a clear step below <span class="ds-label">$color-text</span>.</p>
+          <p class="ds-note">Tiles show each skin's <em>live</em> value (any stale hex here is overwritten on load). <span class="ds-label">$color-muted</span> clears WCAG AA 4.5:1 on every surface it lands on, per skin — dark skins (obsidian/midnight) <strong>6.3–6.9:1</strong> on <span class="ds-label">$bg-row</span> / <span class="ds-label">$surface-card</span>; gallery <strong>4.6–5.4:1</strong> on its light surfaces — while still reading a clear step below <span class="ds-label">$color-text</span>.</p>
 
           <h4>Contrast — live AA check</h4>
           <p class="ds-note">Ratios below are computed by <span class="ds-label">ui.js</span> from the <em>live</em> token colors and re-run on every skin switch — the AA contract, visibly true on the page. AA needs <strong>4.5:1</strong> (small text) / <strong>3:1</strong> (large).</p>
@@ -1567,7 +1567,7 @@
       <span class="skin-switch__label">Skin</span>
       <button type="button" class="skin-switch__btn is-active" data-skin-set="obsidian">Obsidian</button>
       <button type="button" class="skin-switch__btn" data-skin-set="gallery">Gallery</button>
-      <button type="button" class="skin-switch__btn" data-skin-set="aurum" title="Clone example — brand hue over neutral master">Aurum*</button>
+      <button type="button" class="skin-switch__btn" data-skin-set="midnight" title="Clone example — cool violet-blue mood over neutral master">Midnight*</button>
     </div>
 
     <!-- Bootstrap 4.6.2 JS (behavior only): jQuery + bundle (incl. Popper),
