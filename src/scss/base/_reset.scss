@@ -36,9 +36,10 @@ video {
   max-width: 100%;
 }
 
-// Accessible focus ring, tokenised.
+// Accessible focus ring, tokenised. Global default for every focusable element
+// (buttons / controls opt into a box-shadow ring variant instead).
 :focus-visible {
-  outline: 2px solid t.$color-accent;
+  outline: t.$focus-ring-width solid t.$color-accent;
   outline-offset: t.$focus-ring-offset;
 }
 
@@ -46,8 +47,19 @@ video {
   background: rgba(t.$color-accent, 0.18);
 }
 
+// Global reduced-motion sweep — near-instant transitions/animations, no smooth
+// scroll. Component-specific rules (skeleton static, no hover-lift, parallax
+// off) layer on top; JS (counters, parallax) checks the query too.
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

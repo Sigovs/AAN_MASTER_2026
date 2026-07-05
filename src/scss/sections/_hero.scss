@@ -46,6 +46,13 @@
     position: relative;
     z-index: 2;
     width: 100%;
+    max-width: t.$container-max;
+    margin-inline: auto;
+    padding-inline: t.$container-px-mobile;
+
+    @media (min-width: t.$bp-md) {
+      padding-inline: t.$container-px;
+    }
   }
 
   &__content {
@@ -80,36 +87,42 @@
     gap: t.$space-4;
   }
 
-  // Two contracted HEIGHT modes — see the "Hero fold contract" (CLAUDE.md + DS).
-  // full: fills the viewport under the header (zero bleed). content centered,
-  // spec-strip pinned to the bottom. compact: shorter, next section must peek.
+  // Two contracted modes — see the "Hero fold contract" (CLAUDE.md + DS).
+  // FULL: fills the viewport under the (fixed) header → zero fold bleed. The
+  // text block (eyebrow/h1/lead/cta) is vertically centered AS A GROUP; the
+  // spec-strip is a separate grid row pinned to the bottom, so it does NOT
+  // affect the centering.
   &--full {
-    // Header overlays (fixed), so the hero fills the WHOLE viewport → zero fold
-    // bleed. The usable content height is the viewport minus the header, via the
-    // padding-top:$header-h above (content is centered / stats pinned below it).
     height: 100vh; // fallback
     height: 100svh;
-    align-items: stretch; // let the inner own the column
-    // Safe-area / breathing room at the bottom (notch home indicator).
+    align-items: stretch; // the inner grid owns the vertical layout
     padding-bottom: max(#{t.$space-16}, env(safe-area-inset-bottom, 0px));
 
     .hero__inner {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-rows: 1fr auto; // [centered text block] · [pinned strip]
     }
     .hero__content {
-      margin-top: auto; // top spacer → content sits ~centered
+      align-self: center; // centered in the 1fr row (strip out of this flow)
     }
     .hero__stats {
-      margin-top: auto; // bottom spacer → spec-strip to the fold bottom
+      align-self: end; // pinned to the hero bottom
     }
   }
 
+  // COMPACT: reduced content set — the spec-strip is HIDDEN and the headline
+  // uses a smaller clamp so eyebrow + h1 + lead + BOTH CTAs sit fully above the
+  // fold, top-anchored below the header, with quick-search still peeking.
   &--compact {
-    height: clamp(480px, 62svh, 640px); // shorter — next section peeks
-    // Top-anchor content below the fixed header so a tall headline never slides
-    // under the bar (centering would let overflow eat into the top padding).
-    align-items: flex-start;
+    height: clamp(480px, 62svh, 640px);
+    align-items: flex-start; // top-anchor below the header
+
+    .hero__stats {
+      display: none;
+    }
+    .hero__title {
+      font-size: clamp(2.25rem, 1.5rem + 2.5vw, 3.75rem); // 36–60px
+    }
   }
 
   // Spec strip — 4 stat cells in a bordered row.

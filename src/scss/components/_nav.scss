@@ -135,6 +135,7 @@
   }
 
   &:hover &__panel,
+  &:focus-within &__panel,
   &.is-open &__panel {
     opacity: 1;
     visibility: visible;
@@ -142,6 +143,7 @@
   }
 
   &:hover &__caret,
+  &:focus-within &__caret,
   &.is-open &__caret {
     transform: rotate(225deg); // up chevron (180° from down)
   }
@@ -247,8 +249,9 @@
 }
 
 @media (max-width: (t.$bp-lg - 1px)) {
-  .site-nav__menu {
-    display: none;
+  .site-nav__menu,
+  .site-nav__actions {
+    display: none; // moved into the off-canvas menu on mobile
   }
   .nav-toggle {
     display: inline-flex;
@@ -262,7 +265,8 @@
 // desktop / mobile no matter the real viewport. The real component is untouched.
 // ---------------------------------------------------------------------------
 .site-nav.nav--desktop {
-  .site-nav__menu {
+  .site-nav__menu,
+  .site-nav__actions {
     display: flex;
   }
   .nav-toggle {

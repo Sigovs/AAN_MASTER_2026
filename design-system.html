@@ -631,7 +631,7 @@
 
               <fieldset class="fieldset">
                 <legend class="fieldset__title">Upload photos</legend>
-                <div class="dropzone" id="ds-dropzone">
+                <div class="dropzone" id="ds-dropzone" tabindex="0" role="button" aria-label="Upload photos — drag &amp; drop or browse">
                   <span class="dropzone__icon" aria-hidden="true">⤒</span>
                   <p class="dropzone__text">Drag &amp; drop your files or <span class="dropzone__browse">browse</span></p>
                 </div>
@@ -1303,6 +1303,7 @@
             <p class="ds-usage__title">Hero fold contract</p>
             <p><code>.hero--full</code>: fills the viewport under the sticky header — <code>height: calc(100svh - $header-h)</code> (fallback 100vh); content vertically centered, spec-strip pinned to the fold bottom, safe-area bottom padding; short landscape (&lt;560px tall) falls back to min-height so nothing clips. NOTHING below it may be visible before scroll — zero bleed at the fold.</p>
             <p><code>.hero--compact</code>: intentionally shorter — <code>height: clamp(480px, 62svh, 640px)</code>; the next section MUST be visibly peeking above the fold (on 1080p desktop and common mobile heights). If the next section isn't visible, the height values are wrong — fix tokens, not content.</p>
+            <p><strong>Content:</strong> full centers the text block (eyebrow/h1/lead/CTAs) as a group and pins the spec-strip to the hero bottom (out of the centering flow); compact HIDES the spec-strip and uses a smaller h1 clamp so the reduced set — both CTAs included — sits fully above the fold.</p>
             <p>Both modes work with both hero styles — the <strong>full × compact</strong> × <strong>photo × plain</strong> 2×2 matrix is verified. Try the <strong>Hero · Full / Compact</strong> toggle (above the skin switcher) on <a href="index.html">the homepage</a>, and switch skins to flip photo ↔ plain (see <a href="#foundations">hero-style</a>).</p>
           </div>
 
@@ -1339,8 +1340,8 @@
           <div class="ds-frame">
             <div class="media-duo">
               <div class="media-duo__grid">
-                <div class="media-duo__img"><img src="assets/img/demo/car-2.jpg" alt="" /></div>
-                <div class="media-duo__img"><img src="assets/img/demo/car-3.webp" alt="" /></div>
+                <div class="media-duo__img"><img src="assets/img/demo/car-2.jpg" alt="Porsche 911" /></div>
+                <div class="media-duo__img"><img src="assets/img/demo/car-3.webp" alt="Ferrari Roma" /></div>
               </div>
               <div class="media-duo__caption">.media-duo — delivery day · Scottsdale</div>
             </div>

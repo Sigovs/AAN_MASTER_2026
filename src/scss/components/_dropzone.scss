@@ -23,6 +23,12 @@
     border-color: t.$color-muted;
   }
 
+  &:focus-visible {
+    outline: t.$focus-ring-width solid t.$color-accent;
+    outline-offset: t.$focus-ring-offset;
+    border-color: t.$color-accent;
+  }
+
   // Active drag.
   &.is-dragover {
     border-color: t.$color-primary;

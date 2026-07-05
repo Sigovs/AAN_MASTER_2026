@@ -107,20 +107,57 @@
     });
   }
 
-  // -- Real site-header off-canvas (index.html homepage) --------------------
+  // -- Real site-header off-canvas (index.html) — Esc-close + focus trap -----
   // Distinct from the DS demo (which uses the *--contained variants).
   var siteOc = document.querySelector('.nav-offcanvas:not(.nav-offcanvas--contained)');
   if (siteOc) {
     var siteBd = document.querySelector('.nav-backdrop:not(.nav-backdrop--contained)');
     var siteTg = document.querySelector('.site-header .nav-toggle');
+    var ocLastFocus = null;
+    var ocFocusables = function () {
+      return Array.prototype.slice.call(
+        siteOc.querySelectorAll('a[href], button:not([disabled])')
+      );
+    };
+    var setOc = function (open) {
+      siteOc.classList.toggle('is-open', open);
+      if (siteBd) siteBd.classList.toggle('is-open', open);
+      if (siteTg) {
+        siteTg.classList.toggle('is-open', open);
+        siteTg.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+      if (open) {
+        ocLastFocus = document.activeElement;
+        var f = ocFocusables();
+        if (f[0]) f[0].focus();
+      } else if (ocLastFocus) {
+        ocLastFocus.focus();
+      }
+    };
     document.addEventListener('click', function (ev) {
       var t = ev.target.closest('[data-site-nav-toggle]');
       var c = ev.target.closest('[data-site-nav-close]');
       if (!t && !c) return;
-      var open = t ? !siteOc.classList.contains('is-open') : false;
-      siteOc.classList.toggle('is-open', open);
-      if (siteBd) siteBd.classList.toggle('is-open', open);
-      if (siteTg) siteTg.classList.toggle('is-open', open);
+      setOc(t ? !siteOc.classList.contains('is-open') : false);
+    });
+    document.addEventListener('keydown', function (ev) {
+      if (!siteOc.classList.contains('is-open')) return;
+      if (ev.key === 'Escape') {
+        ev.preventDefault();
+        setOc(false);
+      } else if (ev.key === 'Tab') {
+        var f = ocFocusables();
+        if (!f.length) return;
+        var first = f[0];
+        var last = f[f.length - 1];
+        if (ev.shiftKey && document.activeElement === first) {
+          ev.preventDefault();
+          last.focus();
+        } else if (!ev.shiftKey && document.activeElement === last) {
+          ev.preventDefault();
+          first.focus();
+        }
+      }
     });
   }
 

@@ -7,6 +7,40 @@
 // ============================================================================
 @use '../aan-theme-kit' as t;
 
+// Skip-to-content link — sr-only until keyboard :focus-visible, then a small
+// pill top-left. Never renders as a permanent bar.
+.skip-link {
+  position: fixed;
+  top: t.$space-3;
+  left: t.$space-3;
+  z-index: t.$z-toast;
+  // visually hidden (sr-only) by default
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  background: t.$surface-card;
+  color: t.$color-heading;
+  font-family: t.$font-mono;
+  font-size: t.$text-sm;
+  text-decoration: none;
+
+  &:focus-visible {
+    width: auto;
+    height: auto;
+    clip: auto;
+    clip-path: none;
+    padding: t.$space-2 t.$space-4;
+    border-radius: t.$radius-sm;
+    box-shadow: t.$shadow-card-hover;
+    outline: t.$focus-ring-width solid t.$color-accent;
+    outline-offset: t.$focus-ring-offset;
+  }
+}
+
 // Accessible visually-hidden (used by DS skip link / labels).
 .u-visually-hidden {
   position: absolute !important;

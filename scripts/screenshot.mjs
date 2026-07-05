@@ -1,6 +1,11 @@
-// Self-verification: serve the prototype and capture full-page screenshots of
-// index.html + design-system.html across all three skins, plus hero-compact,
-// a mobile pass, and viewport-only fold checks. Output → ./screenshots/.
+// Phase 6 QA self-verification. Serves the prototype and captures:
+//  - fold matrix: hero full/compact at 1920x1080, 1440x900, 390x844 (viewport)
+//  - 3-skin full pages (index + design-system)
+//  - header transparent-at-top vs frosted-after-scroll
+//  - mobile 390 + 768 (both pages)
+//  - reduced-motion emulated pass
+//  - skip-link focused (keyboard reveal)
+// Output → ./screenshots/ (gitignored).
 //
 //   node scripts/screenshot.mjs
 import http from 'node:http';
@@ -21,9 +26,8 @@ const server = http.createServer(async (req, res) => {
   try {
     let p = decodeURIComponent(req.url.split('?')[0]);
     if (p === '/') p = '/index.html';
-    const file = join(ROOT, normalize(p));
-    const data = await readFile(file);
-    res.writeHead(200, { 'content-type': TYPES[extname(file).toLowerCase()] || 'application/octet-stream' });
+    const data = await readFile(join(ROOT, normalize(p)));
+    res.writeHead(200, { 'content-type': TYPES[extname(p).toLowerCase()] || 'application/octet-stream' });
     res.end(data);
   } catch {
     res.writeHead(404);
@@ -42,70 +46,84 @@ async function settle(page, skin) {
   await page.evaluate(() => document.fonts && document.fonts.ready).catch(() => {});
   await page.waitForTimeout(500);
 }
-async function shoot(page, name, fullPage = true) {
+async function shoot(page, name, fullPage = false) {
   await page.screenshot({ path: `screenshots/${name}.png`, fullPage });
   shots.push(`${name}.png`);
 }
+async function setHero(page, mode) {
+  await page.evaluate((m) => {
+    const h = document.querySelector('.hero');
+    h.classList.remove('hero--full', 'hero--compact');
+    h.classList.add('hero--' + m);
+  }, mode);
+  await page.waitForTimeout(300);
+}
 
-const skins = ['obsidian', 'gallery', 'aurum'];
-for (const [file, prefix] of [['index.html', 'index'], ['design-system.html', 'ds']]) {
-  for (const skin of skins) {
-    const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-    await page.goto(`${base}/${file}`, { waitUntil: 'networkidle' });
-    await settle(page, skin);
-    await shoot(page, `${prefix}-${skin}`);
+// Fold matrix — full & compact at three sizes (viewport-only).
+const sizes = [[1920, 1080], [1440, 900], [390, 844]];
+for (const [w, h] of sizes) {
+  for (const mode of ['full', 'compact']) {
+    const page = await browser.newPage({ viewport: { width: w, height: h } });
+    await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
+    await settle(page, 'obsidian');
+    await setHero(page, mode);
+    await shoot(page, `fold-${mode}-${w}x${h}`);
     await page.close();
   }
 }
 
-// index — hero compact (full page)
-{
-  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-  await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
-  await page.evaluate(() => {
-    const h = document.querySelector('.hero');
-    h.classList.remove('hero--full');
-    h.classList.add('hero--compact');
-  });
-  await settle(page, 'obsidian');
-  await shoot(page, 'index-hero-compact');
-  await page.close();
+// 3-skin full pages.
+for (const [file, prefix] of [['index.html', 'index'], ['design-system.html', 'ds']]) {
+  for (const skin of ['obsidian', 'gallery', 'aurum']) {
+    const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+    await page.goto(`${base}/${file}`, { waitUntil: 'networkidle' });
+    await settle(page, skin);
+    await shoot(page, `${prefix}-${skin}`, true);
+    await page.close();
+  }
 }
 
-// Fold checks (viewport-only) — full should show ZERO bleed; compact should peek.
-{
-  const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
-  await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
-  await settle(page, 'obsidian');
-  await shoot(page, 'index-fold-full', false);
-  await page.evaluate(() => {
-    const h = document.querySelector('.hero');
-    h.classList.remove('hero--full');
-    h.classList.add('hero--compact');
-  });
-  await page.waitForTimeout(300);
-  await shoot(page, 'index-fold-compact', false);
-  await page.close();
-}
-
-// Header states — transparent at top vs frosted after scroll.
+// Header states.
 {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
   await settle(page, 'obsidian');
-  await shoot(page, 'header-top-transparent', false);
+  await shoot(page, 'header-top-transparent');
   await page.evaluate(() => window.scrollTo(0, 600));
   await page.waitForTimeout(500);
-  await shoot(page, 'header-scrolled-frosted', false);
+  await shoot(page, 'header-scrolled-frosted');
   await page.close();
 }
 
-// Mobile pass — 390px wide
+// Mobile passes — 390 + 768 (both pages, obsidian).
+for (const w of [390, 768]) {
+  for (const [file, prefix] of [['index.html', 'index'], ['design-system.html', 'ds']]) {
+    const page = await browser.newPage({ viewport: { width: w, height: w === 390 ? 844 : 1024 } });
+    await page.goto(`${base}/${file}`, { waitUntil: 'networkidle' });
+    await settle(page, 'obsidian');
+    await shoot(page, `${prefix}-mobile-${w}`, true);
+    await page.close();
+  }
+}
+
+// Reduced-motion emulated pass (index, full page).
 {
-  const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+  const page = await ctx.newPage();
   await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
   await settle(page, 'obsidian');
-  await shoot(page, 'index-mobile-390');
+  await shoot(page, 'index-reduced-motion', true);
+  await ctx.close();
+}
+
+// Skip-link focused (keyboard reveal).
+{
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
+  await settle(page, 'obsidian');
+  await page.keyboard.press('Tab'); // first focusable = skip link
+  await page.waitForTimeout(200);
+  await shoot(page, 'skip-link-focused');
   await page.close();
 }
 

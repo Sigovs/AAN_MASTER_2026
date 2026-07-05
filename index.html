@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="dist/css/main.css" />
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <!-- ===================== HEADER ===================== -->
     <header class="site-header site-header--top">
       <div class="container">
@@ -32,33 +33,31 @@
             <a href="#" class="btn btn-outline btn-sm">Sign in</a>
             <a href="#sell-your-car" class="btn btn-primary btn-sm">Sell your car</a>
           </div>
-          <button class="nav-toggle" type="button" data-site-nav-toggle aria-label="Toggle menu"><span></span><span></span><span></span></button>
+          <button class="nav-toggle" type="button" data-site-nav-toggle aria-label="Toggle menu" aria-expanded="false" aria-controls="site-offcanvas"><span></span><span></span><span></span></button>
         </nav>
       </div>
     </header>
 
-    <main>
+    <main id="main-content">
       <!-- ===================== HERO ===================== -->
       <section class="hero hero--full" id="hero">
         <div class="hero__media"><img src="assets/img/demo/car-1.jpg" alt="Featured McLaren" /></div>
         <div class="hero__scrim"></div>
         <div class="hero__inner">
-          <div class="container">
-            <div class="hero__content">
-              <p class="eyebrow">All Auto Network</p>
-              <h1 class="hero__title">The exotic you want,<br />delivered <em>effortlessly</em>.</h1>
-              <p class="hero__lead">A curated collection of luxury and performance vehicles — inspected, financed, and shipped nationwide. No pressure, no games.</p>
-              <div class="hero__cta">
-                <a href="#featured" class="btn btn-primary">Browse inventory</a>
-                <a href="#sell-your-car" class="btn btn-on-invert">Sell your car</a>
-              </div>
-              <div class="hero__stats">
-                <div class="stat-cell"><span class="stat-cell__num">64</span><span class="stat-cell__label">In stock</span></div>
-                <div class="stat-cell"><span class="stat-cell__num">17</span><span class="stat-cell__label">Avg days to sell</span></div>
-                <div class="stat-cell"><span class="stat-cell__num">3,400+</span><span class="stat-cell__label">Cars sold</span></div>
-                <div class="stat-cell"><span class="stat-cell__num">4.9</span><span class="stat-cell__label">Google rating</span></div>
-              </div>
+          <div class="hero__content">
+            <p class="eyebrow">All Auto Network</p>
+            <h1 class="hero__title">The exotic you want,<br />delivered <em>effortlessly</em>.</h1>
+            <p class="hero__lead">A curated collection of luxury and performance vehicles — inspected, financed, and shipped nationwide. No pressure, no games.</p>
+            <div class="hero__cta">
+              <a href="#featured" class="btn btn-primary">Browse inventory</a>
+              <a href="#sell-your-car" class="btn btn-on-invert">Sell your car</a>
             </div>
+          </div>
+          <div class="hero__stats">
+            <div class="stat-cell"><span class="stat-cell__num">64</span><span class="stat-cell__label">In stock</span></div>
+            <div class="stat-cell"><span class="stat-cell__num">17</span><span class="stat-cell__label">Avg days to sell</span></div>
+            <div class="stat-cell"><span class="stat-cell__num">3,400+</span><span class="stat-cell__label">Cars sold</span></div>
+            <div class="stat-cell"><span class="stat-cell__num">4.9</span><span class="stat-cell__label">Google rating</span></div>
           </div>
         </div>
       </section>
@@ -226,7 +225,7 @@
 
       <!-- ===================== SHOWCASE (visual break) ===================== -->
       <section class="showcase" id="showcase">
-        <div class="showcase__media"><img src="assets/img/demo/car-2.jpg" alt="" loading="lazy" /></div>
+        <div class="showcase__media"><img src="assets/img/demo/car-2.jpg" alt="Porsche 911 on the open road" loading="lazy" /></div>
         <div class="showcase__inner">
           <p class="eyebrow">The drive</p>
           <p class="showcase__title">Engineered to be driven.</p>
@@ -308,11 +307,12 @@
 
     <!-- Mobile off-canvas (real header) -->
     <div class="nav-backdrop" data-site-nav-close></div>
-    <aside class="nav-offcanvas" aria-label="Mobile menu">
+    <aside class="nav-offcanvas" id="site-offcanvas" aria-label="Mobile menu">
       <a href="#featured" class="nav-offcanvas__link" data-site-nav-close>Inventory</a>
       <a href="#services" class="nav-offcanvas__link" data-site-nav-close>Services</a>
       <a href="#sell-your-car" class="nav-offcanvas__link" data-site-nav-close>Sell your car</a>
       <a href="#visit" class="nav-offcanvas__link" data-site-nav-close>Visit</a>
+      <a href="#" class="nav-offcanvas__link" data-site-nav-close>Sign in</a>
     </aside>
 
     <!-- Hero height demo toggle (stacked above the skin switcher) -->
