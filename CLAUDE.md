@@ -124,6 +124,16 @@ first-class — any clone that changes colors MUST re-verify contrast (a one-fil
 check, because color lives in the skin map; the DS Foundations section computes
 the live ratios per skin).
 
+## 5d. Mobile media rule
+
+Bleed / feature imagery (`.media-split`, `.media-duo`, `.showcase`) is **NEVER
+hidden on mobile — it stacks.** Hiding imagery to "simplify" mobile is forbidden.
+If an image genuinely can't work at mobile widths, that is a design problem to
+solve, not an element to `display:none`. (Watch for the inverse failure too: a
+desktop grid-column placement leaking into a single-column mobile layout can
+starve an image track to `0px` — the image is "gone" without a `display:none`.
+Lay mobile stacks out so column placement can't leak in.)
+
 ## 6. Working style
 
 - **Never ask yes/no or confirmation questions; never pause for permission

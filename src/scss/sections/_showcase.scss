@@ -174,23 +174,31 @@
   }
 }
 
-// Mobile: image on top (full-bleed, 56vw), text below in the container.
+// Mobile: single column — TEXT FIRST, image stacked BELOW it (never hidden).
+// Uses flex (not grid) on purpose: the desktop --img-* variants set grid-column
+// on the text at (0,2,0), which outranks a single-column grid override (0,1,0)
+// — the text kept column 2, spawned an implicit column that ate the full width,
+// and starved the image's grid track to 0px (image present but 0px wide). Under
+// flex, grid-column is inert, so the layout is driven purely by order here.
+// See CLAUDE.md §5d — bleed imagery stacks on mobile, it is never hidden.
 @media (max-width: (t.$bp-md - 1px)) {
   .media-split {
-    grid-template-columns: 1fr;
-
-    &__media {
-      grid-column: 1;
-      order: -1;
-      min-height: 0;
-      height: 56vw;
-    }
-    &__text {
-      grid-column: 1;
-      justify-self: stretch;
-      max-width: none;
-      padding: t.$section-pt-mobile t.$container-px-mobile t.$section-pb-mobile;
-    }
+    display: flex;
+    flex-direction: column;
+  }
+  .media-split__text {
+    order: 1; // text first
+  }
+  // Reset the desktop inner-air padding at matching specificity (0,2,0).
+  .media-split--img-left .media-split__text,
+  .media-split--img-right .media-split__text {
+    padding: t.$section-pt-mobile t.$container-px-mobile t.$section-pb-mobile;
+  }
+  .media-split__media {
+    order: 2; // image after the text
+    min-height: 0;
+    height: 56vw;
+    margin-top: t.$space-8; // air above the stacked image
   }
 }
 

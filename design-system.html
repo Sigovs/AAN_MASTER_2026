@@ -1522,7 +1522,7 @@
           <div class="ds-usage">
             <p class="ds-usage__title">Bleed pattern usage</p>
             <p><code>.showcase</code> — visual break, once per page, mid-scroll, never two stacked, content max 1 line + 1 link.</p>
-            <p><code>.media-split</code> — feature stories (consignment pitch, showroom intro); <code>--img-left</code> / <code>--img-right</code>, collapses to image-on-top on mobile. Image-to-text air is a single token — <code>$split-gap</code> (80px; steps to <code>$split-gap-laptop</code> 64px under <code>$bp-xl</code>) — taken from the text column's inner edge while its outer edge stays aligned to the container. An overlay label on the image (e.g. <code>.p-overlay-pill</code> "Consignment") is optional.</p>
+            <p><code>.media-split</code> — feature stories (consignment pitch, showroom intro); <code>--img-left</code> / <code>--img-right</code>; on mobile it stacks to a single column — <strong>text first, image below</strong> (full-bleed, 56vw, $space-8 of air above; the image is never hidden). Image-to-text air is a single token — <code>$split-gap</code> (80px; steps to <code>$split-gap-laptop</code> 64px under <code>$bp-xl</code>) — taken from the text column's inner edge while its outer edge stays aligned to the container. An overlay label on the image (e.g. <code>.p-overlay-pill</code> "Consignment") is optional.</p>
             <p><code>.media-duo</code> — gallery moments (paired bleed images + optional caption).</p>
             <p>One bleed pattern per two viewport-heights of scroll; don't chain bleeds back-to-back.</p>
           </div>
