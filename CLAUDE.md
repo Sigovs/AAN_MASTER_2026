@@ -134,6 +134,15 @@ desktop grid-column placement leaking into a single-column mobile layout can
 starve an image track to `0px` — the image is "gone" without a `display:none`.
 Lay mobile stacks out so column placement can't leak in.)
 
+## 5e. No horizontal page scroll
+
+**No horizontal page scroll, ever, on any page at any viewport.** Wide content
+(matrices, tables, forced-desktop specimens, code blocks) scrolls **within its
+own container** (`overflow-x:auto`), never the page. Every run that touches
+layout re-verifies at 390px with the Playwright overflow scan (walk the DOM for
+elements whose right edge exceeds the viewport and aren't clipped by an
+`overflow` ancestor; assert `document.documentElement.scrollWidth <= viewport`).
+
 ## 6. Working style
 
 - **Never ask yes/no or confirmation questions; never pause for permission

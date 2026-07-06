@@ -18,12 +18,17 @@
       <!-- ============ LEFT ANCHOR NAV (sticky, quiet chrome) ============ -->
       <aside class="ds-nav">
         <nav aria-label="Design system sections">
-          <p class="ds-nav__brand">AAN Master 2026</p>
+          <div class="ds-nav__head">
+            <p class="ds-nav__brand">AAN Master 2026</p>
+            <button class="ds-nav__toggle" type="button" data-ds-nav-toggle aria-expanded="false" aria-controls="ds-nav-body"><span>Menu</span><svg class="icon icon--sm ds-nav__toggle-caret" aria-hidden="true"><use href="assets/img/icons.svg#icon-chevron-down"/></svg></button>
+          </div>
 
           <div class="ds-nav__search">
             <svg class="icon icon--sm ds-nav__search-icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-search"/></svg>
             <input type="search" class="ds-nav__search-input" id="ds-nav-search" placeholder="Find a component…" aria-label="Find a component" autocomplete="off" />
           </div>
+
+          <div class="ds-nav__body" id="ds-nav-body">
           <p class="ds-nav__empty" data-nav-empty hidden>No matches — try another term.</p>
 
           <ul class="ds-nav__list">
@@ -88,6 +93,7 @@
               </div>
             </li>
           </ul>
+          </div>
         </nav>
       </aside>
 
@@ -499,6 +505,7 @@
           </div>
 
           <h4>Variants × shapes</h4>
+          <div class="ds-scroll-x">
           <table class="ds-table">
             <thead>
               <tr><th>Variant</th><th>Soft (default)</th><th>Pill</th><th>Square</th></tr>
@@ -536,6 +543,7 @@
               </tr>
             </tbody>
           </table>
+          </div>
 
           <h4>Sizes</h4>
           <div class="ds-cluster">
@@ -572,6 +580,7 @@
           </div>
 
           <h4>All statuses × render variants</h4>
+          <div class="ds-scroll-x">
           <table class="ds-table">
             <thead>
               <tr><th>Status <span class="ds-note">(tone)</span></th><th>Solid</th><th>Outline</th><th>Muted</th></tr>
@@ -627,6 +636,7 @@
                 <td><span class="tag tag-muted tag--neutral">Low Miles</span></td></tr>
             </tbody>
           </table>
+          </div>
 
           <h4>Sizes</h4>
           <div class="ds-cluster">
@@ -1338,6 +1348,7 @@
           <div class="ds-section__intro"><p class="eyebrow">Tables</p><h2>Tables</h2></div>
 
           <h4>Zebra</h4>
+          <div class="ds-scroll-x">
           <table class="table table-zebra">
             <thead><tr><th>Year</th><th>Model</th><th>Miles</th><th>Price</th></tr></thead>
             <tbody>
@@ -1346,6 +1357,7 @@
               <tr><td>2023</td><td>Lamborghini Huracán STO</td><td class="num">2,980</td><td class="num">$364,500</td></tr>
             </tbody>
           </table>
+          </div>
 
           <h4>Compare — sticky first column, mono numerics</h4>
           <div class="ds-scroll-x">

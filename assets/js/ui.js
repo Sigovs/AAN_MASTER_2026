@@ -340,7 +340,23 @@
     var navItems = Array.prototype.slice.call(dsNav.querySelectorAll('.ds-nav__item'));
     var navGroups = Array.prototype.slice.call(dsNav.querySelectorAll('.ds-nav__group'));
     var navEmpty = dsNav.querySelector('[data-nav-empty]');
+    var navToggle = dsNav.querySelector('[data-ds-nav-toggle]');
     var userPinned = []; // groups the user explicitly expanded this session
+
+    // Mobile: the Menu toggle opens/closes the nav body (collapsed top bar).
+    function setNavExpanded(open) {
+      dsNav.classList.toggle('is-expanded', open);
+      if (navToggle) navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    if (navToggle) {
+      navToggle.addEventListener('click', function () {
+        setNavExpanded(!dsNav.classList.contains('is-expanded'));
+      });
+    }
+    // Tapping a link (mobile) navigates then closes the dropdown.
+    dsNav.querySelectorAll('.ds-nav__link').forEach(function (a) {
+      a.addEventListener('click', function () { setNavExpanded(false); });
+    });
 
     function setGroupOpen(group, open) {
       group.classList.toggle('is-open', open);
@@ -364,6 +380,7 @@
     function filterNav() {
       var q = navSearch ? navSearch.value.trim().toLowerCase() : '';
       dsNav.classList.toggle('is-searching', q.length > 0);
+      if (q) setNavExpanded(true); // reveal matches on mobile while searching
       var anyVisible = false;
       navItems.forEach(function (it) {
         var link = it.querySelector('.ds-nav__link');

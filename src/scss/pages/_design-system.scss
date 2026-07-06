@@ -71,13 +71,44 @@ $_ds-shadows: (
   border-right: 1px solid t.$color-border;
   padding: t.$space-6 t.$space-5;
 
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: t.$space-3;
+    margin-bottom: t.$space-4;
+  }
   &__brand {
-    margin: 0 0 t.$space-4;
+    margin: 0;
     font-family: t.$font-mono;
     font-size: 12px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: t.$color-heading;
+  }
+  // Mobile menu toggle — hidden on desktop (the nav body is always open there).
+  &__toggle {
+    display: none;
+    align-items: center;
+    gap: t.$space-2;
+    padding: t.$space-1 t.$space-3;
+    border: 1px solid t.$color-border;
+    border-radius: t.$radius-pill;
+    background: none;
+    color: t.$color-text;
+    font-family: t.$font-mono;
+    font-size: t.$text-2xs;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: t.$focus-ring-width solid t.$color-accent;
+      outline-offset: t.$focus-ring-offset;
+    }
+  }
+  &__toggle-caret {
+    transition: transform t.$dur-base t.$ease;
   }
 
   // Keyword search
@@ -254,16 +285,45 @@ $_ds-shadows: (
   max-width: 1080px;
 }
 
-// Stack the shell on small screens.
+// Stack the shell on small screens. align-items:stretch is essential — the base
+// shell uses flex-start, which in a column would size ds-main to its widest
+// child (→ horizontal page overflow); stretch pins both columns to 100%.
 @media (max-width: (t.$bp-lg - 1px)) {
   .ds-shell {
     flex-direction: column;
+    align-items: stretch;
   }
   .ds-nav {
     flex-basis: auto;
     width: 100%;
     border-right: 0;
     border-bottom: 1px solid t.$color-border;
+  }
+  .ds-main {
+    max-width: none;
+  }
+}
+
+@media (max-width: (t.$bp-md - 1px)) {
+  .ds-main {
+    padding-inline: t.$container-px-mobile; // tighter gutters at phone widths
+  }
+}
+
+// Below $bp-md the sidebar is a collapsed top bar: brand + search stay visible,
+// the grouped accordion nav opens as a full-width dropdown via the Menu toggle.
+@media (max-width: (t.$bp-md - 1px)) {
+  .ds-nav__toggle {
+    display: inline-flex;
+  }
+  .ds-nav__body {
+    display: none;
+  }
+  .ds-nav.is-expanded .ds-nav__body {
+    display: block;
+  }
+  .ds-nav.is-expanded .ds-nav__toggle-caret {
+    transform: rotate(180deg);
   }
 }
 
@@ -310,7 +370,7 @@ $_ds-shadows: (
 
 // A neutral label chip that names the class/token a specimen demonstrates.
 .ds-label {
-  display: inline-block;
+  display: inline;
   font-family: t.$font-mono;
   font-size: 11px;
   letter-spacing: 0.04em;
@@ -318,6 +378,16 @@ $_ds-shadows: (
   background: t.$bg-row-alt;
   padding: 2px t.$space-2;
   border-radius: t.$radius-sm;
+  overflow-wrap: anywhere; // long $tokens wrap instead of forcing page overflow
+}
+
+// Long tokens / code strings must wrap, never widen the page.
+.ds-note,
+.ds-usage,
+.ds-note code,
+.ds-usage code,
+code {
+  overflow-wrap: anywhere;
 }
 
 .ds-note {
@@ -1239,6 +1309,8 @@ $_ds-text: (
 
 .ds-viewport__frame {
   container-type: inline-size; // size container → component container queries fire
+  overflow-x: auto; // a forced-desktop specimen (e.g. nav mockup) scrolls here,
+  // never the page — its content fits vertically so no y-scrollbar appears
   padding: t.$space-6;
   border: 1px solid t.$color-border;
   border-radius: t.$radius-md;
@@ -1246,9 +1318,10 @@ $_ds-text: (
   transition: max-width t.$dur-base t.$ease;
 }
 
-// MOBILE — constrain to a 390px device column, centered, device-y border.
+// MOBILE — constrain to a 390px device column (never wider than the container),
+// centered, device-y border.
 .ds-viewport.is-mobile .ds-viewport__frame {
-  max-width: 390px;
+  max-width: min(390px, 100%);
   margin-inline: auto;
   border-color: t.$color-muted;
   border-radius: t.$radius-lg;
