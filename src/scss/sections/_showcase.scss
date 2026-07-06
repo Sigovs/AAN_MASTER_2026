@@ -34,17 +34,24 @@
     }
   }
 
+  // Scrim: a steep MULTI-STOP ramp (kills gradient banding on large dark
+  // renders) + a faint desaturated noise dither for insurance.
   &::before {
     content: '';
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.72) 0%,
-      rgba(0, 0, 0, 0.3) 42%,
-      rgba(0, 0, 0, 0.08) 100%
-    );
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"),
+      linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.72) 0%,
+        rgba(0, 0, 0, 0.56) 16%,
+        rgba(0, 0, 0, 0.42) 32%,
+        rgba(0, 0, 0, 0.28) 50%,
+        rgba(0, 0, 0, 0.16) 72%,
+        rgba(0, 0, 0, 0.06) 100%
+      );
   }
 
   &__inner {

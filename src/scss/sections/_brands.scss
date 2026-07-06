@@ -10,15 +10,15 @@
   align-items: center;
   justify-content: space-between;
   gap: t.$space-6 t.$space-12;
-  padding-block: t.$space-6;
+  padding-block: t.$space-8; // one size up for more presence
   border-top: 1px solid t.$color-border;
   border-bottom: 1px solid t.$color-border;
 }
 
 .brand {
   font-family: t.$font-display;
-  font-size: 1.25rem;
-  letter-spacing: 0.05em;
+  font-size: 1.5rem; // ~24px — the names carry the band
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: t.$color-muted;
   text-decoration: none;

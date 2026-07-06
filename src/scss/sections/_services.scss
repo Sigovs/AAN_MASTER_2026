@@ -1,5 +1,7 @@
 // ============================================================================
-// SECTIONS / SERVICES — 4 .panel cards with a primary glyph + uppercase title.
+// SECTIONS / SERVICES — four columns on open air, divided by 1px vertical rules
+// (no boxes). Icon + title + copy stack; hover shifts the icon colour only.
+// (.panel stays a component — this section just stops using it.)
 // Tokens only.
 // ============================================================================
 @use '../aan-theme-kit' as t;
@@ -7,34 +9,34 @@
 .services__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: t.$grid-gutter;
-
-  @media (max-width: (t.$bp-lg - 1px)) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @media (max-width: (t.$bp-sm - 1px)) {
-    grid-template-columns: 1fr;
-  }
+  gap: 0; // rules do the separating, not gaps
 }
 
 .service {
-  transition: background-color t.$dur-fast t.$ease, border-color t.$dur-fast t.$ease;
+  padding-inline: t.$space-6;
+  border-left: 1px solid t.$color-border; // vertical rule between columns
 
-  &:hover {
-    background: t.$bg-row-alt;
-    border-color: t.$color-border;
+  // First column in each row has no leading rule.
+  &:nth-child(4n + 1) {
+    padding-inline-start: 0;
+    border-left: 0;
   }
 
   &__glyph {
     display: block;
     margin-bottom: t.$space-4;
-    color: t.$color-primary;
+    color: t.$color-muted; // quiet by default…
+    transition: color t.$dur-base t.$ease;
 
     svg {
       display: block;
       width: t.$icon-lg;
       height: t.$icon-lg;
     }
+  }
+
+  &:hover &__glyph {
+    color: t.$color-primary; // …pops to the brand hue on hover (icon only)
   }
 
   &__title {
@@ -52,5 +54,38 @@
     color: t.$color-muted;
     font-size: 0.9375rem;
     line-height: 1.6;
+  }
+}
+
+// Two columns: reset, then rule before the 2nd of each pair.
+@media (max-width: (t.$bp-lg - 1px)) {
+  .services__grid {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: t.$space-8;
+  }
+  .service:nth-child(4n + 1) {
+    padding-inline-start: t.$space-6;
+    border-left: 1px solid t.$color-border;
+  }
+  .service:nth-child(2n + 1) {
+    padding-inline-start: 0;
+    border-left: 0;
+  }
+}
+
+// One column: no vertical rules — horizontal rules between rows instead.
+@media (max-width: (t.$bp-sm - 1px)) {
+  .services__grid {
+    grid-template-columns: 1fr;
+    row-gap: 0;
+  }
+  .service {
+    padding-inline: 0;
+    border-left: 0;
+  }
+  .service + .service {
+    margin-top: t.$space-6;
+    padding-top: t.$space-6;
+    border-top: 1px solid t.$color-border;
   }
 }

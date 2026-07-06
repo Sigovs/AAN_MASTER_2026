@@ -66,6 +66,8 @@
     line-height: 1.05;
     letter-spacing: 0.005em;
     font-size: clamp(2.75rem, 1.6rem + 5vw, 5.75rem); // 44–92px
+    text-wrap: balance; // even rag, no orphan single-word lines
+    max-inline-size: 13ch; // hold it to 2–3 even lines at common widths
 
     em {
       font-style: italic;
