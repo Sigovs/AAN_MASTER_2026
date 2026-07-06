@@ -4,9 +4,12 @@
 // ============================================================================
 @use '../aan-theme-kit' as t;
 
+// The footer is a section — it obeys the rhythm contract (bottom air > top).
+// Top uses $section-pt; the bottom air is delegated to the legal bar's
+// padding-bottom ($section-pb) so the page ends with breath, not a cliff.
 .site-footer {
-  padding-top: t.$space-16;
-  padding-bottom: t.$space-8;
+  padding-top: t.$section-pt;
+  padding-bottom: 0;
   background: t.$bg-footer;
   color: rgba(t.$fg-on-photo, 0.72);
 
@@ -56,6 +59,7 @@
     justify-content: space-between;
     margin-top: t.$space-12;
     padding-top: t.$space-5;
+    padding-bottom: t.$section-pb; // section bottom air (> top) — real breath under the © line
     border-top: 1px solid rgba(t.$fg-on-photo, 0.12);
     font-family: t.$font-mono;
     font-size: t.$text-xs;
@@ -64,6 +68,12 @@
 }
 
 @media (max-width: (t.$bp-md - 1px)) {
+  .site-footer {
+    padding-top: t.$section-pt-mobile;
+  }
+  .site-footer__legal {
+    padding-bottom: t.$section-pb-mobile; // proportional bottom on mobile (> top)
+  }
   .site-footer__grid {
     grid-template-columns: 1fr;
     gap: t.$space-8;

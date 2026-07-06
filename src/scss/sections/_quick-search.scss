@@ -5,8 +5,10 @@
 @use '../aan-theme-kit' as t;
 
 .quick-search {
-  // Tight functional strip between hero and featured (not a full section).
-  padding-block: t.$space-8; // 32px top/bottom — kills the dead air
+  // Tight functional strip between hero and featured (not a full section) —
+  // still honours the rhythm rule: bottom air > top.
+  padding-top: t.$space-8; // 32px
+  padding-bottom: t.$space-10; // 40px
   background: t.$bg-row;
 
   &__form {

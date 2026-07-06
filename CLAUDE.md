@@ -91,6 +91,10 @@ Build only what the plan specifies.
 - A section's **bottom padding is always larger than its top padding.** This is
   a rhythm rule, not a preference. Section padding tokens are defined as pairs in
   `aan-theme-kit.scss`; the bottom value in every pair is the larger one.
+- **This applies to every section, including the footer:** bottom air > top air;
+  the page never ends flush against content. The footer's bottom air lives on
+  its legal bar (`$section-pb`), so the © line has real breath under it. (The
+  hero has its own fold contract — §5b — but still keeps bottom ≥ top.)
 
 ## 5b. Hero fold contract
 

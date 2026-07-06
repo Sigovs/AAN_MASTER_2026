@@ -96,7 +96,7 @@
     height: 100vh; // fallback
     height: 100svh;
     align-items: stretch; // the inner grid owns the vertical layout
-    padding-bottom: max(#{t.$space-16}, env(safe-area-inset-bottom, 0px));
+    padding-bottom: max(#{t.$space-20}, env(safe-area-inset-bottom, 0px)); // > top ($header-h) — rhythm-compliant
 
     .hero__inner {
       display: grid;
