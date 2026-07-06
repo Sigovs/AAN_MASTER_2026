@@ -39,7 +39,8 @@
 
   .image.frame {
     position: relative;
-    aspect-ratio: 16 / 10;
+    aspect-ratio: var(--card-photo-ratio, 16/10); // clone-level, one per site
+
     // Gradient placeholder (shows when no <img> is present, e.g. missing photo).
     background: linear-gradient(
       135deg,
@@ -312,7 +313,7 @@
       min-width: 0;
     }
     .image.frame {
-      aspect-ratio: 16 / 10;
+      aspect-ratio: var(--card-photo-ratio, 16/10);
       height: auto;
       min-height: 0;
     }

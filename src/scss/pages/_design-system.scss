@@ -1291,3 +1291,102 @@ $_ds-text: (
     flex-direction: column;
   }
 }
+
+// ===========================================================================
+// PHOTOGRAPHY specimens
+// ===========================================================================
+.ds-ratio-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: t.$space-2;
+  margin-top: t.$space-2;
+}
+.ds-ratio-chip {
+  padding: t.$space-1 t.$space-3;
+  border: 1px solid t.$color-border;
+  border-radius: t.$radius-pill;
+  font-family: t.$font-mono;
+  font-size: t.$text-xs;
+  color: t.$color-muted;
+
+  &.is-default {
+    border-color: t.$color-accent;
+    color: t.$color-heading;
+  }
+}
+
+.ds-photo-rules {
+  margin: t.$space-2 0 0;
+  padding-left: t.$space-5;
+  max-width: 68ch;
+  color: t.$color-text;
+
+  li {
+    margin-bottom: t.$space-2;
+  }
+  strong {
+    color: t.$color-heading;
+  }
+}
+
+.ds-dodont {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: t.$grid-gutter;
+  margin-top: t.$space-2;
+
+  @media (max-width: (t.$bp-md - 1px)) {
+    grid-template-columns: 1fr;
+  }
+
+  &__item {
+    margin: 0;
+  }
+  &__frame {
+    position: relative;
+    border-radius: t.$radius-md;
+    overflow: hidden;
+    margin-bottom: t.$space-3;
+  }
+  &__tag {
+    position: absolute;
+    top: t.$space-3;
+    left: t.$space-3;
+    z-index: 2;
+    padding: t.$space-1 t.$space-3;
+    border-radius: t.$radius-pill;
+    font-family: t.$font-mono;
+    font-size: t.$text-2xs;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: t.$fg-on-photo;
+
+    &--do {
+      background: t.$color-success;
+    }
+    &--dont {
+      background: t.$color-danger;
+    }
+  }
+  &__sim {
+    position: absolute;
+    bottom: t.$space-3;
+    right: t.$space-3;
+    z-index: 2;
+    padding: 2px t.$space-2;
+    border-radius: t.$radius-sm;
+    background: color-mix(in srgb, #000, transparent 30%);
+    font-family: t.$font-mono;
+    font-size: t.$text-2xs;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: t.$fg-on-photo;
+  }
+}
+
+// Simulated bad capture — oversaturated + over-contrasted + cropped to the edge.
+.ds-photo-bad {
+  filter: saturate(2.4) contrast(1.35) hue-rotate(-8deg);
+  transform: scale(1.7) translate(14%, 10%);
+  transform-origin: center;
+}

@@ -57,7 +57,7 @@
   box-shadow: t.$shadow-card;
 
   &__image {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: var(--card-photo-ratio, 16/10); // match the real frame → no swap jump
     border-radius: 0;
   }
 

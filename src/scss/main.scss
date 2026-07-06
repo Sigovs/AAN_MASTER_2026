@@ -86,3 +86,9 @@
     }
   }
 }
+
+// Site-level (non-skin) runtime tokens. Vehicle photo ratio is a clone setting,
+// applied uniformly to every vehicle image frame — one ratio per site.
+:root {
+  --card-photo-ratio: #{t.$card-photo-ratio};
+}

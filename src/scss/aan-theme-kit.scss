@@ -160,6 +160,13 @@ $text-lead: 17px !default; // lead paragraphs
 $card-title-size: 22px !default; // vehicle-card title
 $hover-lift:      -4px !default; // card / button hover translateY
 
+// Vehicle photo aspect ratio — a CLONE-LEVEL setting (like color): ONE ratio
+// per site, applied to every vehicle image frame (cards grid, list, featured,
+// skeleton). Allowed values: 3/2 · 16/9 · 4/3 · 16/10. Default 16/10 (current
+// look). Emitted as --card-photo-ratio; object-fit:cover absorbs source-format
+// mismatch (see the DS Photography shooting contract / safe-area rule).
+$card-photo-ratio: '16 / 10' !default; // quoted so it emits literally (no slash-div)
+
 // Icon sizes — the .icon helper defaults to md; --sm / --lg opt in.
 $icon-sm: 16px !default; // inline with small/mono text, chips, pins-in-list
 $icon-md: 20px !default; // default — buttons, inline actions, pagination

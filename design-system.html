@@ -43,6 +43,7 @@
                 <li class="ds-nav__item" data-keywords="icon iconography sprite svg glyph symbol stroke"><a class="ds-nav__link" href="#iconography"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-grid"/></svg><span>Iconography</span></a></li>
                 <li class="ds-nav__item" data-keywords="rhythm spacing scale gap padding radius radii margin"><a class="ds-nav__link" href="#rhythm-spacing"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-ruler"/></svg><span>Rhythm &amp; Spacing</span></a></li>
                 <li class="ds-nav__item" data-keywords="type typography font text heading pangram weight lead body mono display"><a class="ds-nav__link" href="#typography"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-type"/></svg><span>Typography</span></a></li>
+                <li class="ds-nav__item" data-keywords="photography photo image ratio aspect crop vehicle shooting camera safe area vdp"><a class="ds-nav__link" href="#photography"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-image"/></svg><span>Photography</span></a></li>
               </ul>
               </div>
             </li>
@@ -445,6 +446,48 @@
             </div>
           </div>
 
+        </section>
+
+        <!-- ---------- PHOTOGRAPHY ---------- -->
+        <section id="photography" class="ds-section">
+          <div class="ds-section__intro">
+            <p class="eyebrow">Photography</p>
+            <h2>Vehicle photography</h2>
+            <p class="lead">Photo aspect ratio is a clone-level setting — like color, it's decided once and applied everywhere. The shooting contract keeps a dealer's feed consistent so any allowed frame ratio crops cleanly.</p>
+          </div>
+
+          <h4>The ratio setting</h4>
+          <p class="ds-note"><span class="ds-label">$card-photo-ratio</span> — <strong>one ratio per site</strong>, applied to every vehicle image frame (cards grid, list variant, featured, skeleton). Mixed ratios across cards are forbidden. <span class="ds-label">object-fit: cover</span> absorbs source-format mismatch — a 3:2 feed in a 16/10 frame crops gracefully thanks to the safe-area rule below.</p>
+          <div class="ds-ratio-row">
+            <span class="ds-ratio-chip">3 / 2</span>
+            <span class="ds-ratio-chip">16 / 9</span>
+            <span class="ds-ratio-chip">4 / 3</span>
+            <span class="ds-ratio-chip is-default">16 / 10 · default</span>
+          </div>
+
+          <h4>Shooting contract (for clones)</h4>
+          <ul class="ds-photo-rules">
+            <li><strong>Consistent source ratio</strong> across a listing — feeds prefer <span class="ds-label">3:2</span> or <span class="ds-label">16:9</span>; never mix ratios within an ad.</li>
+            <li><strong>Coverage</strong> — minimum <strong>8 exterior + 2 interior</strong> frames per vehicle.</li>
+            <li><strong>Safe-area margins</strong> — the subject never touches the frame edges, so any allowed ratio crops without losing the car.</li>
+            <li><strong>Clean stage</strong> — neutral background; no people, animals, other cars, or ads in frame; blur an unavoidable workshop.</li>
+            <li><strong>Exposure</strong> — correct and even; avoid blown highlights and mirror/glass reflections of the photographer.</li>
+            <li><strong>Privacy</strong> — never show the full VIN (crop or obscure it).</li>
+            <li><strong>Hero / showcase frames</strong> must tolerate a dark scrim — keep the subject readable under a gradient overlay.</li>
+          </ul>
+
+          <h4>Do / Don't</h4>
+          <div class="ds-dodont">
+            <figure class="ds-dodont__item">
+              <div class="ds-dodont__frame image frame"><img src="assets/img/demo/car-1.jpg" alt="Well-shot vehicle — centered subject, safe margins, neutral stage" /><span class="ds-dodont__tag ds-dodont__tag--do">Do</span></div>
+              <figcaption class="ds-note">Centered subject, safe margins, neutral stage, even exposure — crops cleanly at every ratio.</figcaption>
+            </figure>
+            <figure class="ds-dodont__item">
+              <div class="ds-dodont__frame image frame"><img class="ds-photo-bad" src="assets/img/demo/car-1.jpg" alt="Simulated bad photo — oversaturated and cropped to the edge" /><span class="ds-dodont__tag ds-dodont__tag--dont">Don't</span><span class="ds-dodont__sim" aria-hidden="true">simulated</span></div>
+              <figcaption class="ds-note">Oversaturated, over-contrasted, subject cropped to the edge — the car is lost the moment the frame ratio changes.</figcaption>
+            </figure>
+          </div>
+          <p class="ds-usage"><strong>Contract.</strong> One ratio per site (<span class="ds-label">$card-photo-ratio</span>) + consistent source ratio and safe-area shooting per the rules above. The "Don't" tile is a CSS-simulated bad capture, not a real asset.</p>
         </section>
 
         <!-- ---------- BUTTONS ---------- -->
