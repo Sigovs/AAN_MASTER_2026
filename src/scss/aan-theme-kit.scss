@@ -208,6 +208,8 @@ $space-20: 80px  !default;
 $space-24: 96px  !default;
 $space-30: 120px !default;
 
+$card-row-gap: $space-10 !default; // list-view card: photo column ↔ content gap
+
 // ----------------------------------------------------------------------------
 // SECTION RHYTHM  (bottom padding ALWAYS larger than top — CLAUDE.md §5)
 // ----------------------------------------------------------------------------

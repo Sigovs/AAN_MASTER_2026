@@ -1199,7 +1199,7 @@
             <div class="ds-viewport__frame">
             <article class="car-card car-card--row">
               <div class="car-image"><div class="image frame"><img src="assets/img/demo/car-2.jpg" alt="Porsche 911 Turbo S" /></div>
-                <div class="car-pins"><button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon icon--sm car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon icon--sm car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button><button class="car-pin" type="button" aria-label="Share"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button></div>
+                <div class="car-pins"><button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button><a class="car-pin" href="sms:" aria-label="Text"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-message"/></svg></a><button class="car-pin" type="button" aria-label="Share"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button></div>
               </div>
               <div class="car-name">
                 <span class="car-name__year">2023</span>
@@ -1211,14 +1211,14 @@
                   <div class="car-actions">
                     <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Call"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-phone"/></svg></button>
                     <button class="btn btn-outline btn-icon-only btn-sm" type="button" aria-label="Text"><svg class="icon icon--sm"><use href="assets/img/icons.svg#icon-message"/></svg></button>
-                    <a class="btn btn-primary btn-sm" href="#vehicle-card">View details</a>
+                    <a class="btn btn-outline btn-sm" href="#vehicle-card">View details</a>
                   </div>
                 </div>
               </div>
             </article>
             </div>
           </div>
-          <p class="ds-note">Toggle <strong>Desk / Mobile</strong> above. .car-card--row · list view collapses to grid layout when its container drops below 640px (container query, not viewport) — MOBILE narrows the frame past that threshold, so it reflows for real.</p>
+          <p class="ds-note">Toggle <strong>Desk / Mobile</strong> above. <span class="ds-label">.car-card--row</span> · photo column (min 260px, full-height bleed) and content column separated by <span class="ds-label">$card-row-gap</span> (40px); content gets <span class="ds-label">$space-8</span> right padding so text never touches the border. Collapses to the grid layout when its container drops below 640px (container query, not viewport) — MOBILE narrows the frame past that threshold, so it reflows for real (gap resets, photo returns to <span class="ds-label">$card-photo-ratio</span>).</p>
 
           <h4>Hover &amp; loading</h4>
           <p class="ds-note">Hover any card: translateY(-4px) + border shift + photo scale 1.03 ($dur-base $ease-out); suppressed under prefers-reduced-motion. Skeleton (below) mirrors the card while data loads.</p>

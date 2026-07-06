@@ -193,8 +193,8 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: t.$space-3;
-  margin-top: t.$space-3;
-  padding-top: t.$space-3;
+  margin-top: t.$space-5; // spec-plate top rule: $space-5 clearance above…
+  padding-top: t.$space-5; // …and below the rule
   border-top: 1px solid t.$color-border;
   font-family: t.$font-mono;
 
@@ -308,25 +308,33 @@
 // tied to the viewport). A parent needs `container-type: inline-size`.
 .car-card--row {
   flex-direction: row;
+  gap: t.$card-row-gap; // air between the photo column and the content column
 
   .car-image {
     flex: 0 0 40%;
     min-width: 260px;
+    // photo bleeds flush to the card's left / top / bottom (the gap is applied
+    // after it, on the content side only).
   }
   .image.frame {
-    aspect-ratio: auto;
-    height: 100%;
+    aspect-ratio: auto; // full-height bleed on desktop (ratio governs the
+    height: 100%; //       collapsed state below, via var(--card-photo-ratio))
     min-height: 220px;
   }
   .car-name {
     flex: 1 1 auto;
     min-width: 0;
+    justify-content: center; // centre the content block against the tall photo
+    // gap owns the left air; add right + block padding so text never touches
+    // the card border.
+    padding: t.$space-6 t.$space-8 t.$space-6 0;
   }
 }
 
 @container (max-width: 640px) {
   .car-card--row {
     flex-direction: column;
+    gap: 0; // reset the desktop photo↔content gap when stacked
 
     .car-image {
       flex-basis: auto;
@@ -336,6 +344,10 @@
       aspect-ratio: var(--card-photo-ratio, 16/10);
       height: auto;
       min-height: 0;
+    }
+    .car-name {
+      justify-content: normal;
+      padding: t.$space-4; // back to the grid card's symmetric padding
     }
   }
 }
