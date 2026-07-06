@@ -160,3 +160,20 @@ elements whose right edge exceeds the viewport and aren't clipped by an
 - Phase discipline: do only the current phase's work.
 - Prefer editing a token over adding an exception.
 - Keep the SCSS import graph flowing through `main.scss`.
+
+## 7. Verification — layout invariants
+
+Every run that touches layout or styles MUST end with the Playwright **invariant
+scan** (`node scripts/screenshot.mjs`), not just task-specific shots. The scan
+asserts programmatically at **1920 and 390 on BOTH pages** and fails loudly
+(non-zero exit) on any violation:
+
+1. **No horizontal page overflow** (scrollWidth walk).
+2. **Section rhythm:** computed `padding-bottom > padding-top` for every
+   `.section` and the footer.
+3. **Every `<img>` has rendered dimensions > 0** (nothing invisible).
+4. **Hero fold contracts hold** in both modes (full = fills the fold, no bleed;
+   compact = next section peeks).
+5. **Live AA contrast rows all green** in every skin.
+
+A run isn't done while any invariant fails.

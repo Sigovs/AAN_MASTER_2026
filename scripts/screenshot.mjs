@@ -208,6 +208,126 @@ for (const skin of ['obsidian', 'gallery', 'midnight']) {
   await page.close();
 }
 
+// ============================================================================
+// LAYOUT INVARIANT SCAN — programmatic assertions at 1920 + 390 on BOTH pages.
+// Fails loudly (non-zero exit). See CLAUDE.md "Layout invariants". A run isn't
+// done while any invariant fails.
+// ============================================================================
+const failures = [];
+const fail = (inv, msg) => failures.push(`[${inv}] ${msg}`);
+const INV_PAGES = ['index.html', 'design-system.html'];
+const INV_SIZES = [[1920, 1080], [390, 844]];
+
+// Invariants 1 (overflow), 2 (rhythm), 3 (imgs) — one pass per page × size.
+for (const file of INV_PAGES) {
+  for (const [w, h] of INV_SIZES) {
+    const page = await browser.newPage({ viewport: { width: w, height: h } });
+    await page.goto(`${base}/${file}`, { waitUntil: 'networkidle' });
+    await settle(page, 'obsidian');
+    const r = await page.evaluate((vw) => {
+      const res = { overflow: null, rhythm: [], imgs: [] };
+      const isClipped = (el) => {
+        let a = el.parentElement;
+        while (a) { const ox = getComputedStyle(a).overflowX; if (ox === 'hidden' || ox === 'auto' || ox === 'scroll' || ox === 'clip') return true; a = a.parentElement; }
+        return false;
+      };
+      // 1. horizontal page overflow
+      const sw = document.documentElement.scrollWidth;
+      if (sw > vw + 1) {
+        const off = [];
+        for (const el of document.body.querySelectorAll('*')) {
+          const b = el.getBoundingClientRect();
+          if (b.right > vw + 1 && getComputedStyle(el).position !== 'fixed' && !isClipped(el))
+            off.push((el.tagName + '.' + (el.className || '').toString().split(' ')[0]).slice(0, 40) + ':' + Math.round(b.right));
+        }
+        res.overflow = { sw, offenders: [...new Set(off)].slice(0, 6) };
+      }
+      // 2. section rhythm — every .section + the footer: bottom > top
+      for (const el of document.querySelectorAll('section.section, .site-footer')) {
+        const c = getComputedStyle(el);
+        let pt = parseFloat(c.paddingTop), pb = parseFloat(c.paddingBottom);
+        if (el.classList.contains('site-footer')) { const lg = el.querySelector('.site-footer__legal'); if (lg) pb = parseFloat(getComputedStyle(lg).paddingBottom); }
+        if (pt > 0 && pb > 0 && pb <= pt) res.rhythm.push(`${el.id || el.className.split(' ')[0]} pt=${Math.round(pt)} pb=${Math.round(pb)}`);
+      }
+      // 3. every rendered <img> has real dimensions (nothing invisible)
+      for (const img of document.querySelectorAll('img')) {
+        if (img.getClientRects().length === 0) continue; // display:none — legitimately hidden
+        const b = img.getBoundingClientRect();
+        if (b.width < 1 || b.height < 1) res.imgs.push((img.getAttribute('alt') || img.currentSrc || 'img').slice(0, 40) + ` ${Math.round(b.width)}x${Math.round(b.height)}`);
+      }
+      return res;
+    }, w);
+    if (r.overflow) fail('1', `${file}@${w}: scrollWidth=${r.overflow.sw} > ${w} — ${r.overflow.offenders.join(', ')}`);
+    for (const v of r.rhythm) fail('2', `${file}@${w}: ${v} (bottom not > top)`);
+    for (const v of r.imgs) fail('3', `${file}@${w}: ${v}`);
+    await page.close();
+  }
+}
+
+// Invariant 4 — hero fold contracts (index, both modes, both sizes).
+for (const [w, h] of INV_SIZES) {
+  const page = await browser.newPage({ viewport: { width: w, height: h } });
+  await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
+  await settle(page, 'obsidian');
+  for (const mode of ['full', 'compact']) {
+    await setHero(page, mode);
+    const m = await page.evaluate(() => {
+      const hero = document.querySelector('.hero');
+      const next = document.querySelector('#quick-search');
+      return { vh: window.innerHeight, heroH: hero.getBoundingClientRect().height, nextTop: next.getBoundingClientRect().top };
+    });
+    if (mode === 'full') {
+      if (m.heroH < m.vh - 2) fail('4', `index@${w} full: hero ${Math.round(m.heroH)} < viewport ${m.vh} (should fill)`);
+      if (m.nextTop < m.vh - 2) fail('4', `index@${w} full: next section top ${Math.round(m.nextTop)} < ${m.vh} — fold bleed`);
+    } else {
+      if (m.heroH >= m.vh) fail('4', `index@${w} compact: hero ${Math.round(m.heroH)} >= viewport ${m.vh} (should be shorter)`);
+      if (m.nextTop >= m.vh) fail('4', `index@${w} compact: next section top ${Math.round(m.nextTop)} >= ${m.vh} (should peek)`);
+    }
+  }
+  await page.close();
+}
+
+// Invariant 5 — live AA contrast rows green in every skin (DS page).
+{
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+  await page.goto(`${base}/design-system.html`, { waitUntil: 'networkidle' });
+  for (const skin of ['obsidian', 'gallery', 'midnight']) {
+    await page.click(`[data-skin-set="${skin}"]`);
+    await page.waitForTimeout(300);
+    const rows = await page.evaluate(() =>
+      [...document.querySelectorAll('[data-contrast]')].map((e) => ({
+        label: e.getAttribute('data-fg') + ' on ' + e.getAttribute('data-bg'),
+        ratio: (e.querySelector('[data-contrast-ratio]') || {}).textContent,
+        pass: e.classList.contains('is-pass'),
+      }))
+    );
+    if (!rows.length) fail('5', `${skin}: no contrast rows found`);
+    for (const row of rows) if (!row.pass) fail('5', `${skin}: ${row.label} = ${row.ratio}`);
+  }
+  await page.close();
+}
+
 await browser.close();
 server.close();
 console.log('SCREENSHOTS:\n' + shots.join('\n'));
+
+// ---- Invariant report -------------------------------------------------------
+const INVARIANTS = [
+  ['1', 'No horizontal page overflow'],
+  ['2', 'Section rhythm (bottom padding > top)'],
+  ['3', 'Every <img> renders with real dimensions'],
+  ['4', 'Hero fold contracts hold (full = no bleed, compact = peek)'],
+  ['5', 'Live AA contrast rows green in every skin'],
+];
+console.log('\n===== LAYOUT INVARIANT SCAN  (1920 + 390, both pages) =====');
+for (const [num, name] of INVARIANTS) {
+  const fs = failures.filter((f) => f.startsWith(`[${num}]`));
+  console.log(`  ${fs.length === 0 ? 'PASS' : 'FAIL'}  ${num}. ${name}`);
+  for (const f of fs) console.log(`         ${f.replace(/^\[\d\]\s*/, '')}`);
+}
+if (failures.length) {
+  console.error(`\n✗ INVARIANT SCAN FAILED — ${failures.length} violation(s). A run isn't done while any invariant fails.`);
+  process.exitCode = 1;
+} else {
+  console.log('\n✓ All 5 layout invariants PASS.');
+}
