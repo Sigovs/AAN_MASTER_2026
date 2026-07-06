@@ -20,7 +20,8 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: t.$color-secondary;
+  color: t.$color-muted; // was $color-secondary — a dark surface token, invisible
+  // on the surfaces labels sit on (dark skins) and failing AA; muted passes.
 
   &--required::after {
     content: '*';
@@ -286,7 +287,7 @@ textarea.form-control {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: t.$color-secondary;
+  color: t.$color-muted; // match .form-label (was $color-secondary — invisible)
 }
 
 // The required asterisk is a literal <red> element in the engine output.

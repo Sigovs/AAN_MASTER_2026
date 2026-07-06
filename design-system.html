@@ -1392,6 +1392,7 @@
               <button type="button" class="ds-viewport__btn" data-viewport-set="mobile"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-menu"/></svg>Mobile</button>
             </div>
             <div class="ds-viewport__frame">
+            <div class="filter-bar">
           <div class="filters">
             <div class="filters__field form-field">
               <label class="form-label" for="flt-make">Make</label>
@@ -1421,8 +1422,9 @@
             <button class="btn btn-outline btn-pill btn-sm" type="button">Clear all</button>
           </div>
             </div>
+            </div>
           </div>
-          <p class="ds-note">Toggle <strong>Desk / Mobile</strong> above — the filter row stacks to a single column under narrow widths.</p>
+          <p class="ds-note">Toggle <strong>Desk / Mobile</strong> above. <span class="ds-label">.filters</span> is a <strong>container-query</strong> component (wrapped in <span class="ds-label">.filter-bar</span>) — it stacks to a single column when its own width drops below 640px, so this frame and a real 390px viewport render the exact same layout (one code path, no viewport-media simulation).</p>
         </section>
 
         <!-- ---------- PAGINATION ---------- -->

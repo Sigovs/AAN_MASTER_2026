@@ -1354,11 +1354,7 @@ $_ds-text: (
       width: 100%;
     }
   }
-  // Filters: row → fully stacked.
-  .filters {
-    flex-direction: column;
-    align-items: stretch;
-  }
+  // (Filters now stack via their own container query — see _filters.scss.)
   // Sample form: side-by-side field rows → single column.
   .form-row {
     flex-direction: column;

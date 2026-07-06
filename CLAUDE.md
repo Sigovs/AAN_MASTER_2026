@@ -175,5 +175,8 @@ asserts programmatically at **1920 and 390 on BOTH pages** and fails loudly
 4. **Hero fold contracts hold** in both modes (full = fills the fold, no bleed;
    compact = next section peeks).
 5. **Live AA contrast rows all green** in every skin.
+6. **Mobile field stacks** (`.filters`, `.form-stack`) have no adjacent field
+   gap exceeding `2× $form-row-gap` — catches a desktop grid/flex-basis leaking
+   into a single-column mobile layout.
 
 A run isn't done while any invariant fails.

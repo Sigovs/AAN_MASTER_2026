@@ -307,6 +307,31 @@ for (const [w, h] of INV_SIZES) {
   await page.close();
 }
 
+// Invariant 6 — no desktop grid gaps leaking into a mobile field stack: within
+// any stacked field container at 390, adjacent field gaps must not exceed
+// 2× $form-row-gap (20px → 40px). Catches "flex-basis-as-height in a column".
+const FORM_ROW_GAP = 20;
+for (const file of INV_PAGES) {
+  const page = await browser.newPage({ viewport: { width: 390, height: 900 } });
+  await page.goto(`${base}/${file}`, { waitUntil: 'networkidle' });
+  await settle(page, 'obsidian');
+  const bad = await page.evaluate((maxGap) => {
+    const out = [];
+    for (const stack of document.querySelectorAll('.filters, .form-stack, .filters__actions')) {
+      const cs = getComputedStyle(stack);
+      if (cs.display !== 'flex' || cs.flexDirection !== 'column') continue; // only vertical stacks
+      const fields = [...stack.children].filter((c) => c.matches('.filters__field, .form-field, .form-row, .filters__actions'));
+      for (let i = 1; i < fields.length; i++) {
+        const gap = fields[i].getBoundingClientRect().top - fields[i - 1].getBoundingClientRect().bottom;
+        if (gap > maxGap) out.push(`${(stack.className || '').split(' ')[0]} gap ${Math.round(gap)} > ${maxGap}`);
+      }
+    }
+    return out;
+  }, FORM_ROW_GAP * 2);
+  for (const v of bad) fail('6', `${file}@390: ${v}`);
+  await page.close();
+}
+
 await browser.close();
 server.close();
 console.log('SCREENSHOTS:\n' + shots.join('\n'));
@@ -318,6 +343,7 @@ const INVARIANTS = [
   ['3', 'Every <img> renders with real dimensions'],
   ['4', 'Hero fold contracts hold (full = no bleed, compact = peek)'],
   ['5', 'Live AA contrast rows green in every skin'],
+  ['6', 'Mobile field stacks: no gap > 2× $form-row-gap'],
 ];
 console.log('\n===== LAYOUT INVARIANT SCAN  (1920 + 390, both pages) =====');
 for (const [num, name] of INVARIANTS) {
@@ -329,5 +355,5 @@ if (failures.length) {
   console.error(`\n✗ INVARIANT SCAN FAILED — ${failures.length} violation(s). A run isn't done while any invariant fails.`);
   process.exitCode = 1;
 } else {
-  console.log('\n✓ All 5 layout invariants PASS.');
+  console.log(`\n✓ All ${INVARIANTS.length} layout invariants PASS.`);
 }
