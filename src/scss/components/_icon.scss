@@ -1,10 +1,11 @@
 // ============================================================================
 // COMPONENTS / ICON — the .icon helper for sprite references.
 // Usage: <svg class="icon"><use href="assets/img/icons.svg#icon-name"/></svg>
-// Sprite symbols carry their own stroke presentation (1.5 round), so an icon
-// renders even without this class; .icon standardises size + inline alignment
-// and re-asserts the stroke contract so host CSS colour flows via currentColor.
-// Size defaults to md; --sm / --lg opt in. Colour is always currentColor.
+// stroke-width lives HERE (not on the sprite symbols) so it can be overridden
+// per context (e.g. .car-pin uses $icon-stroke-strong) — a symbol presentation
+// attribute would block that override across the <use> shadow boundary. Every
+// icon therefore needs this class. Colour is always currentColor.
+// Size defaults to md; --sm / --lg opt in.
 // ============================================================================
 @use '../aan-theme-kit' as t;
 
@@ -15,7 +16,7 @@
   height: t.$icon-md;
   fill: none;
   stroke: currentColor;
-  stroke-width: 1.5;
+  stroke-width: t.$icon-stroke;
   stroke-linecap: round;
   stroke-linejoin: round;
   vertical-align: middle; // sits on the text baseline when inline with a label

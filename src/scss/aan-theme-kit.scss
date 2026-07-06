@@ -172,6 +172,13 @@ $icon-sm: 16px !default; // inline with small/mono text, chips, pins-in-list
 $icon-md: 20px !default; // default — buttons, inline actions, pagination
 $icon-lg: 24px !default; // feature glyphs, section-level affordances
 
+// Icon line weight (stroke-width, user units on the 24 grid). Strong is for
+// icon-on-photo contexts (car pins, quick actions) so they read on bright shots.
+$icon-stroke:        1.5 !default;
+$icon-stroke-strong: 2   !default; // ≈2px at $icon-lg
+
+$tap-min: 44px !default; // WCAG minimum interactive target (car pins, etc.)
+
 // A single border-width token (1px borders may otherwise stay literal).
 $border-w: 1px !default;
 

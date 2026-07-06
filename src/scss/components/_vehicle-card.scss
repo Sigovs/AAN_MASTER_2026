@@ -84,26 +84,35 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: t.$space-8;
-  height: t.$space-8;
+  width: t.$tap-min; // 44px — a11y tap target
+  height: t.$tap-min;
   padding: 0;
-  border: 1px solid rgba(t.$fg-on-photo, 0.4);
+  border: 1px solid rgba(t.$fg-on-photo, 0.55); // stronger edge on bright photos
   border-radius: t.$radius-pill;
-  background: color-mix(in srgb, #000, transparent 62%);
+  background: color-mix(in srgb, #000, transparent 45%); // denser frost for contrast
   backdrop-filter: t.$blur-frosted;
   -webkit-backdrop-filter: t.$blur-frosted;
   color: t.$fg-on-photo;
-  font-size: t.$text-base;
   line-height: 1;
   cursor: pointer;
-  transition: background-color t.$dur-fast t.$ease, color t.$dur-fast t.$ease;
+  text-decoration: none; // the Text pin is an <a>
+  transition: background-color t.$dur-fast t.$ease, color t.$dur-fast t.$ease,
+    border-color t.$dur-fast t.$ease;
+
+  // Icon-on-photo: larger + heavier stroke so pins read on the brightest shots.
+  .icon {
+    width: t.$icon-lg;
+    height: t.$icon-lg;
+    stroke-width: t.$icon-stroke-strong;
+  }
 
   &:hover {
-    background: color-mix(in srgb, #000, transparent 45%);
+    background: color-mix(in srgb, #000, transparent 30%);
+    border-color: rgba(t.$fg-on-photo, 0.75);
   }
   &.is-active {
     color: t.$color-danger;
-    border-color: rgba(t.$color-danger, 0.6);
+    border-color: rgba(t.$color-danger, 0.7);
   }
 }
 
@@ -262,6 +271,17 @@
 .car-actions {
   display: flex;
   gap: t.$space-2;
+
+  // Call / Text quick actions — comfortable targets + heavier icon presence.
+  .btn-icon-only {
+    width: t.$space-10; // 40px min target
+    height: t.$space-10;
+  }
+  .icon {
+    width: t.$icon-md;
+    height: t.$icon-md;
+    stroke-width: t.$icon-stroke-strong;
+  }
 }
 
 // Full-width primary CTA below the footer (chosen over inline — see report).

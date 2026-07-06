@@ -266,7 +266,7 @@
             <span class="ds-icon-color__demo" style="color: var(--color-primary)"><svg class="icon icon--lg"><use href="assets/img/icons.svg#icon-heart"/></svg> primary</span>
           </div>
 
-          <p class="ds-usage"><strong>Usage.</strong> Stroke 1.5, round caps &amp; joins, 24 grid, <span class="ds-label">currentColor</span> — new icons MUST match this language. No filled/duotone/emoji icons (heart-filled is the one intentional fill: the saved state). Reference the sprite; never paste inline path data into components.</p>
+          <p class="ds-usage"><strong>Usage.</strong> Stroke <span class="ds-label">$icon-stroke</span> (1.5), round caps &amp; joins, 24 grid, <span class="ds-label">currentColor</span> — new icons MUST match this language. <strong>On-photo icons</strong> (car pins, quick actions) use <span class="ds-label">$icon-stroke-strong</span> (2) for presence over imagery. stroke-width lives in the <span class="ds-label">.icon</span> class (not on the sprite symbols) so it's overridable — every icon needs the <span class="ds-label">.icon</span> class. No filled/duotone/emoji icons (heart-filled is the one intentional fill: the saved state). Reference the sprite; never paste inline path data into components.</p>
         </section>
 
         <!-- ---------- RHYTHM ---------- -->
@@ -911,6 +911,7 @@
             <h2>Inventory card</h2>
             <p class="lead">The SRP / Featured card — production class names (<span class="ds-label">.car-card</span> …) with new modifiers. Photos from <span class="ds-label">assets/img/demo/</span>; status overlays reuse the <span class="ds-label">.p-overlay</span> family.</p>
             <p class="ds-note">Demo photos: <span class="ds-label">assets/img/demo/car-1…3</span> (3 available) + the gradient placeholder / coming-soon block for the rest.</p>
+            <p class="ds-note"><strong>Action pins</strong> (top-right, on the photo): <span class="ds-label">Save</span> · <span class="ds-label">Text</span> · <span class="ds-label">Share</span> — 44×44 frosted chips (a11y tap target) with <span class="ds-label">$icon-stroke-strong</span> icons so they read on bright shots. The Text pin is a placeholder <span class="ds-label">href="sms:"</span> in the demo; production wires it to the dealer's texting service (with the vehicle URL + stock number prefilled).</p>
           </div>
 
           <h4>Status variants</h4>
@@ -920,9 +921,9 @@
               <div class="car-image">
                 <div class="image frame"><img src="assets/img/demo/car-1.jpg" alt="2024 McLaren 720S" /></div>
                 <div class="car-pins">
-                  <button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon icon--sm car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon icon--sm car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button>
-                  <button class="car-pin" type="button" aria-label="Share"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button>
-                  <button class="car-pin" type="button" aria-label="Text"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-message"/></svg></button>
+                  <button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button>
+                  <a class="car-pin" href="sms:" aria-label="Text"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-message"/></svg></a>
+                  <button class="car-pin" type="button" aria-label="Share"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button>
                 </div>
               </div>
               <div class="car-name">
@@ -950,9 +951,9 @@
                 <div class="image frame"><img src="assets/img/demo/car-2.jpg" alt="2023 Porsche 911 Turbo S" /></div>
                 <span class="card-badge card-badge--new">New Arrival</span>
                 <div class="car-pins">
-                  <button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon icon--sm car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon icon--sm car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button>
-                  <button class="car-pin" type="button" aria-label="Share"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button>
-                  <button class="car-pin" type="button" aria-label="Text"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-message"/></svg></button>
+                  <button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button>
+                  <a class="car-pin" href="sms:" aria-label="Text"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-message"/></svg></a>
+                  <button class="car-pin" type="button" aria-label="Share"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button>
                 </div>
               </div>
               <div class="car-name">
@@ -980,9 +981,9 @@
                 <div class="image frame"><img src="assets/img/demo/car-3.webp" alt="2024 Ferrari Roma" /></div>
                 <span class="card-badge card-badge--cpo">Certified Pre-Owned</span>
                 <div class="car-pins">
-                  <button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon icon--sm car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon icon--sm car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button>
-                  <button class="car-pin" type="button" aria-label="Share"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button>
-                  <button class="car-pin" type="button" aria-label="Text"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-message"/></svg></button>
+                  <button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button>
+                  <a class="car-pin" href="sms:" aria-label="Text"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-message"/></svg></a>
+                  <button class="car-pin" type="button" aria-label="Share"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button>
                 </div>
               </div>
               <div class="car-name">
@@ -1063,9 +1064,9 @@
               <div class="car-image">
                 <div class="image frame"><img src="assets/img/demo/car-2.jpg" alt="2023 Porsche 911 — sale pending" /></div>
                 <div class="car-pins">
-                  <button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon icon--sm car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon icon--sm car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button>
-                  <button class="car-pin" type="button" aria-label="Share"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button>
-                  <button class="car-pin" type="button" aria-label="Text"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-message"/></svg></button>
+                  <button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button>
+                  <a class="car-pin" href="sms:" aria-label="Text"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-message"/></svg></a>
+                  <button class="car-pin" type="button" aria-label="Share"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button>
                 </div>
                 <div class="p-overlay p-overlay-ribbon p-overlay--pending p-overlay--tl"><span>Sale Pending</span></div>
               </div>
@@ -1093,9 +1094,9 @@
               <div class="car-image">
                 <div class="image frame"><img src="assets/img/demo/car-3.webp" alt="2024 Ferrari Roma — price reduced" /></div>
                 <div class="car-pins">
-                  <button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon icon--sm car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon icon--sm car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button>
-                  <button class="car-pin" type="button" aria-label="Share"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button>
-                  <button class="car-pin" type="button" aria-label="Text"><svg class="icon icon--sm" aria-hidden="true"><use href="assets/img/icons.svg#icon-message"/></svg></button>
+                  <button class="car-pin" type="button" data-save aria-label="Save"><svg class="icon car-pin__outline" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart"/></svg><svg class="icon car-pin__filled" aria-hidden="true"><use href="assets/img/icons.svg#icon-heart-filled"/></svg></button>
+                  <a class="car-pin" href="sms:" aria-label="Text"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-message"/></svg></a>
+                  <button class="car-pin" type="button" aria-label="Share"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#icon-share"/></svg></button>
                 </div>
                 <div class="p-overlay p-overlay-bar p-overlay--reduced"><span>Reduced</span></div>
               </div>
